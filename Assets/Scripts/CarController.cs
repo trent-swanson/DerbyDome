@@ -158,8 +158,8 @@ public class CarController : MonoBehaviour
 		{
 			if (hit.collider.tag == "Ground")
 			{
-				//playerBody.drag = playerDrag;
-				//playerBody.angularDrag = playerDrag;
+				playerBody.drag = playerDrag;
+				playerBody.angularDrag = playerDrag;
 			}
 		}
 
