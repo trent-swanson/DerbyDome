@@ -16,7 +16,8 @@ public class CarController : MonoBehaviour
 	public float driftSteer = 35.0f;
 	public float acclBrake = 3000.0f;
 	public float declBrake = 3000.0f;
-	public float playerDrag = 0.5f;
+	public float acclDrag = 0.5f;
+	public float declDrag = 2f;
     public float speedMultiplyer = 0.0f;
 
 	//[HideInInspector]
@@ -30,6 +31,7 @@ public class CarController : MonoBehaviour
 
     private Rigidbody playerBody;
 	public Vector3 localVel;
+	private bool isGrounded = false;
 
 	[Space]
 	[Space]
@@ -39,12 +41,23 @@ public class CarController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        GetComponent<Rigidbody>().centerOfMass = new Vector3(0.0f, -0.5f, 0.3f);
-        playerBody = GetComponent<Rigidbody>();
+		playerBody = transform.GetComponent<Rigidbody>();
+		playerBody.centerOfMass = new Vector3(0.0f, -0.5f, 0.3f);        
     }
 
 	private void Break(float breakValue)
     {
+		if (isGrounded)
+		{
+			playerBody.drag = declDrag;
+			playerBody.angularDrag = declDrag;
+		}
+		else
+		{
+			playerBody.drag = 0;
+			playerBody.angularDrag = 0;	
+		}
+
 		wheelColliders[0].motorTorque = 0;
 		wheelColliders[1].motorTorque = 0;
 		wheelColliders[2].motorTorque = 0;
@@ -57,6 +70,17 @@ public class CarController : MonoBehaviour
 
     private void Reverse()
     {
+		if (isGrounded)
+		{
+			playerBody.drag = acclDrag;
+			playerBody.angularDrag = acclDrag;
+		}
+		else
+		{
+			playerBody.drag = 0;
+			playerBody.angularDrag = 0;	
+		}
+
 		if (localVel.z > 0)
 		{
 			Debug.Log ("R Breaking");
@@ -89,6 +113,15 @@ public class CarController : MonoBehaviour
             wheelColliders[2].steerAngle = steer;
             wheelColliders[0].steerAngle = 0;
             wheelColliders[3].steerAngle = 0;
+
+			//wheelColliders [0].forwardFriction.stiffness = 1;
+			//wheelColliders [0].sidewaysFriction.stiffness = 1;
+			//wheelColliders [1].forwardFriction.stiffness = 1;
+			//wheelColliders [1].sidewaysFriction.stiffness = 1;
+			//wheelColliders [2].forwardFriction.stiffness = 1;
+			//wheelColliders [2].sidewaysFriction.stiffness = 1;
+			//wheelColliders [3].forwardFriction.stiffness = 1;
+			//wheelColliders [3].sidewaysFriction.stiffness = 1;
         }
 
         else
@@ -100,11 +133,30 @@ public class CarController : MonoBehaviour
             wheelColliders[2].steerAngle = 0;
             wheelColliders[0].steerAngle = steer;
             wheelColliders[3].steerAngle = steer;
+
+			//wheelColliders [0].forwardFriction.stiffness = 3;
+			//wheelColliders [0].sidewaysFriction.stiffness = 1.5f;
+			//wheelColliders [1].forwardFriction.stiffness = 3;
+			//wheelColliders [1].sidewaysFriction.stiffness = 1.5f;
+			//wheelColliders [2].forwardFriction.stiffness = 3;
+			//wheelColliders [2].sidewaysFriction.stiffness = 1.5f;
+			//wheelColliders [3].forwardFriction.stiffness = 3;
+			//wheelColliders [3].sidewaysFriction.stiffness = 1.5f;
         }
     }
 
     private void Accelerate()
     {
+		if (isGrounded)
+		{
+			playerBody.drag = acclDrag;
+			playerBody.angularDrag = acclDrag;
+		}
+		else
+		{
+			playerBody.drag = 0;
+			playerBody.angularDrag = 0;	
+		}
 
 		if (localVel.z < 0)
 		{
@@ -151,15 +203,19 @@ public class CarController : MonoBehaviour
 		reverse = XCI.GetAxis (XboxAxis.LeftTrigger, controller) * (enginePower * speedMultiplyer) * Time.deltaTime;
 		localVel = playerBody.transform.InverseTransformDirection(playerBody.velocity);
 
+		//ground check
 		RaycastHit hit;
 		Ray groundCheck = new Ray(transform.position, Vector3.down);
-		Debug.DrawRay(transform.position, Vector3.down * 0.5f, Color.red);
-		if (Physics.Raycast(groundCheck, out hit, 0.5f))
+		Debug.DrawRay(transform.position, Vector3.down * 0.3f, Color.red);
+		if (Physics.Raycast(groundCheck, out hit, 0.3f))
 		{
 			if (hit.collider.tag == "Ground")
 			{
-				playerBody.drag = playerDrag;
-				playerBody.angularDrag = playerDrag;
+				isGrounded = true;
+			}
+			else
+			{
+				isGrounded = false;
 			}
 		}
 
@@ -192,6 +248,17 @@ public class CarController : MonoBehaviour
 		}
         else
         {
+			if (isGrounded)
+			{
+				playerBody.drag = declDrag;
+				playerBody.angularDrag = declDrag;
+			}
+			else
+			{
+				playerBody.drag = 0;
+				playerBody.angularDrag = 0;	
+			}
+
             wheelColliders[0].motorTorque = 0;
             wheelColliders[1].motorTorque = 0;
             wheelColliders[2].motorTorque = 0;
