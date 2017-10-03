@@ -14,8 +14,6 @@ public class CarController : MonoBehaviour
     public float MaxBWVelocity = 5.0f;
 	public float maxSteer = 15.0f;
 	public float driftSteer = 35.0f;
-	public float acclBrake = 3000.0f;
-	public float declBrake = 3000.0f;
 	public float acclDrag = 0.5f;
 	public float declDrag = 2f;
     public float speedMultiplyer = 0.0f;
@@ -83,12 +81,9 @@ public class CarController : MonoBehaviour
 
 		if (localVel.z > 0)
 		{
-			Debug.Log ("R Breaking");
-			Break(declBrake * reverse);
+			Break(reverse);
 			return;
 		}
-
-		Debug.Log ("Reverse");
 
 		wheelColliders[0].brakeTorque = 0;
 		wheelColliders[1].brakeTorque = 0;
@@ -160,14 +155,10 @@ public class CarController : MonoBehaviour
 
 		if (localVel.z < 0)
 		{
-			//Debug.Log ("A-Breaking");
-			Break(acclBrake * power);
+			Break(power);
 			return;
 		}
 
-        Debug.Log(wheelColliders[0].motorTorque);
-
-        //Debug.Log ("Accelerate");
         wheelColliders[0].brakeTorque = 0;
         wheelColliders[1].brakeTorque = 0;
         wheelColliders[2].brakeTorque = 0;
@@ -236,7 +227,7 @@ public class CarController : MonoBehaviour
 
 		if ((XCI.GetAxis (XboxAxis.LeftTrigger, controller) > 0) & (XCI.GetAxis (XboxAxis.RightTrigger, controller) > 0))
         {
-			Break(acclBrake);
+			Break(power);
 		}
 		else if (XCI.GetAxis (XboxAxis.RightTrigger, controller) > 0)
         {
@@ -250,8 +241,21 @@ public class CarController : MonoBehaviour
         {
 			if (isGrounded)
 			{
-				playerBody.drag = declDrag;
-				playerBody.angularDrag = declDrag;
+				if (localVel.z > 7.5f)
+				{
+					playerBody.drag = declDrag;
+					playerBody.angularDrag = declDrag;
+				}
+				else if (localVel.z > 3.6f)
+				{
+					playerBody.drag = declDrag * 2;
+					playerBody.angularDrag = declDrag * 2;
+				}
+				else
+				{
+					playerBody.drag = declDrag * 4;
+					playerBody.angularDrag = declDrag * 4;
+				}
 			}
 			else
 			{
