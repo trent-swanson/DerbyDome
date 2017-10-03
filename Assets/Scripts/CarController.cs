@@ -241,20 +241,20 @@ public class CarController : MonoBehaviour
         {
 			if (isGrounded)
 			{
-				if (localVel.z > 7.5f)
+				if (localVel.z > 7.5f || localVel.z < -7.5f)
+				{
+					playerBody.drag = declDrag / 2;
+					playerBody.angularDrag = declDrag / 2;
+				}
+				else if (localVel.z > 3.6f || localVel.z < -3.6f)
 				{
 					playerBody.drag = declDrag;
 					playerBody.angularDrag = declDrag;
 				}
-				else if (localVel.z > 3.6f)
+				else
 				{
 					playerBody.drag = declDrag * 2;
 					playerBody.angularDrag = declDrag * 2;
-				}
-				else
-				{
-					playerBody.drag = declDrag * 4;
-					playerBody.angularDrag = declDrag * 4;
 				}
 			}
 			else
