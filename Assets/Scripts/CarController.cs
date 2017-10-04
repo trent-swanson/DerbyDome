@@ -16,7 +16,7 @@ public class CarController : MonoBehaviour
 	public float driftSteer = 35.0f;
 	public float acclDrag = 0.5f;
 	public float declDrag = 2f;
-    public float speedMultiplyer = 0.0f;
+    public float speedMultiplier = 0.0f;
 
 	//[HideInInspector]
 	public float power = 0.0f;
@@ -190,8 +190,8 @@ public class CarController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		power = XCI.GetAxis (XboxAxis.RightTrigger, controller) * (enginePower * speedMultiplyer) * Time.deltaTime;
-		reverse = XCI.GetAxis (XboxAxis.LeftTrigger, controller) * (enginePower * speedMultiplyer) * Time.deltaTime;
+		power = XCI.GetAxis (XboxAxis.RightTrigger, controller) * (enginePower * speedMultiplier) * Time.deltaTime;
+		reverse = XCI.GetAxis (XboxAxis.LeftTrigger, controller) * (enginePower * speedMultiplier) * Time.deltaTime;
 		localVel = playerBody.transform.InverseTransformDirection(playerBody.velocity);
 
 		//ground check

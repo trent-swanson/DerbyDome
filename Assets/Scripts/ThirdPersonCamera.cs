@@ -1,18 +1,23 @@
-using System;
+﻿using System;
 using UnityEngine;
 using XboxCtrlrInput;
 
-public class DriftCamera : MonoBehaviour
+
+// This script gets attached to the car. You dragndrop a camera into the "cam" slot.
+public class ThirdPersonCamera : MonoBehaviour
 {
     [Serializable]
     public class AdvancedOptions
     {
         public bool updateCameraInUpdate;
-        public bool updateCameraInFixedUpdate = true;
-        public bool updateCameraInLateUpdate;
-        //public KeyCode switchRightViewKey = KeyCode.RightArrow;
+        public bool updateCameraInFixedUpdate;
+        public bool updateCameraInLateUpdate = true;
         public KeyCode switchCentreViewKey = KeyCode.Space;
     }
+
+    [Space]
+
+    public Camera cam;
 
     // The point the camera looks at.
     // Technically, the camera object will LookAt() the pivotTarget which will then LookAt() the lookAtTarget().
@@ -20,13 +25,13 @@ public class DriftCamera : MonoBehaviour
     [HideInInspector]
     public Transform lookAtTarget;
 
-    
+
     public float smoothing = 6f; // How fast the camera lerps
 
     [Space]
 
-    // The cameras position. The camera sits here.
-    public Transform cameraPoint;
+    // The camera gets put here by default.
+    public Transform cameraDefaultPosition;
     // The pivot the camera looks at and rotates around. This is so that the camera is always centered around the car.
     public Transform cameraPivot;
     // The front of the car. This exists so that the camera can use this point as a default LookAt() target. 
@@ -58,7 +63,7 @@ public class DriftCamera : MonoBehaviour
     void Start()
     {
         // rotates the cameraDefaultPosition towards the pivot point.
-        cameraPoint.LookAt(cameraPivot);
+        cameraDefaultPosition.LookAt(cameraPivot);
     }
 
     private void FixedUpdate()
@@ -104,18 +109,18 @@ public class DriftCamera : MonoBehaviour
             // rotates cameraPivot to look at the centre of the map.
             cameraPivot.transform.LookAt(mapCentre);
 
-            TransitionCamera(cameraPoint);
-             
- 
+            TransitionCamera(cameraDefaultPosition);
+
+
         }
         else
         {
             // rotates cameraPivot to look at the front of the car.
             cameraPivot.transform.LookAt(carFront);
 
-            TransitionCamera(cameraPoint);
+            TransitionCamera(cameraDefaultPosition);
         }
 
-       
+
     }
 }
