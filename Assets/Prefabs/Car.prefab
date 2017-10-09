@@ -428,7 +428,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1447728911352810}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.4491367, y: -4.8654656, z: 4.753049}
+  m_LocalPosition: {x: -5.58, y: 0.037, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4244201590319120}
@@ -461,7 +461,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1724671427633122}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.85, y: 0.4, z: -1.201}
+  m_LocalPosition: {x: 0.85, y: 0.452, z: -1.237}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4419957902812238}
@@ -502,7 +502,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1310266158135710}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.85, y: 0.4, z: 1.345}
+  m_LocalPosition: {x: 0.85, y: 0.44, z: 1.345}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4419957902812238}
@@ -528,7 +528,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1246835830751288}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.85, y: 0.4, z: 1.345}
+  m_LocalPosition: {x: -0.85, y: 0.445, z: 1.345}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4419957902812238}
@@ -567,7 +567,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1448101016604156}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.85, y: 0.4, z: -1.201}
+  m_LocalPosition: {x: -0.85, y: 0.458, z: -1.235}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4419957902812238}
@@ -1150,8 +1150,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.7697662, y: 0.86, z: 4.315563}
-  m_Center: {x: 0, y: 0.61364466, z: 0.009460688}
+  m_Size: {x: 1.7697662, y: 1, z: 4.315563}
+  m_Center: {x: 0, y: 0.7, z: 0.009460688}
 --- !u!65 &65982999019998268
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1183,7 +1183,7 @@ MonoBehaviour:
   driftSteer: 25
   acclDrag: 0.1
   declDrag: 1.2
-  speedMultiplier: 1
+  speedMultiplier: 1e+20
   power: 0
   reverse: 0
   steer: 0
@@ -1237,11 +1237,11 @@ WheelCollider:
   m_Center: {x: 0, y: 0, z: 0}
   m_Radius: 0.315
   m_SuspensionSpring:
-    spring: 35657.72
-    damper: 5705.2354
+    spring: 36190.715
+    damper: 5790.5146
     targetPosition: 0.5
   m_SuspensionDistance: 0.19620001
-  m_ForceAppPointDistance: 0.4986445
+  m_ForceAppPointDistance: 0.54499996
   m_Mass: 10
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
@@ -1266,11 +1266,11 @@ WheelCollider:
   m_Center: {x: 0, y: 0, z: 0}
   m_Radius: 0.315
   m_SuspensionSpring:
-    spring: 39342.31
-    damper: 6294.769
+    spring: 38809.28
+    damper: 6209.4854
     targetPosition: 0.5
   m_SuspensionDistance: 0.1962
-  m_ForceAppPointDistance: 0.4986445
+  m_ForceAppPointDistance: 0.533
   m_Mass: 10
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
@@ -1295,11 +1295,11 @@ WheelCollider:
   m_Center: {x: 0, y: 0, z: 0}
   m_Radius: 0.315
   m_SuspensionSpring:
-    spring: 39342.28
-    damper: 6294.765
+    spring: 38808.266
+    damper: 6209.3228
     targetPosition: 0.5
   m_SuspensionDistance: 0.19620001
-  m_ForceAppPointDistance: 0.4986445
+  m_ForceAppPointDistance: 0.52699995
   m_Mass: 10
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
@@ -1324,11 +1324,11 @@ WheelCollider:
   m_Center: {x: 0, y: 0, z: 0}
   m_Radius: 0.315
   m_SuspensionSpring:
-    spring: 35657.695
-    damper: 5705.2314
+    spring: 36191.73
+    damper: 5790.677
     targetPosition: 0.5
-  m_SuspensionDistance: 0.19620001
-  m_ForceAppPointDistance: 0.4986445
+  m_SuspensionDistance: 0.1962
+  m_ForceAppPointDistance: 0.53999996
   m_Mass: 10
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
