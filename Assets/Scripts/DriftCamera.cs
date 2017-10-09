@@ -4,7 +4,9 @@ using XboxCtrlrInput;
 
 public class DriftCamera : MonoBehaviour
 {
+    public XboxController controller;
     [Serializable]
+
     public class AdvancedOptions
     {
         public bool updateCameraInUpdate;
@@ -103,7 +105,7 @@ public class DriftCamera : MonoBehaviour
         if (Input.GetKeyDown(advancedOptions.switchCentreViewKey))
             showingCentreView = !showingCentreView;
 
-        if (XCI.GetButtonDown(XboxButton.Y))
+        if (XCI.GetButtonDown(XboxButton.Y, controller))
             showingCentreView = !showingCentreView;
 
         if (advancedOptions.updateCameraInUpdate)
