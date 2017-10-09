@@ -8,16 +8,11 @@ public class DriftCamera : MonoBehaviour
     public class AdvancedOptions
     {
         public bool updateCameraInUpdate;
-        public bool updateCameraInFixedUpdate = true;
-        public bool updateCameraInLateUpdate;
+        public bool updateCameraInFixedUpdate;
+        public bool updateCameraInLateUpdate = true;
         //public KeyCode switchRightViewKey = KeyCode.RightArrow;
         public KeyCode switchCentreViewKey = KeyCode.Space;
     }
-    
-    [Space]
-
-    public float smoothing = 6f; // How fast the camera lerps
-
     [Space]
 
     // The cameras desired position. It should follow this point around smoothly. 
@@ -47,15 +42,15 @@ public class DriftCamera : MonoBehaviour
 
     [Space]
 
-    public float currentX = 0.0f;
-    public float currentY = 0.0f;
-
-
-
-    public void ManualControl()
-    {
-
-    }
+    public float mouseX = 0.0f;
+    public float mouseY = 0.0f;
+    public float ctrlX = 0.0f; 
+    public float ctrlY = 0.0f;
+    public float finalInputX = 0.0f;
+    public float finalInputY = 0.0f;
+    public float clampAngle = 80.0f;
+    public float inputSensitivity = 150.0f;
+    public float smoothing = 6f; // How fast the camera lerps
 
     // Smoothly transitions from normal view to centre view. The smoothing causes the camera to lag behind the player though.
     public void ViewCentre()
@@ -92,6 +87,17 @@ public class DriftCamera : MonoBehaviour
 
     private void Update()
     {
+        mouseX = Input.GetAxis("Mouse X");
+        mouseY = Input.GetAxis("Mouse Y");
+        ctrlX = XCI.GetAxis(XboxAxis.RightStickX);
+        ctrlY = XCI.GetAxis(XboxAxis.RightStickY);
+        finalInputX = mouseX + ctrlX;
+        finalInputY = mouseY + ctrlY;
+        //Debug.Log("\nfinalInputX: ");
+        //Debug.Log(finalInputX);
+        // Debug.Log("\nfinalInputY: ");
+        //Debug.Log(finalInputY);
+
         //if (Input.GetKeyDown(advancedOptions.switchRightViewKey))
         //    m_ShowingRightSideView = !m_ShowingRightSideView;
         if (Input.GetKeyDown(advancedOptions.switchCentreViewKey))
@@ -123,8 +129,10 @@ public class DriftCamera : MonoBehaviour
             ViewFront();
         }
 
-        currentX += Input.GetAxis("Mouse X");
-        currentY += Input.GetAxis("Mouse Y");
+       
+        transform.LookAt(cameraPivot);
+        cameraPivot.transform.Rotate(-finalInputY, finalInputX, 0);
+        
 
         //Quaternion targetRotation = Quaternion.Euler(currentY, currentX, 0);
 
