@@ -131,7 +131,7 @@ public class DriftCamera : MonoBehaviour
 
        
         transform.LookAt(cameraPivot);
-        cameraPivot.transform.Rotate(-finalInputY, finalInputX, 0);
+        cameraPivot.Rotate(-finalInputY, finalInputX, 0);
         
 
         //Quaternion targetRotation = Quaternion.Euler(currentY, currentX, 0);
