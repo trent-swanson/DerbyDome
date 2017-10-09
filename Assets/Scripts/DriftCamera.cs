@@ -81,6 +81,7 @@ public class DriftCamera : MonoBehaviour
 
     void Start()
     {
+        inputSensitivity = 2.0f;
 
     }
 
