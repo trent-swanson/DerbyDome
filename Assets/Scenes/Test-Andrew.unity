@@ -360,11 +360,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4106655646465998, guid: 92c3a5f690e4b694a9a1d6fe78d9daee,
     type: 2}
   m_PrefabInternal: {fileID: 135564892}
---- !u!4 &243775896 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4315479390513690, guid: 78bebe2a138ea09479e1ba7f95688176,
-    type: 2}
-  m_PrefabInternal: {fileID: 1760655249}
 --- !u!1001 &376941713
 Prefab:
   m_ObjectHideFlags: 0
@@ -929,112 +924,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4958703661076546, guid: 4b533123e3941774ebbd4318157df3fd,
     type: 2}
   m_PrefabInternal: {fileID: 927439650}
---- !u!1001 &992465490
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4419957902812238, guid: 78bebe2a138ea09479e1ba7f95688176, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -5.58
-      objectReference: {fileID: 0}
-    - target: {fileID: 4419957902812238, guid: 78bebe2a138ea09479e1ba7f95688176, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4419957902812238, guid: 78bebe2a138ea09479e1ba7f95688176, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4419957902812238, guid: 78bebe2a138ea09479e1ba7f95688176, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4419957902812238, guid: 78bebe2a138ea09479e1ba7f95688176, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4419957902812238, guid: 78bebe2a138ea09479e1ba7f95688176, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4419957902812238, guid: 78bebe2a138ea09479e1ba7f95688176, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4419957902812238, guid: 78bebe2a138ea09479e1ba7f95688176, type: 2}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1447728911352810, guid: 78bebe2a138ea09479e1ba7f95688176, type: 2}
-      propertyPath: m_Name
-      value: Car (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 146870315461883774, guid: 78bebe2a138ea09479e1ba7f95688176,
-        type: 2}
-      propertyPath: m_SuspensionSpring.damper
-      value: 5705.2354
-      objectReference: {fileID: 0}
-    - target: {fileID: 146870315461883774, guid: 78bebe2a138ea09479e1ba7f95688176,
-        type: 2}
-      propertyPath: m_SuspensionDistance
-      value: 0.1962
-      objectReference: {fileID: 0}
-    - target: {fileID: 146660366324121134, guid: 78bebe2a138ea09479e1ba7f95688176,
-        type: 2}
-      propertyPath: m_SuspensionDistance
-      value: 0.1962
-      objectReference: {fileID: 0}
-    - target: {fileID: 146851453241511178, guid: 78bebe2a138ea09479e1ba7f95688176,
-        type: 2}
-      propertyPath: m_SuspensionDistance
-      value: 0.1962
-      objectReference: {fileID: 0}
-    - target: {fileID: 146032426953643498, guid: 78bebe2a138ea09479e1ba7f95688176,
-        type: 2}
-      propertyPath: m_SuspensionSpring.damper
-      value: 5705.2354
-      objectReference: {fileID: 0}
-    - target: {fileID: 146032426953643498, guid: 78bebe2a138ea09479e1ba7f95688176,
-        type: 2}
-      propertyPath: m_SuspensionDistance
-      value: 0.1962
-      objectReference: {fileID: 0}
-    - target: {fileID: 146870315461883774, guid: 78bebe2a138ea09479e1ba7f95688176,
-        type: 2}
-      propertyPath: m_SuspensionSpring.spring
-      value: 35657.72
-      objectReference: {fileID: 0}
-    - target: {fileID: 146660366324121134, guid: 78bebe2a138ea09479e1ba7f95688176,
-        type: 2}
-      propertyPath: m_SuspensionSpring.spring
-      value: 39342.28
-      objectReference: {fileID: 0}
-    - target: {fileID: 146660366324121134, guid: 78bebe2a138ea09479e1ba7f95688176,
-        type: 2}
-      propertyPath: m_SuspensionSpring.damper
-      value: 6294.765
-      objectReference: {fileID: 0}
-    - target: {fileID: 146851453241511178, guid: 78bebe2a138ea09479e1ba7f95688176,
-        type: 2}
-      propertyPath: m_SuspensionSpring.spring
-      value: 39342.28
-      objectReference: {fileID: 0}
-    - target: {fileID: 146851453241511178, guid: 78bebe2a138ea09479e1ba7f95688176,
-        type: 2}
-      propertyPath: m_SuspensionSpring.damper
-      value: 6294.765
-      objectReference: {fileID: 0}
-    - target: {fileID: 146032426953643498, guid: 78bebe2a138ea09479e1ba7f95688176,
-        type: 2}
-      propertyPath: m_SuspensionSpring.spring
-      value: 35657.72
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 78bebe2a138ea09479e1ba7f95688176, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1001 &998196586
 Prefab:
   m_ObjectHideFlags: 0
@@ -2401,6 +2290,21 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: af8935f46ac1d7c4b826c31ee6e39637, type: 2}
+    - target: {fileID: 146851453241511178, guid: 78bebe2a138ea09479e1ba7f95688176,
+        type: 2}
+      propertyPath: m_ForceAppPointDistance
+      value: 0.527
+      objectReference: {fileID: 0}
+    - target: {fileID: 146032426953643498, guid: 78bebe2a138ea09479e1ba7f95688176,
+        type: 2}
+      propertyPath: m_ForceAppPointDistance
+      value: 0.545
+      objectReference: {fileID: 0}
+    - target: {fileID: 146870315461883774, guid: 78bebe2a138ea09479e1ba7f95688176,
+        type: 2}
+      propertyPath: m_ForceAppPointDistance
+      value: 0.54
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 78bebe2a138ea09479e1ba7f95688176, type: 2}
   m_IsPrefabParent: 0
@@ -2508,7 +2412,7 @@ MonoBehaviour:
   controller: 0
   cameraDesiredPosition: {fileID: 1711932872}
   cameraFocus: {fileID: 1681769837}
-  cameraPivot: {fileID: 243775896}
+  cameraPivot: {fileID: 1681769837}
   carFront: {fileID: 1142806060}
   mapCentre: {fileID: 1968895757}
   advancedOptions:

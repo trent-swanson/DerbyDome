@@ -9,29 +9,24 @@ public class DriftCamera : MonoBehaviour
 
     public class AdvancedOptions
     {
-        public bool updateCameraInUpdate;
-        public bool updateCameraInFixedUpdate;
-        public bool updateCameraInLateUpdate = true;
-        //public KeyCode switchRightViewKey = KeyCode.RightArrow;
+        public bool isInUpdate = false;
+        public bool isInFixedUpdate = true;
+        public bool isInLateUpdate = false;
         public KeyCode switchCentreViewKey = KeyCode.Space;
     }
     [Space]
 
-    // The cameras desired position. It should follow this point around smoothly. 
+    // The cameras desired position. It should follow this point around smoothly.
     public Transform cameraDesiredPosition;
-    // cameraFocus looks at carFrontFocusPoint or the center of the map, only rotates on Y axis.
-    public Transform cameraFocus;
-    // cameraPivot rotates on player input.
+    // cameraPivot is what the camera looks at. rotates on player input.
     public Transform cameraPivot;
-    // The front of the car. This exists so that the pivot can use this point as a default LookAt() target. 
+    // The front of the car. This exists so that the pivot can use this point as a default LookAt() target.
     // By default the pivot is aimed here.
     public Transform carFront;
     // The centre of the map. The camera can be toggled to look at this.
     // This causes the pivotTarget to LookAt() the centre of the map.
     public Transform mapCentre;
-    //// If the player wants to look at the side of their car they can.
-    //// The camera will shift its position and rotation to match this transform.
-    //public Transform sideView;
+
 
     [Space]
 
@@ -39,14 +34,13 @@ public class DriftCamera : MonoBehaviour
 
     [Space]
 
-    //bool m_ShowingRightSideView;
     public bool showingCentreView = false;
 
     [Space]
 
     public float mouseX = 0.0f;
     public float mouseY = 0.0f;
-    public float ctrlX = 0.0f; 
+    public float ctrlX = 0.0f;
     public float ctrlY = 0.0f;
     public float finalInputX = 0.0f;
     public float finalInputY = 0.0f;
@@ -61,7 +55,7 @@ public class DriftCamera : MonoBehaviour
     public void ViewFront()
     {
         // rotates cameraPivot to look at the front of the car.
-          cameraPivot.transform.LookAt(carFront);
+        cameraPivot.transform.LookAt(carFront);
 
         // rotates and moves the camera. Smoothly lerps between the cameras current transform to the desired transform.
         transform.position = Vector3.Lerp(transform.position, cameraDesiredPosition.position, Time.deltaTime * smoothing);
@@ -87,18 +81,13 @@ public class DriftCamera : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (advancedOptions.updateCameraInFixedUpdate)
-            UpdateCamera();
+        if (advancedOptions.isInFixedUpdate)
+        { UpdateCamera(); }
     }
 
     private void Update()
     {
-        mouseX = Input.GetAxis("Mouse X");
-        mouseY = Input.GetAxis("Mouse Y");
-        ctrlX = XCI.GetAxis(XboxAxis.RightStickX, controller);
-        ctrlY = XCI.GetAxis(XboxAxis.RightStickY, controller);
-        finalInputX = (mouseX + ctrlX) * inputSensitivity;
-        finalInputY = (mouseY + ctrlY) * inputSensitivity;
+        
         /*Debug.Log("\nfinalInputX: ");
         Debug.Log(finalInputX);
         Debug.Log("\nfinalInputY: ");
@@ -112,15 +101,15 @@ public class DriftCamera : MonoBehaviour
 
         if (XCI.GetButtonDown(XboxButton.Y, controller))
             showingCentreView = !showingCentreView;
-        UpdateCamera();
-        //if (advancedOptions.updateCameraInUpdate)
-        //    UpdateCamera();
+        //UpdateCamera();
+        if (advancedOptions.isInUpdate)
+        { UpdateCamera(); }
     }
 
     private void LateUpdate()
     {
-        if (advancedOptions.updateCameraInLateUpdate)
-            UpdateCamera();
+        if (advancedOptions.isInLateUpdate)
+        { UpdateCamera(); }
     }
 
     private void UpdateCamera()
@@ -136,9 +125,16 @@ public class DriftCamera : MonoBehaviour
             ViewFront();
         }*/
 
+        mouseX = Input.GetAxis("Mouse X");
+        mouseY = Input.GetAxis("Mouse Y");
+        ctrlX = XCI.GetAxis(XboxAxis.RightStickX, controller);
+        ctrlY = XCI.GetAxis(XboxAxis.RightStickY, controller);
+        finalInputX = (mouseX + ctrlX) * inputSensitivity;
+        finalInputY = (mouseY + ctrlY) * inputSensitivity;
+
         // Preserves orientation.
         transform.LookAt(cameraPivot);
-        
+
         cameraPivot.Rotate(-finalInputY, finalInputX, 0);
 
         transform.position = Vector3.Lerp(transform.position, cameraDesiredPosition.position, Time.deltaTime * smoothing);
