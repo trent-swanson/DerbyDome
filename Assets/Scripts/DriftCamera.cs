@@ -61,7 +61,7 @@ public class DriftCamera : MonoBehaviour
     public void ViewFront()
     {
         // rotates cameraPivot to look at the front of the car.
-          cameraFocus.transform.LookAt(carFront);
+          cameraPivot.transform.LookAt(carFront);
 
         // rotates and moves the camera. Smoothly lerps between the cameras current transform to the desired transform.
         transform.position = Vector3.Lerp(transform.position, cameraDesiredPosition.position, Time.deltaTime * smoothing);
@@ -71,7 +71,7 @@ public class DriftCamera : MonoBehaviour
     public void ViewCentre()
     {
         // rotates cameraPivot to look at the centre of the map.
-        cameraFocus.transform.LookAt(mapCentre);
+        cameraPivot.transform.LookAt(mapCentre);
 
         // rotates and moves the camera. Smoothly lerps between the cameras current transform to the desired transform.
         transform.position = Vector3.Lerp(transform.position, cameraDesiredPosition.position, Time.deltaTime * smoothing);
@@ -95,8 +95,8 @@ public class DriftCamera : MonoBehaviour
     {
         mouseX = Input.GetAxis("Mouse X");
         mouseY = Input.GetAxis("Mouse Y");
-        ctrlX = XCI.GetAxis(XboxAxis.RightStickX);
-        ctrlY = XCI.GetAxis(XboxAxis.RightStickY);
+        ctrlX = XCI.GetAxis(XboxAxis.RightStickX, controller);
+        ctrlY = XCI.GetAxis(XboxAxis.RightStickY, controller);
         finalInputX = (mouseX + ctrlX) * inputSensitivity;
         finalInputY = (mouseY + ctrlY) * inputSensitivity;
         /*Debug.Log("\nfinalInputX: ");
