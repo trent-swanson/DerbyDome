@@ -70,7 +70,7 @@ public class CarController : MonoBehaviour
     {
 		if (isGrounded)
 		{
-			playerBody.drag = acclDrag;
+            playerBody.drag = acclDrag;
 			playerBody.angularDrag = acclDrag;
 		}
 		else
@@ -79,7 +79,7 @@ public class CarController : MonoBehaviour
 			playerBody.angularDrag = 0;	
 		}
 
-		if (localVel.z > 0)
+		if (localVel.z > 0.01f)
 		{
 			Break(reverse);
 			return;
@@ -99,7 +99,7 @@ public class CarController : MonoBehaviour
     private void Drift()
     {
         //Drift Steering
-        if (XCI.GetButton(XboxButton.X))
+        if (XCI.GetButton(XboxButton.X, controller))
         {
             driftbool = true;
             steer = 0;
@@ -123,6 +123,7 @@ public class CarController : MonoBehaviour
         {
             driftbool = false;
             steer = 0;
+
             steer = XCI.GetAxis(XboxAxis.LeftStickX, controller) * maxSteer;
             wheelColliders[1].steerAngle = 0;
             wheelColliders[2].steerAngle = 0;
@@ -147,13 +148,14 @@ public class CarController : MonoBehaviour
 			playerBody.drag = acclDrag;
 			playerBody.angularDrag = acclDrag;
 		}
+
 		else
 		{
 			playerBody.drag = 0;
 			playerBody.angularDrag = 0;	
 		}
 
-		if (localVel.z < 0)
+		if (localVel.z < -0.01f)
 		{
 			Break(power);
 			return;
@@ -167,7 +169,8 @@ public class CarController : MonoBehaviour
         //toggle drift mode
         //if (driftbool == true)
         //{
-            //back 
+        //back 
+        Debug.Log(power);
             wheelColliders[1].motorTorque = power;
             wheelColliders[2].motorTorque = power;
             //front
@@ -198,12 +201,14 @@ public class CarController : MonoBehaviour
 		RaycastHit hit;
 		Ray groundCheck = new Ray(transform.position, Vector3.down);
 		Debug.DrawRay(transform.position, Vector3.down * 0.3f, Color.red);
+
 		if (Physics.Raycast(groundCheck, out hit, 0.3f))
 		{
 			if (hit.collider.tag == "Ground")
 			{
 				isGrounded = true;
 			}
+
 			else
 			{
 				isGrounded = false;
@@ -225,18 +230,21 @@ public class CarController : MonoBehaviour
         //Allows for drift mode
         Drift();
 
-		if ((XCI.GetAxis (XboxAxis.LeftTrigger, controller) > 0) & (XCI.GetAxis (XboxAxis.RightTrigger, controller) > 0))
+        if ((XCI.GetAxis (XboxAxis.LeftTrigger, controller) > 0) & (XCI.GetAxis (XboxAxis.RightTrigger, controller) > 0))
         {
 			Break(power);
 		}
+
 		else if (XCI.GetAxis (XboxAxis.RightTrigger, controller) > 0)
         {
 			Accelerate();
 		}
+
 		else if (XCI.GetAxis (XboxAxis.LeftTrigger, controller) > 0)
         {
 			Reverse();
 		}
+
         else
         {
 			if (isGrounded)
@@ -246,17 +254,20 @@ public class CarController : MonoBehaviour
 					playerBody.drag = declDrag / 2;
 					playerBody.angularDrag = declDrag / 2;
 				}
+
 				else if (localVel.z > 3.6f || localVel.z < -3.6f)
 				{
-					playerBody.drag = declDrag;
-					playerBody.angularDrag = declDrag;
-				}
+                    playerBody.drag = declDrag;
+                    playerBody.angularDrag = declDrag;
+                }
+
 				else
 				{
 					playerBody.drag = declDrag * 2;
 					playerBody.angularDrag = declDrag * 2;
 				}
 			}
+
 			else
 			{
 				playerBody.drag = 0;
