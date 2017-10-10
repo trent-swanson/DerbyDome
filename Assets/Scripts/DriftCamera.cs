@@ -51,6 +51,10 @@ public class DriftCamera : MonoBehaviour
     public float inputSensitivity = 2.0f;
     public float smoothing = 6f; // How fast the camera lerps
 
+    private float rotX = 0.0f;
+    private float rotY = 0.0f;
+
+
     // Smoothly transitions from centre view to normal view. The smoothing causes the camera to lag behind the player though.
     public void ViewFront()
     {
@@ -76,6 +80,9 @@ public class DriftCamera : MonoBehaviour
     void Start()
     {
         inputSensitivity = 2.0f;
+        Vector3 rot = transform.localRotation.eulerAngles;
+        rotX = rot.x;
+        rotY = rot.y;
 
     }
 
@@ -87,7 +94,7 @@ public class DriftCamera : MonoBehaviour
 
     private void Update()
     {
-        
+
         /*Debug.Log("\nfinalInputX: ");
         Debug.Log(finalInputX);
         Debug.Log("\nfinalInputY: ");
@@ -131,6 +138,7 @@ public class DriftCamera : MonoBehaviour
         ctrlY = XCI.GetAxis(XboxAxis.RightStickY, controller);
         finalInputX = (mouseX + ctrlX) * inputSensitivity;
         finalInputY = (mouseY + ctrlY) * inputSensitivity;
+        //Mathf.Clamp(transform.rotation.y, minClampY, maxClampY);
 
         // Preserves orientation.
         transform.LookAt(cameraPivot);
@@ -139,6 +147,11 @@ public class DriftCamera : MonoBehaviour
 
         transform.position = Vector3.Lerp(transform.position, cameraDesiredPosition.position, Time.deltaTime * smoothing);
         transform.rotation = Quaternion.Slerp(transform.rotation, cameraDesiredPosition.rotation, Time.deltaTime * smoothing);
+
+        //if (transform.position.y >= 4.5f) { transform.position.Set(transform.position.x, 4.5f, transform.position.z); }
+        //if (transform.position.y <= 0.2f) { transform.position.Set(transform.position.x, 0.2f, transform.position.z); }
+        //transform.rotation.Set(transform.rotation.x, transform.rotation.y, 0.0f, transform.rotation.w);
+
 
 
         //Quaternion targetRotation = Quaternion.Euler(currentY, currentX, 0);
