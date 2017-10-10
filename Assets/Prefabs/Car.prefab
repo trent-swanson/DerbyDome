@@ -1176,7 +1176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: 1
-  enginePower: 10000000
+  enginePower: 250000
   MaxFWVelocity: 18
   MaxBWVelocity: 10
   maxSteer: 60
@@ -1184,6 +1184,8 @@ MonoBehaviour:
   acclDrag: 0.1
   declDrag: 1.2
   speedMultiplier: 1
+  vibrationIntensity: 0.08
+  vibrationThreshold: 3.5
   power: 0
   reverse: 0
   steer: 0
