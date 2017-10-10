@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using XboxCtrlrInput;
+using XInputDotNetPure;
 
 public class CarController : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class CarController : MonoBehaviour
 	public float acclDrag = 0.5f;
 	public float declDrag = 2f;
     public float speedMultiplier = 0.0f;
+    public float vibrationIntensity = 0.3f;
+    public float vibrationThreshold = 3.5f;
 
 	//[HideInInspector] commented out to debug
 	public float power = 0.0f;
@@ -40,7 +43,7 @@ public class CarController : MonoBehaviour
     void Start()
     {
 		playerBody = transform.GetComponent<Rigidbody>();
-		playerBody.centerOfMass = new Vector3(0.0f, -0.5f, 0.3f);        
+		playerBody.centerOfMass = new Vector3(0.0f, -0.5f, 0.3f);
     }
 
 	private void Break(float breakValue)
@@ -161,12 +164,25 @@ public class CarController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		power = XCI.GetAxis (XboxAxis.RightTrigger, controller) * (enginePower * speedMultiplier) * Time.deltaTime;
+        power = XCI.GetAxis (XboxAxis.RightTrigger, controller) * (enginePower * speedMultiplier) * Time.deltaTime;
 		reverse = XCI.GetAxis (XboxAxis.LeftTrigger, controller) * (enginePower * speedMultiplier) * Time.deltaTime;
 		localVel = playerBody.transform.InverseTransformDirection(playerBody.velocity);
+        int player;
 
-		//ground check
-		RaycastHit hit;
+        //Sets up controller numbers to ensure that vibration is applied to the correct controller
+        if (controller == XboxController.First)
+            player = 1;
+        else if (controller == XboxController.Second)
+            player = 2;
+        else if (controller == XboxController.Third)
+            player = 3;
+        else if (controller == XboxController.Fourth)
+            player = 4;
+        else
+            player = 0;
+
+        //ground check
+        RaycastHit hit;
 		Ray groundCheck = new Ray(transform.position, Vector3.down);
 		Debug.DrawRay(transform.position, Vector3.down * 0.3f, Color.red);
 
@@ -201,24 +217,44 @@ public class CarController : MonoBehaviour
         if ((XCI.GetAxis (XboxAxis.LeftTrigger, controller) > 0) & (XCI.GetAxis (XboxAxis.RightTrigger, controller) > 0))
         {
 			Break(power);
-		}
+            //Sets vibration
+            Vibration(player, vibrationIntensity, vibrationIntensity);
+        }
 
 		else if (XCI.GetAxis (XboxAxis.RightTrigger, controller) > 0)
         {
 			Accelerate();
-		}
+            //Sets vibration
+            Vibration(player, vibrationIntensity, vibrationIntensity);
+        }
 
 		else if (XCI.GetAxis (XboxAxis.LeftTrigger, controller) > 0)
         {
-            if (localVel.z > 0)
+            if (localVel.z > 8)
+            {
                 Break(power);
+                //Sets vibration
+                Vibration(player, vibrationIntensity, vibrationIntensity);
+            }
+
             else
+            {
                 Reverse();
+                //Sets vibration
+                Vibration(player, vibrationIntensity, vibrationIntensity);
+            }
+
 		}
 
         else
         {
-			if (isGrounded)
+            //Removes vibration to ensure players that are not moving are not vibrating if they are below the threshold
+            if (localVel.z > vibrationThreshold || localVel.z < -vibrationThreshold)
+                Vibration(player, vibrationIntensity, vibrationIntensity);
+            else if (localVel.z <= vibrationThreshold || localVel.z >= -vibrationThreshold)
+                Vibration(player, 0.0f, 0.0f);
+
+            if (isGrounded)
 			{
 				if (localVel.z > 8f || localVel.z < -8f)
 				{
@@ -250,5 +286,24 @@ public class CarController : MonoBehaviour
             wheelColliders[2].motorTorque = 0;
             wheelColliders[3].motorTorque = 0;
         }
+
+        
+    }
+    void Vibration(int playerNum, float left, float right)
+    {
+        //Sets the vibration if player one is the active player in the update function
+        if (playerNum == 1)
+            GamePad.SetVibration(PlayerIndex.One, left, right);
+        //Sets the vibration if player two is the active player in the update function
+        else if (playerNum == 2)
+            GamePad.SetVibration(PlayerIndex.Two, left, right);
+        //Sets the vibration if player three is the active player in the update function
+        else if (playerNum == 3)
+            GamePad.SetVibration(PlayerIndex.Three, left, right);
+        //Sets the vibration if player four is the active player in the update function
+        else if (playerNum == 4)
+            GamePad.SetVibration(PlayerIndex.Four, left, right);
+        else
+            return;
     }
 }
