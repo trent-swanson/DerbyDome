@@ -125,8 +125,8 @@ public class DriftCamera : MonoBehaviour
             ViewFront();
         }*/
 
-        mouseX = Input.GetAxis("Mouse X");
-        mouseY = Input.GetAxis("Mouse Y");
+        //mouseX = Input.GetAxis("Mouse X");
+        //mouseY = Input.GetAxis("Mouse Y");
         ctrlX = XCI.GetAxis(XboxAxis.RightStickX, controller);
         ctrlY = XCI.GetAxis(XboxAxis.RightStickY, controller);
         finalInputX = (mouseX + ctrlX) * inputSensitivity;
