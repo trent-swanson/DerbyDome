@@ -18,7 +18,7 @@ public class CarController : MonoBehaviour
 	public float declDrag = 2f;
     public float speedMultiplier = 0.0f;
 
-	//[HideInInspector]
+	//[HideInInspector] commented out to debug
 	public float power = 0.0f;
 	[HideInInspector]
 	public float reverse = 0.0f;
@@ -108,15 +108,6 @@ public class CarController : MonoBehaviour
             wheelColliders[2].steerAngle = steer;
             wheelColliders[0].steerAngle = 0;
             wheelColliders[3].steerAngle = 0;
-
-			//wheelColliders [0].forwardFriction.stiffness = 1;
-			//wheelColliders [0].sidewaysFriction.stiffness = 1;
-			//wheelColliders [1].forwardFriction.stiffness = 1;
-			//wheelColliders [1].sidewaysFriction.stiffness = 1;
-			//wheelColliders [2].forwardFriction.stiffness = 1;
-			//wheelColliders [2].sidewaysFriction.stiffness = 1;
-			//wheelColliders [3].forwardFriction.stiffness = 1;
-			//wheelColliders [3].sidewaysFriction.stiffness = 1;
         }
 
         else
@@ -129,15 +120,6 @@ public class CarController : MonoBehaviour
             wheelColliders[2].steerAngle = 0;
             wheelColliders[0].steerAngle = steer;
             wheelColliders[3].steerAngle = steer;
-
-			//wheelColliders [0].forwardFriction.stiffness = 3;
-			//wheelColliders [0].sidewaysFriction.stiffness = 1.5f;
-			//wheelColliders [1].forwardFriction.stiffness = 3;
-			//wheelColliders [1].sidewaysFriction.stiffness = 1.5f;
-			//wheelColliders [2].forwardFriction.stiffness = 3;
-			//wheelColliders [2].sidewaysFriction.stiffness = 1.5f;
-			//wheelColliders [3].forwardFriction.stiffness = 3;
-			//wheelColliders [3].sidewaysFriction.stiffness = 1.5f;
         }
     }
 
@@ -166,27 +148,12 @@ public class CarController : MonoBehaviour
         wheelColliders[2].brakeTorque = 0;
         wheelColliders[3].brakeTorque = 0;
 
-        //toggle drift mode
-        //if (driftbool == true)
-        //{
-        //back 
         Debug.Log(power);
             wheelColliders[1].motorTorque = power;
             wheelColliders[2].motorTorque = power;
             //front
             wheelColliders[0].motorTorque = 0;
             wheelColliders[3].motorTorque = 0;
-        //}
-
-        //else
-        //{
-        //    //front
-        //    wheelColliders[0].motorTorque = power;
-        //    wheelColliders[3].motorTorque = power;
-        //    //back
-        //    wheelColliders[1].motorTorque = 0;
-        //    wheelColliders[2].motorTorque = 0;
-        //}
     }
 
 
