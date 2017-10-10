@@ -427,8 +427,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1447728911352810}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.58, y: 0.037, z: 0}
+  m_LocalRotation: {x: -0.002838186, y: 0.9352256, z: 0.0070401523, w: 0.3539709}
+  m_LocalPosition: {x: -49.063625, y: -5.1558995, z: 36.66102}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4244201590319120}
@@ -439,7 +439,7 @@ Transform:
   - {fileID: 4497136619127914}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.87000006, y: 138.53801, z: -0.019000001}
 --- !u!4 &4464877040151280
 Transform:
   m_ObjectHideFlags: 1
@@ -714,7 +714,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 5d014f70abf28c34da36ef503c7cde5c, type: 2}
+  - {fileID: 2100000, guid: 5edb3f2783648994192d0ced341d5e88, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1055,7 +1055,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &65144899577921122
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1176,14 +1176,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: 1
-  enginePower: 1000000
-  MaxFWVelocity: 20
+  enginePower: 10000000
+  MaxFWVelocity: 18
   MaxBWVelocity: 10
   maxSteer: 60
   driftSteer: 25
   acclDrag: 0.1
   declDrag: 1.2
-  speedMultiplier: 1e+20
+  speedMultiplier: 1
   power: 0
   reverse: 0
   steer: 0
@@ -1237,11 +1237,11 @@ WheelCollider:
   m_Center: {x: 0, y: 0, z: 0}
   m_Radius: 0.315
   m_SuspensionSpring:
-    spring: 36190.715
-    damper: 5790.5146
+    spring: 36190.81
+    damper: 5790.529
     targetPosition: 0.5
-  m_SuspensionDistance: 0.19620001
-  m_ForceAppPointDistance: 0.54499996
+  m_SuspensionDistance: 0.19619998
+  m_ForceAppPointDistance: 0.54499966
   m_Mass: 10
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
@@ -1266,11 +1266,11 @@ WheelCollider:
   m_Center: {x: 0, y: 0, z: 0}
   m_Radius: 0.315
   m_SuspensionSpring:
-    spring: 38809.28
-    damper: 6209.4854
+    spring: 38809.332
+    damper: 6209.4937
     targetPosition: 0.5
-  m_SuspensionDistance: 0.1962
-  m_ForceAppPointDistance: 0.533
+  m_SuspensionDistance: 0.19620001
+  m_ForceAppPointDistance: 0.5330001
   m_Mass: 10
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
@@ -1295,11 +1295,11 @@ WheelCollider:
   m_Center: {x: 0, y: 0, z: 0}
   m_Radius: 0.315
   m_SuspensionSpring:
-    spring: 38808.266
-    damper: 6209.3228
+    spring: 38808.176
+    damper: 6209.308
     targetPosition: 0.5
-  m_SuspensionDistance: 0.19620001
-  m_ForceAppPointDistance: 0.52699995
+  m_SuspensionDistance: 0.19620003
+  m_ForceAppPointDistance: 0.52699983
   m_Mass: 10
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
@@ -1324,11 +1324,11 @@ WheelCollider:
   m_Center: {x: 0, y: 0, z: 0}
   m_Radius: 0.315
   m_SuspensionSpring:
-    spring: 36191.73
-    damper: 5790.677
+    spring: 36191.68
+    damper: 5790.669
     targetPosition: 0.5
-  m_SuspensionDistance: 0.1962
-  m_ForceAppPointDistance: 0.53999996
+  m_SuspensionDistance: 0.19620001
+  m_ForceAppPointDistance: 0.5399996
   m_Mass: 10
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
