@@ -8,10 +8,10 @@ public class Damage : MonoBehaviour
     private MultiTag PlayerTag;
     private BumperTag BumperTag;
 
-    public double PlayerHealth1 = 1500;
-    public double PlayerHealth2 = 1500;
-    public double PlayerHealth3 = 1500;
-    public double PlayerHealth4 = 1500;
+    Player1 P1;
+    Player2 P2;
+    Player3 P3;
+    Player4 P4;
 
     public float attackValue = 100.0f;
     //change this positivly to increase DMG
@@ -34,6 +34,11 @@ public class Damage : MonoBehaviour
 
         PlayerTag = GetComponentInParent<MultiTag>();
         BumperTag = GetComponent<BumperTag>();
+
+        P1 = GetComponent<Player1>();
+        P2 = GetComponent<Player2>();
+        P3 = GetComponent<Player3>();
+        P4 = GetComponent<Player4>();
     }
 
     // Update is called once per frame
@@ -47,27 +52,27 @@ public class Damage : MonoBehaviour
     {
         if (BumperTag.Player1bumper == true)
         {
-            PlayerHealth1 -= DamageTaken;
+            P1.BodyHealth -= DamageTaken;
             bumperDamage = true;
-            return PlayerHealth1;
+            return P1.BodyHealth;
         }
         if (BumperTag.Player2bumper == true)
         {
-            PlayerHealth2 -= DamageTaken;
+            P2.BodyHealth -= DamageTaken;
             bumperDamage = true;
-            return PlayerHealth2;
+            return P2.BodyHealth;
         }
         if (BumperTag.Player3bumper == true)
         {
-            PlayerHealth3 -= DamageTaken;
+            P3.BodyHealth -= DamageTaken;
             bumperDamage = true;
-            return PlayerHealth3;
+            return P3.BodyHealth;
         }
         if (BumperTag.Player4bumper == true)
         {
-            PlayerHealth4 -= DamageTaken;
+            P4.BodyHealth -= DamageTaken;
             bumperDamage = true;
-            return PlayerHealth4;
+            return P4.BodyHealth;
         }
         else
         {
@@ -96,13 +101,13 @@ public class Damage : MonoBehaviour
                             if (bumperDamage == false)
                             {
                                 if (other.GetComponent<MultiTag>().Player1Tag == true)
-                                    PlayerHealth1 -= DamageTaken;
+                                    P1.BodyHealth -= DamageTaken;
                                 if (other.GetComponent<MultiTag>().Player2Tag == true)
-                                    PlayerHealth2 -= DamageTaken;
+                                    P2.BodyHealth -= DamageTaken;
                                 if (other.GetComponent<MultiTag>().Player3Tag == true)
-                                    PlayerHealth3 -= DamageTaken;
+                                    P3.BodyHealth -= DamageTaken;
                                 if (other.GetComponent<MultiTag>().Player4Tag == true)
-                                    PlayerHealth4 -= DamageTaken;
+                                    P4.BodyHealth -= DamageTaken;
                             }
                         }
                         else
@@ -112,13 +117,13 @@ public class Damage : MonoBehaviour
                             if (bumperDamage == false)
                             {
                                 if (other.GetComponent<MultiTag>().Player1Tag == true)
-                                    PlayerHealth1 -= DamageTaken;
+                                    P1.BodyHealth -= DamageTaken;
                                 if (other.GetComponent<MultiTag>().Player2Tag == true)
-                                    PlayerHealth2 -= DamageTaken;
+                                    P2.BodyHealth -= DamageTaken;
                                 if (other.GetComponent<MultiTag>().Player3Tag == true)
-                                    PlayerHealth3 -= DamageTaken;
+                                    P3.BodyHealth -= DamageTaken;
                                 if (other.GetComponent<MultiTag>().Player4Tag == true)
-                                    PlayerHealth4 -= DamageTaken;
+                                    P4.BodyHealth -= DamageTaken;
                             }
                         }
                     }
@@ -134,14 +139,14 @@ public class Damage : MonoBehaviour
                             //This function determins who takes the damage
                             if (bumperDamage == false)
                             {
-                                if (other.GetComponent<MultiTag>().Player1Tag == true)
-                                    PlayerHealth1 -= DamageTaken;
-                                if (other.GetComponent<MultiTag>().Player2Tag == true)
-                                    PlayerHealth2 -= DamageTaken;
-                                if (other.GetComponent<MultiTag>().Player3Tag == true)
-                                    PlayerHealth3 -= DamageTaken;
-                                if (other.GetComponent<MultiTag>().Player4Tag == true)
-                                    PlayerHealth4 -= DamageTaken;
+                                if (playerBody.GetComponent<MultiTag>().Player1Tag == true)
+                                    P1.BodyHealth -= DamageTaken;
+                                if (playerBody.GetComponent<MultiTag>().Player2Tag == true)
+                                    P2.BodyHealth -= DamageTaken;
+                                if (playerBody.GetComponent<MultiTag>().Player3Tag == true)
+                                    P3.BodyHealth -= DamageTaken;
+                                if (playerBody.GetComponent<MultiTag>().Player4Tag == true)
+                                    P4.BodyHealth -= DamageTaken;
                             }
                         }
                         else
@@ -150,14 +155,14 @@ public class Damage : MonoBehaviour
                             //This function determins who takes the damage
                             if (bumperDamage == false)
                             {
-                                if (other.GetComponent<MultiTag>().Player1Tag == true)
-                                    PlayerHealth1 -= DamageTaken;
-                                if (other.GetComponent<MultiTag>().Player2Tag == true)
-                                    PlayerHealth2 -= DamageTaken;
-                                if (other.GetComponent<MultiTag>().Player3Tag == true)
-                                    PlayerHealth3 -= DamageTaken;
-                                if (other.GetComponent<MultiTag>().Player4Tag == true)
-                                    PlayerHealth4 -= DamageTaken;
+                                if (playerBody.GetComponent<MultiTag>().Player1Tag == true)
+                                    P1.BodyHealth -= DamageTaken;
+                                if (playerBody.GetComponent<MultiTag>().Player2Tag == true)
+                                    P2.BodyHealth -= DamageTaken;
+                                if (playerBody.GetComponent<MultiTag>().Player3Tag == true)
+                                    P3.BodyHealth -= DamageTaken;
+                                if (playerBody.GetComponent<MultiTag>().Player4Tag == true)
+                                    P4.BodyHealth -= DamageTaken;
                             }
                         }
                     }
