@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 1
+  m_AmbientIntensity: 1.87
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 8185c62f5ccafe247bd3d1a04315857d, type: 2}
@@ -953,14 +953,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: 2
   cameraDesiredPosition: {fileID: 633632343}
-  cameraFocus: {fileID: 2072781605}
   cameraPivot: {fileID: 927482606}
   carFront: {fileID: 2072781605}
   mapCentre: {fileID: 1968895757}
   advancedOptions:
-    updateCameraInUpdate: 0
-    updateCameraInFixedUpdate: 1
-    updateCameraInLateUpdate: 0
+    isInUpdate: 0
+    isInFixedUpdate: 1
+    isInLateUpdate: 0
     switchCentreViewKey: 32
   showingCentreView: 0
   mouseX: 0
@@ -3829,8 +3828,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 1
-  m_Color: {r: 0.092776805, g: 0.13587864, b: 0.5735294, a: 1}
-  m_Intensity: 0.4
+  m_Color: {r: 0.14057094, g: 0.1938908, b: 0.7352941, a: 1}
+  m_Intensity: 0.62
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -4581,6 +4580,7 @@ Transform:
   - {fileID: 1999560327}
   - {fileID: 716634165}
   - {fileID: 2015408868}
+  - {fileID: 1579767725}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5815,14 +5815,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: 4
   cameraDesiredPosition: {fileID: 532211330}
-  cameraFocus: {fileID: 1463022121}
   cameraPivot: {fileID: 401474937}
   carFront: {fileID: 1463022121}
   mapCentre: {fileID: 1968895757}
   advancedOptions:
-    updateCameraInUpdate: 0
-    updateCameraInFixedUpdate: 1
-    updateCameraInLateUpdate: 0
+    isInUpdate: 0
+    isInFixedUpdate: 1
+    isInLateUpdate: 0
     switchCentreViewKey: 32
   showingCentreView: 0
   mouseX: 0
@@ -9304,6 +9303,85 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c62010b1b3a226a4d81c348c1fc6a306, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1579767724
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1579767725}
+  - component: {fileID: 1579767726}
+  m_Layer: 0
+  m_Name: Point light (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1579767725
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1579767724}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 43.199997, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 837623973}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!108 &1579767726
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1579767724}
+  m_Enabled: 1
+  serializedVersion: 8
+  m_Type: 2
+  m_Color: {r: 1, g: 0.83316433, b: 0.6544118, a: 1}
+  m_Intensity: 0.46
+  m_Range: 601.1913
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 4
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
 --- !u!1001 &1579849613
 Prefab:
   m_ObjectHideFlags: 0
@@ -9933,14 +10011,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: 3
   cameraDesiredPosition: {fileID: 282703829}
-  cameraFocus: {fileID: 1060401962}
   cameraPivot: {fileID: 95000012}
   carFront: {fileID: 1060401962}
   mapCentre: {fileID: 1968895757}
   advancedOptions:
-    updateCameraInUpdate: 0
-    updateCameraInFixedUpdate: 1
-    updateCameraInLateUpdate: 0
+    isInUpdate: 0
+    isInFixedUpdate: 1
+    isInLateUpdate: 0
     switchCentreViewKey: 32
   showingCentreView: 0
   mouseX: 0
@@ -10565,14 +10642,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: 1
   cameraDesiredPosition: {fileID: 1911576783}
-  cameraFocus: {fileID: 1142806060}
   cameraPivot: {fileID: 243775896}
   carFront: {fileID: 1142806060}
   mapCentre: {fileID: 1968895757}
   advancedOptions:
-    updateCameraInUpdate: 0
-    updateCameraInFixedUpdate: 1
-    updateCameraInLateUpdate: 0
+    isInUpdate: 0
+    isInFixedUpdate: 1
+    isInLateUpdate: 0
     switchCentreViewKey: 32
   showingCentreView: 0
   mouseX: 0
@@ -11875,7 +11951,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 1
-  m_Color: {r: 0.7352941, g: 0.76997954, b: 1, a: 1}
+  m_Color: {r: 0.75735295, g: 0.7891479, b: 1, a: 1}
   m_Intensity: 0.6
   m_Range: 10
   m_SpotAngle: 30
@@ -12023,7 +12099,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2015408867}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 43.2, z: 0}
+  m_LocalPosition: {x: 0, y: 30.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 837623973}
@@ -12039,8 +12115,8 @@ Light:
   serializedVersion: 8
   m_Type: 2
   m_Color: {r: 1, g: 0.84746444, b: 0.6544118, a: 1}
-  m_Intensity: 1.77
-  m_Range: 147.51709
+  m_Intensity: 1.89
+  m_Range: 149.60855
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
