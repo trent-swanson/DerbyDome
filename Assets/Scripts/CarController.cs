@@ -50,6 +50,7 @@ public class CarController : MonoBehaviour
 			playerBody.drag = declDrag;
 			playerBody.angularDrag = declDrag;
 		}
+
 		else
 		{
 			playerBody.drag = 0;
@@ -149,11 +150,11 @@ public class CarController : MonoBehaviour
         wheelColliders[3].brakeTorque = 0;
 
         Debug.Log(power);
-            wheelColliders[1].motorTorque = power;
-            wheelColliders[2].motorTorque = power;
-            //front
-            wheelColliders[0].motorTorque = 0;
-            wheelColliders[3].motorTorque = 0;
+        wheelColliders[1].motorTorque = power;
+        wheelColliders[2].motorTorque = power;
+        //front
+        wheelColliders[0].motorTorque = 0;
+        wheelColliders[3].motorTorque = 0;
     }
 
 
@@ -209,7 +210,10 @@ public class CarController : MonoBehaviour
 
 		else if (XCI.GetAxis (XboxAxis.LeftTrigger, controller) > 0)
         {
-			Reverse();
+            if (localVel.z > 0)
+                Break(power);
+            else
+                Reverse();
 		}
 
         else
