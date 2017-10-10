@@ -1,7 +1,7 @@
 fileFormatVersion: 2
-guid: 62a376a5bd719084c99a96dfc9af40ca
-timeCreated: 1506982808
-licenseType: Pro
+guid: 3e050ce8379fa8442a7b075fd2834fcb
+timeCreated: 1507602263
+licenseType: Free
 ModelImporter:
   serializedVersion: 21
   fileIDToRecycleName:
@@ -9,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: barrier_001
+    4300000: polySurface3
     9500000: //RootNode
   materials:
     importMaterials: 0
