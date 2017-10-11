@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Wheel
   - Ground
+  - Camera1
+  - Pivot
   layers:
   - Default
   - TransparentFX
