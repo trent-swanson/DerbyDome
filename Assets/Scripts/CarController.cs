@@ -118,8 +118,7 @@ public class CarController : MonoBehaviour
         {
             driftbool = false;
             steer = 0;
-
-            steer = XCI.GetAxis(XboxAxis.LeftStickX, controller) * maxSteer;
+            steer = XCI.GetAxis(XboxAxis.LeftStickX, controller) * maxSteer * ((localVel.z / 120) + 0.8f);
             wheelColliders[1].steerAngle = 0;
             wheelColliders[2].steerAngle = 0;
             wheelColliders[0].steerAngle = steer;
@@ -189,14 +188,9 @@ public class CarController : MonoBehaviour
 		if (Physics.Raycast(groundCheck, out hit, 0.3f))
 		{
 			if (hit.collider.tag == "Ground")
-			{
 				isGrounded = true;
-			}
-
 			else
-			{
 				isGrounded = false;
-			}
 		}
 
         if (localVel.z >= MaxFWVelocity)
@@ -214,7 +208,7 @@ public class CarController : MonoBehaviour
         //Allows for drift mode
         Drift();
 
-        if ((XCI.GetAxis (XboxAxis.LeftTrigger, controller) > 0) & (XCI.GetAxis (XboxAxis.RightTrigger, controller) > 0))
+        if ((XCI.GetAxis (XboxAxis.LeftTrigger, controller) > 0) && (XCI.GetAxis (XboxAxis.RightTrigger, controller) > 0))
         {
 			Break(power);
             //Sets vibration
