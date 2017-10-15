@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Damage : MonoBehaviour
 {
-    Rigidbody playerBody;
+    Rigidbody PlayerBody;
     private MultiTag PlayerTag;
     private BumperTag BumperTag;
 
@@ -27,7 +27,7 @@ public class Damage : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        playerBody = GetComponentInParent<Rigidbody>();
+        PlayerBody = GetComponentInParent<Rigidbody>();
         //setters for moving DMG and Stable DMG
         attackValue = AttackValue;
         sitStillDamage = SitStillAttack;
@@ -35,10 +35,23 @@ public class Damage : MonoBehaviour
         PlayerTag = GetComponentInParent<MultiTag>();
         BumperTag = GetComponent<BumperTag>();
 
-        P1 = GetComponent<Player1>();
-        P2 = GetComponent<Player2>();
-        P3 = GetComponent<Player3>();
-        P4 = GetComponent<Player4>();
+
+        if (PlayerTag.Player1Tag == true)
+        {
+            P1 = GetComponentInParent<Player1>();
+        }
+        if (PlayerTag.Player2Tag == true)
+        {
+            P2 = GetComponentInParent<Player2>();
+        }
+        if (PlayerTag.Player3Tag == true)
+        {
+            P3 = GetComponentInParent<Player3>();
+        }
+        if (PlayerTag.Player4Tag == true)
+        {
+            P4 = GetComponentInParent<Player4>();
+        }
     }
 
     // Update is called once per frame
@@ -82,98 +95,11 @@ public class Damage : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
-        {
-            Debug.Log("player hit");
-            //Body Damage
-            //The otherPlayer below checks the Attacking player
-            if (other.gameObject.tag == "Player" && bumperDamage == false)
-            {
-                //You take damage
-                if (other.GetComponent<Rigidbody>().velocity.magnitude < playerBody.velocity.magnitude)
-                {
-                    if (other.GetComponent<Rigidbody>().velocity.magnitude < playerBody.velocity.magnitude * (float)0.80f)
-                    {
-                        if (other.GetComponent<Rigidbody>().velocity.magnitude < NotMoving)
-                        {
-                            DamageTaken = (attackValue + playerBody.velocity.magnitude) * sitStillDamage;
-                            //This function determins who takes the damage
-                            if (bumperDamage == false)
-                            {
-                                if (other.GetComponent<MultiTag>().Player1Tag == true)
-                                    P1.BodyHealth -= DamageTaken;
-                                if (other.GetComponent<MultiTag>().Player2Tag == true)
-                                    P2.BodyHealth -= DamageTaken;
-                                if (other.GetComponent<MultiTag>().Player3Tag == true)
-                                    P3.BodyHealth -= DamageTaken;
-                                if (other.GetComponent<MultiTag>().Player4Tag == true)
-                                    P4.BodyHealth -= DamageTaken;
-                            }
-                        }
-                        else
-                        {
-                            DamageTaken = (attackValue + playerBody.velocity.magnitude) * (float)1.30f;
-                            //This function determins who takes the damage
-                            if (bumperDamage == false)
-                            {
-                                if (other.GetComponent<MultiTag>().Player1Tag == true)
-                                    P1.BodyHealth -= DamageTaken;
-                                if (other.GetComponent<MultiTag>().Player2Tag == true)
-                                    P2.BodyHealth -= DamageTaken;
-                                if (other.GetComponent<MultiTag>().Player3Tag == true)
-                                    P3.BodyHealth -= DamageTaken;
-                                if (other.GetComponent<MultiTag>().Player4Tag == true)
-                                    P4.BodyHealth -= DamageTaken;
-                            }
-                        }
-                    }
-                }
-                //Target take damage
-                else
-                {
-                    if ((other.GetComponent<Rigidbody>().velocity.magnitude * (float)0.80f) > playerBody.velocity.magnitude)
-                    {
-                        if (playerBody.velocity.magnitude < NotMoving)
-                        {
-                            DamageTaken = (attackValue + playerBody.velocity.magnitude) * sitStillDamage;
-                            //This function determins who takes the damage
-                            if (bumperDamage == false)
-                            {
-                                if (playerBody.GetComponent<MultiTag>().Player1Tag == true)
-                                    P1.BodyHealth -= DamageTaken;
-                                if (playerBody.GetComponent<MultiTag>().Player2Tag == true)
-                                    P2.BodyHealth -= DamageTaken;
-                                if (playerBody.GetComponent<MultiTag>().Player3Tag == true)
-                                    P3.BodyHealth -= DamageTaken;
-                                if (playerBody.GetComponent<MultiTag>().Player4Tag == true)
-                                    P4.BodyHealth -= DamageTaken;
-                            }
-                        }
-                        else
-                        {
-                            DamageTaken = (attackValue + playerBody.velocity.magnitude) * (float)1.30f;
-                            //This function determins who takes the damage
-                            if (bumperDamage == false)
-                            {
-                                if (playerBody.GetComponent<MultiTag>().Player1Tag == true)
-                                    P1.BodyHealth -= DamageTaken;
-                                if (playerBody.GetComponent<MultiTag>().Player2Tag == true)
-                                    P2.BodyHealth -= DamageTaken;
-                                if (playerBody.GetComponent<MultiTag>().Player3Tag == true)
-                                    P3.BodyHealth -= DamageTaken;
-                                if (playerBody.GetComponent<MultiTag>().Player4Tag == true)
-                                    P4.BodyHealth -= DamageTaken;
-                            }
-                        }
-                    }
-                }
-            }
-        }
         //Bumper damage
         //The otherPlayer below checks the ATTACKING players bumper
+        //Bumper v Bumper
         if (other.gameObject.tag == "Front Bumper")
         {
-            //bumper v bumper
             if (other.gameObject.GetComponentInParent<Rigidbody>().velocity.magnitude > NotMoving && timer > 1)
             {
                 timer = 0;
@@ -182,6 +108,93 @@ public class Damage : MonoBehaviour
                 Bumperdamage();
             }
         }
+
+        ////Body Damage
+        //if (other.gameObject.tag == "Player")
+        //{
+        //    //The otherPlayer below checks the Attacking player
+        //    if (other.gameObject.tag == "Player" && bumperDamage == false)
+        //    {
+        //        //You take damage
+        //        if (other.GetComponent<Rigidbody>().velocity.magnitude < PlayerBody.velocity.magnitude)
+        //        {
+        //            if (other.GetComponent<Rigidbody>().velocity.magnitude < PlayerBody.velocity.magnitude * (float)0.80f)
+        //            {
+        //                if (other.GetComponent<Rigidbody>().velocity.magnitude < NotMoving)
+        //                {
+        //                    DamageTaken = (attackValue + PlayerBody.velocity.magnitude) * sitStillDamage;
+        //                    //This function determins who takes the damage
+        //                    if (bumperDamage == false)
+        //                    {
+        //                        if (other.GetComponent<MultiTag>().Player1Tag == true)
+        //                            P1.BodyHealth -= DamageTaken;
+        //                        if (other.GetComponent<MultiTag>().Player2Tag == true)
+        //                            P2.BodyHealth -= DamageTaken;
+        //                        if (other.GetComponent<MultiTag>().Player3Tag == true)
+        //                            P3.BodyHealth -= DamageTaken;
+        //                        if (other.GetComponent<MultiTag>().Player4Tag == true)
+        //                            P4.BodyHealth -= DamageTaken;
+        //                    }
+        //                }
+        //                else
+        //                {
+        //                    DamageTaken = (attackValue + PlayerBody.velocity.magnitude) * (float)1.30f;
+        //                    //This function determins who takes the damage
+        //                    if (bumperDamage == false)
+        //                    {
+        //                        if (other.GetComponent<MultiTag>().Player1Tag == true)
+        //                            P1.BodyHealth -= DamageTaken;
+        //                        if (other.GetComponent<MultiTag>().Player2Tag == true)
+        //                            P2.BodyHealth -= DamageTaken;
+        //                        if (other.GetComponent<MultiTag>().Player3Tag == true)
+        //                            P3.BodyHealth -= DamageTaken;
+        //                        if (other.GetComponent<MultiTag>().Player4Tag == true)
+        //                            P4.BodyHealth -= DamageTaken;
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        //Target take damage
+        //        else
+        //        {
+        //            if ((other.GetComponent<Rigidbody>().velocity.magnitude * (float)0.80f) > PlayerBody.velocity.magnitude)
+        //            {
+        //                if (PlayerBody.velocity.magnitude < NotMoving)
+        //                {
+        //                    DamageTaken = (attackValue + PlayerBody.velocity.magnitude) * sitStillDamage;
+        //                    //This function determins who takes the damage
+        //                    if (bumperDamage == false)
+        //                    {
+        //                        if (PlayerBody.GetComponent<MultiTag>().Player1Tag == true)
+        //                            P1.BodyHealth -= DamageTaken;
+        //                        if (PlayerBody.GetComponent<MultiTag>().Player2Tag == true)
+        //                            P2.BodyHealth -= DamageTaken;
+        //                        if (PlayerBody.GetComponent<MultiTag>().Player3Tag == true)
+        //                            P3.BodyHealth -= DamageTaken;
+        //                        if (PlayerBody.GetComponent<MultiTag>().Player4Tag == true)
+        //                            P4.BodyHealth -= DamageTaken;
+        //                    }
+        //                }
+        //                else
+        //                {
+        //                    DamageTaken = (attackValue + PlayerBody.velocity.magnitude) * (float)1.30f;
+        //                    //This function determins who takes the damage
+        //                    if (bumperDamage == false)
+        //                    {
+        //                        if (PlayerBody.GetComponent<MultiTag>().Player1Tag == true)
+        //                            P1.BodyHealth -= DamageTaken;
+        //                        if (PlayerBody.GetComponent<MultiTag>().Player2Tag == true)
+        //                            P2.BodyHealth -= DamageTaken;
+        //                        if (PlayerBody.GetComponent<MultiTag>().Player3Tag == true)
+        //                            P3.BodyHealth -= DamageTaken;
+        //                        if (PlayerBody.GetComponent<MultiTag>().Player4Tag == true)
+        //                            P4.BodyHealth -= DamageTaken;
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
     }
     void OnTriggerExit(Collider other)
     {

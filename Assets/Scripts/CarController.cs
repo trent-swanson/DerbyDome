@@ -250,7 +250,7 @@ public class CarController : MonoBehaviour
 
             if (isGrounded)
 			{
-				if (localVel.z > 8f || localVel.z < -8f)
+				if (localVel.z > 7.5f || localVel.z < -7.5f)
 				{
 					playerBody.drag = declDrag / 2;
 					playerBody.angularDrag = declDrag / 2;
