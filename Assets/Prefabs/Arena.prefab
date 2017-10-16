@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4873611732321960}
-  - component: {fileID: 64377581977874754}
+  - component: {fileID: 64523759120142990}
   m_Layer: 0
   m_Name: Arena
   m_TagString: Ground
@@ -37,7 +37,6 @@ GameObject:
   - component: {fileID: 4416966197556532}
   - component: {fileID: 33513032239370018}
   - component: {fileID: 23092692431278050}
-  - component: {fileID: 95707107239326632}
   m_Layer: 0
   m_Name: arena_001
   m_TagString: Untagged
@@ -111,7 +110,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1636815375493240}
   m_Mesh: {fileID: 4300004, guid: ac5b86e53598d4e4c963f06ce346eb7d, type: 3}
---- !u!64 &64377581977874754
+--- !u!64 &64523759120142990
 MeshCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -124,21 +123,4 @@ MeshCollider:
   m_Convex: 0
   m_InflateMesh: 0
   m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300000, guid: ac5b86e53598d4e4c963f06ce346eb7d, type: 3}
---- !u!95 &95707107239326632
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1636815375493240}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: ac5b86e53598d4e4c963f06ce346eb7d, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
+  m_Mesh: {fileID: 4300004, guid: ac5b86e53598d4e4c963f06ce346eb7d, type: 3}
