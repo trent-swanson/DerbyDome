@@ -9,12 +9,8 @@ public class BumperTag : MonoBehaviour {
     public bool Player4bumper;
 
     // Use this for initialization
-    void Start () {
-		
-	}
+    void Start () {}
 	
 	// Update is called once per frame
-	void Update () {
-		
-	}
+	void Update () {}
 }

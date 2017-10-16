@@ -20,9 +20,12 @@ public class CarController : MonoBehaviour
     public float speedMultiplier = 0.0f;
     public float vibrationIntensity = 0.3f;
     public float vibrationThreshold = 3.5f;
+    public float carHealth = 1500;
+    public int playerID;
 
-	//[HideInInspector] commented out to debug
-	public float power = 0.0f;
+
+    //[HideInInspector] commented out to debug
+    public float power = 0.0f;
 	[HideInInspector]
 	public float reverse = 0.0f;
 	[HideInInspector]
@@ -151,7 +154,6 @@ public class CarController : MonoBehaviour
         wheelColliders[2].brakeTorque = 0;
         wheelColliders[3].brakeTorque = 0;
 
-        Debug.Log(power);
         wheelColliders[1].motorTorque = power;
         wheelColliders[2].motorTorque = power;
         //front
@@ -166,19 +168,18 @@ public class CarController : MonoBehaviour
         power = XCI.GetAxis (XboxAxis.RightTrigger, controller) * (enginePower * speedMultiplier) * Time.deltaTime;
 		reverse = XCI.GetAxis (XboxAxis.LeftTrigger, controller) * (enginePower * speedMultiplier) * Time.deltaTime;
 		localVel = playerBody.transform.InverseTransformDirection(playerBody.velocity);
-        int player;
 
         //Sets up controller numbers to ensure that vibration is applied to the correct controller
         if (controller == XboxController.First)
-            player = 1;
+            playerID = 1;
         else if (controller == XboxController.Second)
-            player = 2;
+            playerID = 2;
         else if (controller == XboxController.Third)
-            player = 3;
+            playerID = 3;
         else if (controller == XboxController.Fourth)
-            player = 4;
+            playerID = 4;
         else
-            player = 0;
+            playerID = 0;
 
         //ground check
         RaycastHit hit;
@@ -212,14 +213,14 @@ public class CarController : MonoBehaviour
         {
 			Break(power);
             //Sets vibration
-            Vibration(player, vibrationIntensity, vibrationIntensity);
+            Vibration(playerID, vibrationIntensity, vibrationIntensity);
         }
 
 		else if (XCI.GetAxis (XboxAxis.RightTrigger, controller) > 0)
         {
 			Accelerate();
             //Sets vibration
-            Vibration(player, vibrationIntensity, vibrationIntensity);
+            Vibration(playerID, vibrationIntensity, vibrationIntensity);
         }
 
 		else if (XCI.GetAxis (XboxAxis.LeftTrigger, controller) > 0)
@@ -228,14 +229,14 @@ public class CarController : MonoBehaviour
             {
                 Break(power);
                 //Sets vibration
-                Vibration(player, vibrationIntensity, vibrationIntensity);
+                Vibration(playerID, vibrationIntensity, vibrationIntensity);
             }
 
             else
             {
                 Reverse();
                 //Sets vibration
-                Vibration(player, vibrationIntensity, vibrationIntensity);
+                Vibration(playerID, vibrationIntensity, vibrationIntensity);
             }
 
 		}
@@ -244,9 +245,9 @@ public class CarController : MonoBehaviour
         {
             //Removes vibration to ensure players that are not moving are not vibrating if they are below the threshold
             if (localVel.z > vibrationThreshold || localVel.z < -vibrationThreshold)
-                Vibration(player, vibrationIntensity, vibrationIntensity);
+                Vibration(playerID, vibrationIntensity, vibrationIntensity);
             else if (localVel.z <= vibrationThreshold || localVel.z >= -vibrationThreshold)
-                Vibration(player, 0.0f, 0.0f);
+                Vibration(playerID, 0.0f, 0.0f);
 
             if (isGrounded)
 			{

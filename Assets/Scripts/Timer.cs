@@ -21,7 +21,6 @@ public class Timer : MonoBehaviour {
     {
         myTimer -= Time.deltaTime;
         timerText.text = myTimer.ToString("f2");
-        print(myTimer);
         if (myTimer <= 0.05f)
         {
             SceneManager.LoadScene(0);
