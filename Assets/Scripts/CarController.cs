@@ -23,6 +23,8 @@ public class CarController : MonoBehaviour
     public float carHealth = 1500;
     public int playerID;
 
+    private bool alive = true;
+
 
     //[HideInInspector] commented out to debug
     public float power = 0.0f;
@@ -106,7 +108,7 @@ public class CarController : MonoBehaviour
     private void Drift()
     {
         //Drift Steering
-        if (XCI.GetButton(XboxButton.X, controller))
+        if (XCI.GetButton(XboxButton.X, controller) && alive)
         {
             driftbool = true;
             steer = 0;
@@ -165,9 +167,16 @@ public class CarController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        power = XCI.GetAxis (XboxAxis.RightTrigger, controller) * (enginePower * speedMultiplier) * Time.deltaTime;
-		reverse = XCI.GetAxis (XboxAxis.LeftTrigger, controller) * (enginePower * speedMultiplier) * Time.deltaTime;
-		localVel = playerBody.transform.InverseTransformDirection(playerBody.velocity);
+        if(carHealth <= 0)
+            alive = false;
+
+        if (alive)
+        {
+            power = XCI.GetAxis(XboxAxis.RightTrigger, controller) * (enginePower * speedMultiplier) * Time.deltaTime;
+            reverse = XCI.GetAxis(XboxAxis.LeftTrigger, controller) * (enginePower * speedMultiplier) * Time.deltaTime;
+        }
+
+        localVel = playerBody.transform.InverseTransformDirection(playerBody.velocity);
 
         //Sets up controller numbers to ensure that vibration is applied to the correct controller
         if (controller == XboxController.First)
