@@ -172,7 +172,7 @@ public class CarController : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         //Checks the players health and sets them to not alive if it is below zero
         if(carHealth <= 0)
