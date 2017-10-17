@@ -46,9 +46,10 @@ public class CarController : MonoBehaviour
     public bool driftbool = false;
     [HideInInspector]
     public int playerID;
+    [HideInInspector]
+    public bool isAlive = true;
 
     private bool isGrounded = false;
-    private bool isAlive = true;
     private Rigidbody playerBody;
 
     // Use this for initialization
