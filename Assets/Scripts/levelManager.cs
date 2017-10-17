@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -11,15 +9,8 @@ public class levelManager : MonoBehaviour {
 
     public GameObject gameManager;
 
-    void Awake()
-    {
-    }
-
     // Use this for initialization
-    void Start()
-    {
-        Debug.Log("roundCount" + scoreRoundCounter.roundCount);
-    }
+    void Start(){}
 
     // Update is called once per frame
     void Update()
@@ -31,7 +22,7 @@ public class levelManager : MonoBehaviour {
         {
             ++scoreRoundCounter.roundCount;
             if (scoreRoundCounter.roundCount < 3)
-                SceneManager.LoadScene(0);
+                SceneManager.LoadScene(1);
 
             else
             {
