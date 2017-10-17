@@ -185,8 +185,8 @@ public class CarController : MonoBehaviour
         }
 
         //Calculates the amount of power that will be applied to the wheels, depending on the movement of the player
-        power = XCI.GetAxis(XboxAxis.RightTrigger, controller) * (enginePower * speedMultiplier) * Time.deltaTime;
-        reverse = XCI.GetAxis(XboxAxis.LeftTrigger, controller) * (enginePower * speedMultiplier) * Time.deltaTime;
+        power = XCI.GetAxis(XboxAxis.RightTrigger, controller) * (enginePower * speedMultiplier) * Time.fixedDeltaTime;
+        reverse = XCI.GetAxis(XboxAxis.LeftTrigger, controller) * (enginePower * speedMultiplier) * Time.fixedDeltaTime;
 
         localVel = playerBody.transform.InverseTransformDirection(playerBody.velocity);
 
