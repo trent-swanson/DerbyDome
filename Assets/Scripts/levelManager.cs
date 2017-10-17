@@ -32,7 +32,7 @@ public class levelManager : MonoBehaviour {
                 scoreRoundCounter.player2Score = 0;
                 scoreRoundCounter.player3Score = 0;
                 scoreRoundCounter.player4Score = 0;
-                SceneManager.LoadScene(0);
+                SceneManager.LoadScene(2);
             }
         }
     }
