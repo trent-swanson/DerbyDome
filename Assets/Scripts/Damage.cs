@@ -22,7 +22,7 @@ public class Damage : MonoBehaviour
     void Update()
     {
         carVelo = transform.parent.GetComponent<CarController>().localVel.z;
-        damageTaken = (attackValue + (carVelo * 10));
+        damageTaken = (attackValue + ((carVelo * Random.Range(0.1f, 1.0f)) * 10));
     }
 
     void CarDamage()
