@@ -29,6 +29,7 @@ public class CarController : MonoBehaviour
     public float vibrationIntensity = 0.3f;
     public float vibrationThreshold = 3.5f;
     public float carHealth = 1500;
+    public bool DebugControls = false;
 
     [Space]
 
@@ -52,6 +53,7 @@ public class CarController : MonoBehaviour
     private bool isGrounded = false;
     private Rigidbody playerBody;
 
+    //==============================================================================================
     // Use this for initialization
     void Start()
     {
@@ -59,42 +61,32 @@ public class CarController : MonoBehaviour
 		playerBody.centerOfMass = new Vector3(0.0f, -0.5f, 0.3f);
     }
 
-	private void Break(float breakValue)
+    //==============================================================================================
+    private void Break(float breakValue)
     {
-		if (isGrounded)
-		{
-			playerBody.drag = declDrag;
-			playerBody.angularDrag = declDrag;
-		}
+        Drag(declDrag);
 
-		else
-		{
-			playerBody.drag = 0;
-			playerBody.angularDrag = 0;	
-		}
+        //Resets the motorTorque of the car to minimise potential bugs, and to stop the player if they are not alive
+        wheelColliders[0].motorTorque = 0;
+        wheelColliders[1].motorTorque = 0;
+        wheelColliders[2].motorTorque = 0;
+        wheelColliders[3].motorTorque = 0;
 
-		wheelColliders[0].motorTorque = 0;
-		wheelColliders[1].motorTorque = 0;
-		wheelColliders[2].motorTorque = 0;
-		wheelColliders[3].motorTorque = 0;
-		wheelColliders[0].brakeTorque = breakValue;
-		wheelColliders[1].brakeTorque = breakValue;
-		wheelColliders[2].brakeTorque = breakValue;
-		wheelColliders[3].brakeTorque = breakValue;
+        //If the player is alive and currently breaking, the appropriate break torque is applied
+        if (isAlive)
+        {
+            wheelColliders[0].brakeTorque = breakValue;
+            wheelColliders[1].brakeTorque = breakValue;
+            wheelColliders[2].brakeTorque = breakValue;
+            wheelColliders[3].brakeTorque = breakValue;
+        }
+        
     }
 
+    //==============================================================================================
     private void Reverse()
     {
-		if (isGrounded)
-		{
-            playerBody.drag = acclDrag;
-			playerBody.angularDrag = acclDrag;
-		}
-		else
-		{
-			playerBody.drag = 0;
-			playerBody.angularDrag = 0;	
-		}
+        Drag(acclDrag);
 
 		if (localVel.z > 0.01f)
 		{
@@ -107,12 +99,16 @@ public class CarController : MonoBehaviour
 		wheelColliders[2].brakeTorque = 0;
 		wheelColliders[3].brakeTorque = 0;
 
-        wheelColliders[0].motorTorque = 0;
-        wheelColliders[1].motorTorque = -reverse;
-        wheelColliders[2].motorTorque = -reverse;
-        wheelColliders[3].motorTorque = 0;
+        if (isAlive)
+        {
+            wheelColliders[0].motorTorque = 0;
+            wheelColliders[1].motorTorque = -reverse;
+            wheelColliders[2].motorTorque = -reverse;
+            wheelColliders[3].motorTorque = 0;
+        }
     }
 
+    //==============================================================================================
     private void Drift()
     {
         //Drift Steering
@@ -127,7 +123,7 @@ public class CarController : MonoBehaviour
             wheelColliders[3].steerAngle = 0;
         }
 
-        else
+        else if (isAlive)
         {
             driftbool = false;
             steer = 0;
@@ -139,21 +135,12 @@ public class CarController : MonoBehaviour
         }
     }
 
+    //==============================================================================================
     private void Accelerate()
     {
-		if (isGrounded)
-		{
-			playerBody.drag = acclDrag;
-			playerBody.angularDrag = acclDrag;
-		}
+        Drag(acclDrag);
 
-		else
-		{
-			playerBody.drag = 0;
-			playerBody.angularDrag = 0;	
-		}
-
-		if (localVel.z < -0.01f)
+		if (localVel.z < -0.01f && isAlive)
 		{
 			Break(power);
 			return;
@@ -165,12 +152,20 @@ public class CarController : MonoBehaviour
         wheelColliders[3].brakeTorque = 0;
 
         wheelColliders[0].motorTorque = 0;
-        wheelColliders[1].motorTorque = power;
-        wheelColliders[2].motorTorque = power;
+        wheelColliders[1].motorTorque = 0;
+        wheelColliders[2].motorTorque = 0;
         wheelColliders[3].motorTorque = 0;
+
+        if (isAlive)
+        {
+            wheelColliders[0].motorTorque = 0;
+            wheelColliders[1].motorTorque = power;
+            wheelColliders[2].motorTorque = power;
+            wheelColliders[3].motorTorque = 0;
+        }
     }
 
-
+    //==============================================================================================
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -178,17 +173,24 @@ public class CarController : MonoBehaviour
         if(carHealth <= 0)
             isAlive = false;
 
-        //Changes color to grey if the players health is below zero
-        if (!isAlive)
+        if (XCI.GetButton(XboxButton.B, controller) && DebugControls)
         {
-            transform.GetChild(1).gameObject.GetComponent<Renderer>().material.color = death;
+            carHealth = 0;
+            isAlive = false;
         }
 
-        //Calculates the amount of power that will be applied to the wheels, depending on the movement of the player
-        power = XCI.GetAxis(XboxAxis.RightTrigger, controller) * (enginePower * speedMultiplier) * Time.fixedDeltaTime;
-        reverse = XCI.GetAxis(XboxAxis.LeftTrigger, controller) * (enginePower * speedMultiplier) * Time.fixedDeltaTime;
+        //Changes color to grey if the players health is below zero
+        if (!isAlive)
+            transform.GetChild(1).gameObject.GetComponent<Renderer>().material.color = death;
 
-        localVel = playerBody.transform.InverseTransformDirection(playerBody.velocity);
+        //Calculates the amount of power that will be applied to the wheels, depending on the movement of the player 
+        //and if they are currently alive
+        else
+        {
+            power = XCI.GetAxis(XboxAxis.RightTrigger, controller) * (enginePower * speedMultiplier) * Time.fixedDeltaTime;
+            reverse = XCI.GetAxis(XboxAxis.LeftTrigger, controller) * (enginePower * speedMultiplier) * Time.fixedDeltaTime;
+            localVel = playerBody.transform.InverseTransformDirection(playerBody.velocity);
+        }
 
         //Sets up controller numbers to ensure that vibration is applied to the correct controller
         if (controller == XboxController.First)
@@ -202,52 +204,50 @@ public class CarController : MonoBehaviour
         else
             playerID = 0;
 
-        //ground check
-        RaycastHit hit;
-		Ray groundCheck = new Ray(transform.position, Vector3.down);
-		Debug.DrawRay(transform.position, Vector3.down * 0.3f, Color.red);
+            //ground check
+            RaycastHit hit;
+            Ray groundCheck = new Ray(transform.position, Vector3.down);
+            Debug.DrawRay(transform.position, Vector3.down * 0.3f, Color.red);
 
-		if (Physics.Raycast(groundCheck, out hit, 0.3f))
-		{
-			if (hit.collider.tag == "Ground")
-				isGrounded = true;
-			else
-				isGrounded = false;
-		}
+            if (Physics.Raycast(groundCheck, out hit, 0.3f))
+            {
+                if (hit.collider.tag == "Ground")
+                    isGrounded = true;
+                else
+                    isGrounded = false;
+            }
 
-        if (localVel.z >= maxFWVelocity)
-        {
-            float temp = localVel.z - maxFWVelocity;
-            localVel.z -= temp;
-        }
+            if (localVel.z >= maxFWVelocity)
+            {
+                float temp = localVel.z - maxFWVelocity;
+                localVel.z -= temp;
+            }
 
-        if (localVel.z <= -maxBWVelocity)
-        {
-            float temp = localVel.z + maxBWVelocity;
-            localVel.z -= temp;
-        }
+            if (localVel.z <= -maxBWVelocity)
+            {
+                float temp = localVel.z + maxBWVelocity;
+                localVel.z -= temp;
+            }
 
-        //Allows for drift mode
-        Drift();
+            //Allows for drift mode
+            Drift();
 
-        //Allows the players movement if they are still alive
-        if (isAlive)
-        {
-            if ((XCI.GetAxis(XboxAxis.LeftTrigger, controller) > 0) && (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0))
+            //Allows the players movement if they are still alive
+            if ((XCI.GetAxis(XboxAxis.LeftTrigger, controller) > 0) && (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0) && isAlive)
             {
                 Break(power);
                 //Sets vibration
                 Vibration(playerID, vibrationIntensity, vibrationIntensity);
             }
 
-            else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0)
+            else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0 && isAlive)
             {
                 Accelerate();
                 //Sets vibration
                 Vibration(playerID, vibrationIntensity, vibrationIntensity);
             }
 
-            else if (XCI.GetAxis(XboxAxis.LeftTrigger, controller) > 0)
+            else if (XCI.GetAxis(XboxAxis.LeftTrigger, controller) > 0 && isAlive)
             {
                 if (localVel.z > 8)
                 {
@@ -262,7 +262,6 @@ public class CarController : MonoBehaviour
                     //Sets vibration
                     Vibration(playerID, vibrationIntensity, vibrationIntensity);
                 }
-
             }
 
             else
@@ -270,6 +269,7 @@ public class CarController : MonoBehaviour
                 //Removes vibration to ensure players that are not moving are not vibrating if they are below the threshold
                 if (localVel.z > vibrationThreshold || localVel.z < -vibrationThreshold)
                     Vibration(playerID, vibrationIntensity, vibrationIntensity);
+
                 else if (localVel.z <= vibrationThreshold || localVel.z >= -vibrationThreshold)
                     Vibration(playerID, 0.0f, 0.0f);
 
@@ -300,14 +300,13 @@ public class CarController : MonoBehaviour
                     playerBody.angularDrag = 0;
                 }
 
-                wheelColliders[0].motorTorque = 0;
-                wheelColliders[1].motorTorque = 0;
-                wheelColliders[2].motorTorque = 0;
-                wheelColliders[3].motorTorque = 0;
+                    wheelColliders[0].motorTorque = 0;
+                    wheelColliders[1].motorTorque = 0;
+                    wheelColliders[2].motorTorque = 0;
+                    wheelColliders[3].motorTorque = 0;
             }
-        }
-        
     }
+    //==============================================================================================
     void Vibration(int playerNum, float left, float right)
     {
         //Sets the vibration if player one is the active player in the update function
@@ -324,5 +323,23 @@ public class CarController : MonoBehaviour
             GamePad.SetVibration(PlayerIndex.Four, left, right);
         else
             return;
+    }
+
+    //==============================================================================================
+    void Drag(float typeOfDrag)
+    {
+        //Checks if the player is on the ground and applies drag to them
+        if (isGrounded)
+        {
+            playerBody.drag = typeOfDrag;
+            playerBody.angularDrag = typeOfDrag;
+        }
+
+        //If the player is not on the ground, no drag is applied to them so they dont slow down travelling through the air
+        else
+        {
+            playerBody.drag = 0;
+            playerBody.angularDrag = 0;
+        }
     }
 }
