@@ -36,8 +36,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4044711878745532}
-  - component: {fileID: 54222530997516284}
-  - component: {fileID: 65460079277882856}
+  - component: {fileID: 54669692625374734}
+  - component: {fileID: 64791861951745596}
+  - component: {fileID: 136575928937015006}
   m_Layer: 0
   m_Name: Barrel
   m_TagString: Untagged
@@ -52,7 +53,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1693869767622994}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.3599997, y: -2.608, z: -9.480001}
+  m_LocalPosition: {x: 4.6900005, y: -2.608, z: -6.959999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4554719677180306}
@@ -111,7 +112,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1593965006671922}
   m_Mesh: {fileID: 4300000, guid: 621091e80f6a8214697e3590ac042e29, type: 3}
---- !u!54 &54222530997516284
+--- !u!54 &54669692625374734
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -126,8 +127,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &65460079277882856
-BoxCollider:
+--- !u!64 &64791861951745596
+MeshCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -136,5 +137,20 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.8, y: 1, z: 0.8}
+  m_Convex: 0
+  m_InflateMesh: 0
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 0}
+--- !u!136 &136575928937015006
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1693869767622994}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1.3
+  m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
