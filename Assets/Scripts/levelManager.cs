@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class levelManager : MonoBehaviour {
-
+    public Time time;
     public float myTimer = 180.0f;
     public Text timerText;
 
@@ -13,10 +13,14 @@ public class levelManager : MonoBehaviour {
     void Start(){}
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         myTimer -= Time.deltaTime;
-        timerText.text = myTimer.ToString("f2");
+
+        int min = Mathf.FloorToInt(myTimer / 60);
+        int sec = Mathf.FloorToInt(myTimer % 60);
+        timerText.text = min.ToString("00") + ":" + sec.ToString("00");
+
 
         if (myTimer <= 0.05f)
         {
