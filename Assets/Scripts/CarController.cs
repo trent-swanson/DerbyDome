@@ -11,6 +11,7 @@
 using UnityEngine;
 using XboxCtrlrInput;
 using XInputDotNetPure;
+using UnityEngine.SceneManagement;
 
 public class CarController : MonoBehaviour
 {
@@ -29,6 +30,9 @@ public class CarController : MonoBehaviour
     public float vibrationIntensity = 0.3f;
     public float vibrationThreshold = 3.5f;
     public float carHealth = 1500;
+
+    [Space]
+    [Tooltip("B = Kills player || Y = Revives player")]
     public bool DebugControls = false;
 
     [Space]
@@ -49,6 +53,9 @@ public class CarController : MonoBehaviour
     public int playerID;
     [HideInInspector]
     public bool isAlive = true;
+    [HideInInspector]
+    public Color debugAlive = Color.magenta;
+
 
     private bool isGrounded = false;
     private Rigidbody playerBody;
@@ -174,9 +181,17 @@ public class CarController : MonoBehaviour
             isAlive = false;
 
         if (XCI.GetButton(XboxButton.B, controller) && DebugControls)
-        {
-            carHealth = 0;
             isAlive = false;
+
+        if (XCI.GetButton(XboxButton.Y, controller) && DebugControls)
+        {
+            isAlive = true;
+            transform.GetChild(1).gameObject.GetComponent<Renderer>().material.color = debugAlive;
+        }
+
+        if (XCI.GetButton(XboxButton.Start, controller))
+        {
+            SceneManager.LoadScene(0);
         }
 
         //Changes color to grey if the players health is below zero
