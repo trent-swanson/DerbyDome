@@ -6,11 +6,14 @@
 //
 //Creator: Joel Goodchild
 //Edited by: Ryan Ward
+//Edited by: Trent Swanson
 //================================================================================
 
 using UnityEngine;
 using XboxCtrlrInput;
 using XInputDotNetPure;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
 public class CarController : MonoBehaviour
@@ -59,6 +62,7 @@ public class CarController : MonoBehaviour
 
     private bool isGrounded = false;
     private Rigidbody playerBody;
+	private float CurrentRotation;
 
     //==============================================================================================
     // Use this for initialization
@@ -172,6 +176,47 @@ public class CarController : MonoBehaviour
         }
     }
 
+	//==============================================================================================
+
+	private void GroundCheck()
+	{
+		RaycastHit hit;
+		Ray groundCheck = new Ray(transform.position, Vector3.down);
+		Debug.DrawRay(transform.position, Vector3.down * 0.3f, Color.red);
+
+		if (Physics.Raycast(groundCheck, out hit, 0.3f))
+		{
+			if (hit.collider.tag == "Ground")
+				isGrounded = true;
+			else
+				isGrounded = false;
+		}
+	}
+
+	private void FlipCheck()
+	{
+		CurrentRotation = transform.eulerAngles.y;
+		RaycastHit hit;
+		Ray groundCheck = new Ray(transform.position, transform.up);
+		Debug.DrawRay(transform.position, transform.up * 1.4f, Color.yellow);
+
+		if (Physics.Raycast(groundCheck, out hit, 1.4f))
+		{
+			if (hit.collider.tag == "Ground")
+			{
+				StartCoroutine ("WaitForSeconds");
+			}
+		}
+	}
+
+	IEnumerator WaitForSeconds() {
+		yield return new WaitForSeconds (3);
+		if (isGrounded == false)
+		{
+			transform.localEulerAngles = new Vector3 (0, CurrentRotation, 0);
+		}
+	}
+
     //==============================================================================================
     // Update is called once per frame
     void FixedUpdate()
@@ -219,18 +264,12 @@ public class CarController : MonoBehaviour
         else
             playerID = 0;
 
-            //ground check
-            RaycastHit hit;
-            Ray groundCheck = new Ray(transform.position, Vector3.down);
-            Debug.DrawRay(transform.position, Vector3.down * 0.3f, Color.red);
+		//ground check
+		GroundCheck();
 
-            if (Physics.Raycast(groundCheck, out hit, 0.3f))
-            {
-                if (hit.collider.tag == "Ground")
-                    isGrounded = true;
-                else
-                    isGrounded = false;
-            }
+		//check is upsidedown
+		FlipCheck();
+            
 
             if (localVel.z >= maxFWVelocity)
             {
