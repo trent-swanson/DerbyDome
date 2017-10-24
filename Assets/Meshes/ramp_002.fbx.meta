@@ -6,10 +6,40 @@ ModelImporter:
   serializedVersion: 21
   fileIDToRecycleName:
     100000: //RootNode
+    100002: ramp_002
+    100004: ramp_002_bar
+    100006: ramp_002_bar_001
+    100008: ramp_002_bar_002
+    100010: ramp_002_bar_003
+    100012: ramp_002_bar_004
+    100014: ramp_002 1
     400000: //RootNode
+    400002: ramp_002
+    400004: ramp_002_bar
+    400006: ramp_002_bar_001
+    400008: ramp_002_bar_002
+    400010: ramp_002_bar_003
+    400012: ramp_002_bar_004
+    400014: ramp_002 1
     2300000: //RootNode
+    2300002: ramp_002
+    2300004: ramp_002_bar_001
+    2300006: ramp_002_bar_002
+    2300008: ramp_002_bar_003
+    2300010: ramp_002_bar_004
+    2300012: ramp_002 1
     3300000: //RootNode
+    3300002: ramp_002
+    3300004: ramp_002_bar_001
+    3300006: ramp_002_bar_002
+    3300008: ramp_002_bar_003
+    3300010: ramp_002_bar_004
+    3300012: ramp_002 1
     4300000: ramp_002
+    4300002: ramp_002_bar_002
+    4300004: ramp_002_bar_001
+    4300006: ramp_002_bar_003
+    4300008: ramp_002_bar_004
     9500000: //RootNode
   materials:
     importMaterials: 0
