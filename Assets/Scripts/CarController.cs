@@ -64,6 +64,8 @@ public class CarController : MonoBehaviour
     private Rigidbody playerBody;
 	private float CurrentRotation;
 
+    private PowerUp CurrentPowerUp;
+
     //==============================================================================================
     // Use this for initialization
     void Start()
@@ -208,6 +210,26 @@ public class CarController : MonoBehaviour
 			}
 		}
 	}
+
+    private void PowerUps()
+    {
+        if (CurrentPowerUp.BombActive == true)
+        {
+
+        }
+        if (CurrentPowerUp.ShieldActive == true)
+        {
+
+        }
+        if (CurrentPowerUp.EMPActive == true)
+        {
+
+        }
+        if (CurrentPowerUp.ShockActive == true)
+        {
+
+        }
+    }
 
 	IEnumerator WaitForSeconds() {
 		yield return new WaitForSeconds (3);

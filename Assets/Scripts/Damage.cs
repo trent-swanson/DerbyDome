@@ -51,7 +51,6 @@ public class Damage : MonoBehaviour
     {
         if (carVelo >= minAttackVelocity)
         {
-            //The Bumper v Bumper Doesnt trigger - Ryan
             //Calculation occurs with head on collision with another car
             if (other.gameObject.tag == "Front Bumper")
             {
@@ -59,6 +58,7 @@ public class Damage : MonoBehaviour
                 //Gets a copy of the damage dealt for the Score.CS NOT NOT DELETE
                 Debug.Log("bumper hit");
                 Debug.Log(transform.parent.GetComponent<CarController>().playerID + ":  " + other.gameObject.GetComponent<CarController>().carHealth);
+                
                 return;
             }
 
