@@ -19,7 +19,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4436670393757980}
-  - component: {fileID: 64600074354165000}
   m_Layer: 0
   m_Name: Ramp2
   m_TagString: Untagged
@@ -37,6 +36,7 @@ GameObject:
   - component: {fileID: 4612519514060078}
   - component: {fileID: 33929034077589242}
   - component: {fileID: 23252571099656028}
+  - component: {fileID: 64310117522211586}
   m_Layer: 0
   m_Name: ramp_002
   m_TagString: Untagged
@@ -50,14 +50,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1388101796697750}
-  m_LocalRotation: {x: -0, y: -0.31871256, z: -0, w: 0.9478514}
-  m_LocalPosition: {x: 52.56, y: 0, z: -9.12}
+  m_LocalRotation: {x: -0, y: -0.6792644, z: -0, w: 0.7338937}
+  m_LocalPosition: {x: 53.31, y: 0.05, z: 0.61}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4612519514060078}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -37.170002, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -85.57201, z: 0}
 --- !u!4 &4612519514060078
 Transform:
   m_ObjectHideFlags: 1
@@ -65,7 +65,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1430025096093280}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.83, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4436670393757980}
@@ -110,12 +110,12 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1430025096093280}
   m_Mesh: {fileID: 4300000, guid: 0e7b3cd92fc924d439fa42410979c348, type: 3}
---- !u!64 &64600074354165000
+--- !u!64 &64310117522211586
 MeshCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1388101796697750}
+  m_GameObject: {fileID: 1430025096093280}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
