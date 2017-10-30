@@ -64,8 +64,7 @@ public class CarController : MonoBehaviour
     private Rigidbody playerBody;
 	private float CurrentRotation;
 
-    private PowerUp CurrentPowerUp;
-
+    private float JumpHeight = 15000;
     //==============================================================================================
     // Use this for initialization
     void Start()
@@ -180,8 +179,20 @@ public class CarController : MonoBehaviour
 
 	//==============================================================================================
 
+    private void Jump()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            playerBody.AddForce(Vector3.up * JumpHeight, ForceMode.Impulse);
+            Debug.Log("Is Firing");
+        }
+    }
+
+    //==============================================================================================
+
 	private void GroundCheck()
 	{
+        isGrounded = false;
 		RaycastHit hit;
 		Ray groundCheck = new Ray(transform.position, Vector3.down);
 		Debug.DrawRay(transform.position, Vector3.down * 0.3f, Color.red);
@@ -210,27 +221,6 @@ public class CarController : MonoBehaviour
 			}
 		}
 	}
-
-    private void PowerUps()
-    {
-        if (CurrentPowerUp.BombActive == true)
-        {
-
-        }
-        if (CurrentPowerUp.ShieldActive == true)
-        {
-
-        }
-        if (CurrentPowerUp.EMPActive == true)
-        {
-
-        }
-        if (CurrentPowerUp.ShockActive == true)
-        {
-
-        }
-    }
-
 	IEnumerator WaitForSeconds() {
 		yield return new WaitForSeconds (3);
 		if (isGrounded == false)
@@ -381,6 +371,12 @@ public class CarController : MonoBehaviour
                     wheelColliders[2].motorTorque = 0;
                     wheelColliders[3].motorTorque = 0;
             }
+
+        //Jump
+        if (isGrounded)
+        {
+            Jump();
+        }
     }
     //==============================================================================================
     void Vibration(int playerNum, float left, float right)
