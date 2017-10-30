@@ -1,7 +1,19 @@
 fileFormatVersion: 2
+<<<<<<< .mine
+guid: 5569b92a2019fe541b2412ff48bb35ca
+||||||| .r142
+guid: 1b5941d74a7016d44a02d5aa71152a23
+=======
 guid: 856db53bc8d347e4882afe436378fa8f
+>>>>>>> .r145
 folderAsset: yes
+<<<<<<< .mine
+timeCreated: 1509331846
+||||||| .r142
+timeCreated: 1509318912
+=======
 timeCreated: 1508888656
+>>>>>>> .r145
 licenseType: Pro
 DefaultImporter:
   userData: 
