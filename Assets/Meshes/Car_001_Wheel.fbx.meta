@@ -1,0 +1,169 @@
+fileFormatVersion: 2
+guid: 5a39e00f90eb51f44afaeca7f97a1dcd
+timeCreated: 1509334916
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 21
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Hub_low
+    100004: Spoke_low3
+    100006: Spoke_low4
+    100008: Spoke_low5
+    100010: Spoke_low6
+    100012: Spoke_low7
+    100014: Spoke_low8
+    100016: Tyre_low
+    100018: Car_001
+    100020: Car_001_Wheel
+    100022: Car_001_Wheel 1
+    100024: Details
+    100026: polySurface1
+    100028: polySurface11
+    100030: polySurface13
+    100032: polySurface15
+    100034: polySurface3
+    100036: polySurface5
+    100038: polySurface7
+    100040: polySurface9
+    100042: transform1
+    100044: transform2
+    100046: transform3
+    100048: transform4
+    100050: transform5
+    100052: transform6
+    100054: transform7
+    100056: transform8
+    400000: //RootNode
+    400002: Hub_low
+    400004: Spoke_low3
+    400006: Spoke_low4
+    400008: Spoke_low5
+    400010: Spoke_low6
+    400012: Spoke_low7
+    400014: Spoke_low8
+    400016: Tyre_low
+    400018: Car_001
+    400020: Car_001_Wheel
+    400022: Car_001_Wheel 1
+    400024: Details
+    400026: polySurface1
+    400028: polySurface11
+    400030: polySurface13
+    400032: polySurface15
+    400034: polySurface3
+    400036: polySurface5
+    400038: polySurface7
+    400040: polySurface9
+    400042: transform1
+    400044: transform2
+    400046: transform3
+    400048: transform4
+    400050: transform5
+    400052: transform6
+    400054: transform7
+    400056: transform8
+    2300000: Hub_low
+    2300002: Spoke_low3
+    2300004: Spoke_low4
+    2300006: Spoke_low5
+    2300008: Spoke_low6
+    2300010: Spoke_low7
+    2300012: Spoke_low8
+    2300014: Tyre_low
+    2300016: Car_001_Wheel
+    2300018: //RootNode
+    3300000: Hub_low
+    3300002: Spoke_low3
+    3300004: Spoke_low4
+    3300006: Spoke_low5
+    3300008: Spoke_low6
+    3300010: Spoke_low7
+    3300012: Spoke_low8
+    3300014: Tyre_low
+    3300016: Car_001_Wheel
+    3300018: //RootNode
+    4300000: Spoke_low5
+    4300002: Spoke_low6
+    4300004: Spoke_low7
+    4300006: Hub_low
+    4300008: Spoke_low8
+    4300010: Tyre_low
+    4300012: Spoke_low3
+    4300014: Spoke_low4
+    4300016: Car_001_Wheel
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
