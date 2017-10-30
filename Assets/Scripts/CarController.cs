@@ -194,7 +194,7 @@ public class CarController : MonoBehaviour
 	{
         isGrounded = false;
 		RaycastHit hit;
-		Ray groundCheck = new Ray(transform.position, Vector3.down);
+		Ray groundCheck = new Ray(transform.position, -transform.up);
 		Debug.DrawRay(transform.position, Vector3.down * 0.3f, Color.red);
 
 		if (Physics.Raycast(groundCheck, out hit, 0.3f))
