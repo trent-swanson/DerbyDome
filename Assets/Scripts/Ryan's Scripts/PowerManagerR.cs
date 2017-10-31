@@ -4,7 +4,7 @@ using UnityEngine;
 using XboxCtrlrInput;
 
 // This script is attached to every players car. It contains functions for activating each ability.
-public class PowerManager : MonoBehaviour
+public class PowerManagerR : MonoBehaviour
 {
     public GameObject ParentObj;
     public GameObject Shield;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PowerSpawner : MonoBehaviour
+public class PowerSpawnerR : MonoBehaviour
 {
     private float timer = 0;
     private bool Active = false;
