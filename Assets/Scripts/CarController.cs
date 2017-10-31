@@ -22,6 +22,7 @@ public class CarController : MonoBehaviour
 
 	[Space]
 
+	public Transform centerOfMass;
 	public float enginePower = 100.0f;
 	public float maxFWVelocity = 10.0f;
     public float maxBWVelocity = 5.0f;
@@ -33,16 +34,20 @@ public class CarController : MonoBehaviour
     public float vibrationIntensity = 0.3f;
     public float vibrationThreshold = 3.5f;
     public float carHealth = 1500;
+	public float JumpHeight = 15000;
 
-    [Space]
-    [Tooltip("B = Kills player || Y = Revives player")]
-    public bool DebugControls = false;
-
-    [Space]
-
+	[Space]
     public Vector3 localVel;
+
+	[Space]
+	[Space]
+	public GameObject[] carParts;
+	[Space]
     public Color death = Color.grey;
+
+	[Space]
     public WheelCollider[] wheelColliders;
+	public Transform[] wheels;
 
     [HideInInspector]
     public float power = 0.0f;
@@ -59,17 +64,27 @@ public class CarController : MonoBehaviour
     [HideInInspector]
     public Color debugAlive = Color.magenta;
 
-
     private bool isGrounded = false;
     private Rigidbody playerBody;
 	private float CurrentRotation;
 
+	[Space]
+	[Space]
+	public float speedTreshold = 1;
+	public int stepsBelowTreshold = 12;
+	public int stepsAboveTreshold = 15;
+
+	[Space]
+	[Space]
+	[Tooltip("B = Kills player || Y = Revives player")]
+	public bool DebugControls = false;
     //==============================================================================================
     // Use this for initialization
     void Start()
     {
 		playerBody = transform.GetComponent<Rigidbody>();
-		playerBody.centerOfMass = new Vector3(0.0f, -0.5f, 0.3f);
+		playerBody.centerOfMass = new Vector3(0f, -0.5f, 0.3f);
+		//wheelColliders [0].ConfigureVehicleSubsteps (speedTreshold, stepsBelowTreshold, stepsAboveTreshold);
     }
 
     //==============================================================================================
@@ -178,8 +193,20 @@ public class CarController : MonoBehaviour
 
 	//==============================================================================================
 
+    private void Jump()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            playerBody.AddForce(Vector3.up * JumpHeight, ForceMode.Impulse);
+            Debug.Log("Is Firing");
+        }
+    }
+
+    //==============================================================================================
+
 	private void GroundCheck()
 	{
+        isGrounded = false;
 		RaycastHit hit;
 		Ray groundCheck = new Ray(transform.position, Vector3.down);
 		Debug.DrawRay(transform.position, Vector3.down * 0.3f, Color.red);
@@ -208,7 +235,6 @@ public class CarController : MonoBehaviour
 			}
 		}
 	}
-
 	IEnumerator WaitForSeconds() {
 		yield return new WaitForSeconds (3);
 		if (isGrounded == false)
@@ -223,7 +249,15 @@ public class CarController : MonoBehaviour
     {
         //Checks the players health and sets them to not alive if it is below zero
         if(carHealth <= 0)
-            isAlive = false;
+		{
+			isAlive = false;
+			wheelColliders[0].steerAngle = 0;
+			wheelColliders[1].steerAngle = 0;
+			wheelColliders[2].steerAngle = 0;
+			wheelColliders[3].steerAngle = 0;
+			wheelColliders[0].steerAngle = 0;
+			Break (power);
+		}
 
         if (XCI.GetButton(XboxButton.B, controller) && DebugControls)
             isAlive = false;
@@ -241,7 +275,13 @@ public class CarController : MonoBehaviour
 
         //Changes color to grey if the players health is below zero
         if (!isAlive)
-            transform.GetChild(1).gameObject.GetComponent<Renderer>().material.color = death;
+		{
+			//transform.GetChild(1).gameObject.GetComponent<Renderer>().material.color = death;
+			for (int i = 0; i < carParts.Length; i++)
+			{
+				carParts [i].GetComponent<Renderer> ().material.color = death;
+			}
+		}
 
         //Calculates the amount of power that will be applied to the wheels, depending on the movement of the player 
         //and if they are currently alive
@@ -329,37 +369,61 @@ public class CarController : MonoBehaviour
 
                 if (isGrounded)
                 {
-                    if (localVel.z > 7.5f || localVel.z < -7.5f)
+                    if (localVel.z > 7f || localVel.z < -7f)
                     {
                         playerBody.drag = declDrag / 2;
-                        playerBody.angularDrag = declDrag / 2;
                     }
 
-                    else if (localVel.z > 3.6f || localVel.z < -3.6f)
+                    else if (localVel.z > 4f || localVel.z < -4f)
                     {
                         playerBody.drag = declDrag;
-                        playerBody.angularDrag = declDrag;
                     }
 
                     else
                     {
                         playerBody.drag = declDrag * 2;
-                        playerBody.angularDrag = declDrag * 2;
                     }
                 }
 
                 else
                 {
                     playerBody.drag = 0;
-                    playerBody.angularDrag = 0;
                 }
 
-                    wheelColliders[0].motorTorque = 0;
-                    wheelColliders[1].motorTorque = 0;
-                    wheelColliders[2].motorTorque = 0;
-                    wheelColliders[3].motorTorque = 0;
+                wheelColliders[0].motorTorque = 0;
+                wheelColliders[1].motorTorque = 0;
+                wheelColliders[2].motorTorque = 0;
+                wheelColliders[3].motorTorque = 0;
             }
+
+		//turn wheels
+		WheelRotation();
+
+        //Jump
+        if (isGrounded)
+        {
+            Jump();
+        }
     }
+
+	//==============================================================================================
+	void WheelRotation()
+	{
+		if (!driftbool)
+		{
+			wheels [0].localEulerAngles = new Vector3 (wheels [0].localEulerAngles.x, wheelColliders [0].steerAngle - wheels [0].localEulerAngles.z, wheels [0].localEulerAngles.z);
+			wheels [1].localEulerAngles = new Vector3 (wheels [1].localEulerAngles.x, (wheelColliders [3].steerAngle - wheels [1].localEulerAngles.z) + 180, wheels [1].localEulerAngles.z);
+		} else
+		{
+			wheels [0].localEulerAngles = new Vector3 (wheels [0].localEulerAngles.x, -(wheelColliders [1].steerAngle - wheels [0].localEulerAngles.z), wheels [0].localEulerAngles.z);
+			wheels [1].localEulerAngles = new Vector3 (wheels [1].localEulerAngles.x, -((wheelColliders [2].steerAngle - wheels [1].localEulerAngles.z) + 180), wheels [1].localEulerAngles.z);
+		}
+		wheels[0].Rotate(wheelColliders[0].rpm / 60 * 360 * Time.deltaTime, 0, 0);
+		wheels[1].Rotate(wheelColliders[3].rpm / 60 * 360 * Time.deltaTime, 0, 0);
+		wheels[2].Rotate(wheelColliders[1].rpm / 60 * 360 * Time.deltaTime, 0, 0);
+		wheels[3].Rotate(wheelColliders[2].rpm / 60 * 360 * Time.deltaTime, 0, 0);
+	}
+
     //==============================================================================================
     void Vibration(int playerNum, float left, float right)
     {
@@ -386,14 +450,12 @@ public class CarController : MonoBehaviour
         if (isGrounded)
         {
             playerBody.drag = typeOfDrag;
-            playerBody.angularDrag = typeOfDrag;
         }
 
         //If the player is not on the ground, no drag is applied to them so they dont slow down travelling through the air
         else
         {
             playerBody.drag = 0;
-            playerBody.angularDrag = 0;
         }
     }
 }
