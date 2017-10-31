@@ -1,7 +1,7 @@
 fileFormatVersion: 2
-guid: 3e050ce8379fa8442a7b075fd2834fcb
-timeCreated: 1507602263
-licenseType: Free
+guid: 5c8d7cbe5377eef40b3307476391b5ab
+timeCreated: 1508800245
+licenseType: Pro
 ModelImporter:
   serializedVersion: 21
   fileIDToRecycleName:
@@ -12,7 +12,7 @@ ModelImporter:
     4300000: polySurface3
     9500000: //RootNode
   materials:
-    importMaterials: 0
+    importMaterials: 1
     materialName: 0
     materialSearch: 1
   animations:
@@ -43,8 +43,8 @@ ModelImporter:
     addColliders: 0
     importVisibility: 1
     importBlendShapes: 1
-    importCameras: 0
-    importLights: 0
+    importCameras: 1
+    importLights: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
