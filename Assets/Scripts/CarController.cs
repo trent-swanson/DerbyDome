@@ -44,6 +44,10 @@ public class CarController : MonoBehaviour
 	public GameObject[] carParts;
 	[Space]
     public Color death = Color.grey;
+	[Space]
+	public GameObject leftLightTrail;
+	public GameObject rightLightTrail;
+	public float lightTrailVelocity;
 
 	[Space]
     public WheelCollider[] wheelColliders;
@@ -67,6 +71,8 @@ public class CarController : MonoBehaviour
     private bool isGrounded = false;
     private Rigidbody playerBody;
 	private float CurrentRotation;
+	private bool isPuased = false;
+	private GameObject pauseCanvas;
 
 	[Space]
 	[Space]
@@ -82,6 +88,7 @@ public class CarController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+		pauseCanvas = GameObject.FindGameObjectWithTag ("Pause");
 		playerBody = transform.GetComponent<Rigidbody>();
 		playerBody.centerOfMass = new Vector3(0f, -0.5f, 0.3f);
 		//wheelColliders [0].ConfigureVehicleSubsteps (speedTreshold, stepsBelowTreshold, stepsAboveTreshold);
@@ -244,7 +251,23 @@ public class CarController : MonoBehaviour
 	}
 
     //==============================================================================================
-    // Update is called once per frame
+	void Update()
+	{
+		if (XCI.GetButtonUp(XboxButton.Start, controller))
+		{
+			if (isPuased){
+				pauseCanvas.transform.GetChild (0).gameObject.SetActive (false);
+				Time.timeScale = 1f;
+				isPuased = false;
+			}
+			else {
+				pauseCanvas.transform.GetChild (0).gameObject.SetActive (true);
+				Time.timeScale = 0f;
+				isPuased = true;
+			}
+		}
+	}
+
     void FixedUpdate()
     {
         //Checks the players health and sets them to not alive if it is below zero
@@ -256,7 +279,7 @@ public class CarController : MonoBehaviour
 			wheelColliders[2].steerAngle = 0;
 			wheelColliders[3].steerAngle = 0;
 			wheelColliders[0].steerAngle = 0;
-			Break (power);
+			Break (10000);
 		}
 
         if (XCI.GetButton(XboxButton.B, controller) && DebugControls)
@@ -266,11 +289,6 @@ public class CarController : MonoBehaviour
         {
             isAlive = true;
             transform.GetChild(1).gameObject.GetComponent<Renderer>().material.color = debugAlive;
-        }
-
-        if (XCI.GetButton(XboxButton.Start, controller))
-        {
-            SceneManager.LoadScene(0);
         }
 
         //Changes color to grey if the players health is below zero
@@ -311,17 +329,28 @@ public class CarController : MonoBehaviour
 		FlipCheck();
             
 
-            if (localVel.z >= maxFWVelocity)
-            {
-                float temp = localVel.z - maxFWVelocity;
-                localVel.z -= temp;
-            }
+		if (localVel.z >= maxFWVelocity)
+        {
+        	float temp = localVel.z - maxFWVelocity;
+            localVel.z -= temp;
+       	}
 
-            if (localVel.z <= -maxBWVelocity)
-            {
-                float temp = localVel.z + maxBWVelocity;
-                localVel.z -= temp;
-            }
+        if (localVel.z <= -maxBWVelocity)
+        {
+            float temp = localVel.z + maxBWVelocity;
+        	localVel.z -= temp;
+        }
+
+		if (localVel.z >= lightTrailVelocity)
+		{
+			leftLightTrail.GetComponent<TrailRenderer> ().enabled = true;
+			rightLightTrail.GetComponent<TrailRenderer> ().enabled = true;
+		}
+		else
+		{
+			leftLightTrail.GetComponent<TrailRenderer> ().enabled = false;
+			rightLightTrail.GetComponent<TrailRenderer> ().enabled = false;
+		}
 
             //Allows for drift mode
             Drift();
