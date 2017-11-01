@@ -15,10 +15,10 @@ public class Scoreboard : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        score[0] = Score.Player1ScoreActual;
-        score[1] = Score.Player2ScoreActual;
-        score[2] = Score.Player3ScoreActual;
-        score[3] = Score.Player4ScoreActual;
+        score[0] = Score.Player1Score;
+        score[1] = Score.Player2Score;
+        score[2] = Score.Player3Score;
+        score[3] = Score.Player4Score;
         playerNum[0] = 1;
         playerNum[1] = 2;
         playerNum[2] = 3;
@@ -54,10 +54,10 @@ public class Scoreboard : MonoBehaviour {
         if (timer >= wait)
         {
             SceneManager.LoadScene(0);
-            Score.Player1ScoreActual = 0;
-            Score.Player2ScoreActual = 0;
-            Score.Player3ScoreActual = 0;
-            Score.Player4ScoreActual = 0;
+            Score.Player1Score = 0;
+            Score.Player2Score = 0;
+            Score.Player3Score = 0;
+            Score.Player4Score = 0;
             scoreRoundCounter.roundCount = 0;
         }
 	}

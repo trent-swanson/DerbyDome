@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4873611732321960}
   - component: {fileID: 64523759120142990}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Arena
   m_TagString: Ground
   m_Icon: {fileID: 0}

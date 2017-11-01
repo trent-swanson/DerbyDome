@@ -22,10 +22,8 @@ public class CarController : MonoBehaviour
 
 	[Space]
 
-	public Transform centerOfMass;
 	public float enginePower = 100.0f;
-	public float maxFWVelocity = 10.0f;
-    public float maxBWVelocity = 5.0f;
+	public float maxSpeed = 150.0f;
 	public float maxSteer = 15.0f;
 	public float driftSteer = 35.0f;
 	public float acclDrag = 0.5f;
@@ -38,6 +36,7 @@ public class CarController : MonoBehaviour
 
 	[Space]
     public Vector3 localVel;
+    public float speed;
 
 	[Space]
 	[Space]
@@ -47,7 +46,7 @@ public class CarController : MonoBehaviour
 	[Space]
 	public GameObject leftLightTrail;
 	public GameObject rightLightTrail;
-	public float lightTrailVelocity;
+	public float lightTrailSpeed;
 
 	[Space]
     public WheelCollider[] wheelColliders;
@@ -84,6 +83,8 @@ public class CarController : MonoBehaviour
 	[Space]
 	[Tooltip("B = Kills player || Y = Revives player")]
 	public bool DebugControls = false;
+
+    private int layerMask;
     //==============================================================================================
     // Use this for initialization
     void Start()
@@ -91,6 +92,18 @@ public class CarController : MonoBehaviour
 		pauseCanvas = GameObject.FindGameObjectWithTag ("Pause");
 		playerBody = transform.GetComponent<Rigidbody>();
 		playerBody.centerOfMass = new Vector3(0f, -0.5f, 0.3f);
+        layerMask = LayerMask.GetMask("Ground");
+        isGrounded = false;
+        
+        if(controller == XboxController.First) {
+            playerID = 1;
+        } else if(controller == XboxController.Second) {
+            playerID = 2;
+        } else if(controller == XboxController.Third) {
+            playerID = 3;
+        } else if(controller == XboxController.Fourth) {
+            playerID = 4;
+        } 
 		//wheelColliders [0].ConfigureVehicleSubsteps (speedTreshold, stepsBelowTreshold, stepsAboveTreshold);
     }
 
@@ -120,12 +133,6 @@ public class CarController : MonoBehaviour
     private void Reverse()
     {
         Drag(acclDrag);
-
-		if (localVel.z > 0.01f)
-		{
-			Break(reverse);
-			return;
-		}
 
 		wheelColliders[0].brakeTorque = 0;
 		wheelColliders[1].brakeTorque = 0;
@@ -160,7 +167,7 @@ public class CarController : MonoBehaviour
         {
             driftbool = false;
             steer = 0;
-            steer = XCI.GetAxis(XboxAxis.LeftStickX, controller) * maxSteer * ((localVel.z / 120) + 0.8f);
+            steer = XCI.GetAxis(XboxAxis.LeftStickX, controller) * maxSteer;
             wheelColliders[0].steerAngle = steer;
             wheelColliders[1].steerAngle = 0;
             wheelColliders[2].steerAngle = 0;
@@ -173,21 +180,10 @@ public class CarController : MonoBehaviour
     {
         Drag(acclDrag);
 
-		if (localVel.z < -0.01f && isAlive)
-		{
-			Break(power);
-			return;
-		}
-
         wheelColliders[0].brakeTorque = 0;
         wheelColliders[1].brakeTorque = 0;
         wheelColliders[2].brakeTorque = 0;
         wheelColliders[3].brakeTorque = 0;
-
-        wheelColliders[0].motorTorque = 0;
-        wheelColliders[1].motorTorque = 0;
-        wheelColliders[2].motorTorque = 0;
-        wheelColliders[3].motorTorque = 0;
 
         if (isAlive)
         {
@@ -202,10 +198,12 @@ public class CarController : MonoBehaviour
 
     private void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (XCI.GetButtonDown(XboxButton.LeftBumper, controller) || XCI.GetButtonDown(XboxButton.RightBumper, controller))
         {
-            playerBody.AddForce(Vector3.up * JumpHeight, ForceMode.Impulse);
-            Debug.Log("Is Firing");
+            if(isGrounded == true)
+            {
+                playerBody.AddForce(Vector3.up * JumpHeight, ForceMode.Impulse);
+            }
         }
     }
 
@@ -213,12 +211,11 @@ public class CarController : MonoBehaviour
 
 	private void GroundCheck()
 	{
-        isGrounded = false;
 		RaycastHit hit;
-		Ray groundCheck = new Ray(transform.position, Vector3.down);
-		Debug.DrawRay(transform.position, Vector3.down * 0.3f, Color.red);
+		Ray groundCheck = new Ray(transform.position, -transform.up);
+		Debug.DrawRay(transform.position, -transform.up * 0.3f, Color.red);
 
-		if (Physics.Raycast(groundCheck, out hit, 0.3f))
+		if (Physics.Raycast(groundCheck, out hit, 0.3f, layerMask))
 		{
 			if (hit.collider.tag == "Ground")
 				isGrounded = true;
@@ -234,7 +231,7 @@ public class CarController : MonoBehaviour
 		Ray groundCheck = new Ray(transform.position, transform.up);
 		Debug.DrawRay(transform.position, transform.up * 1.4f, Color.yellow);
 
-		if (Physics.Raycast(groundCheck, out hit, 1.4f))
+		if (Physics.Raycast(groundCheck, out hit, 1.4f, layerMask))
 		{
 			if (hit.collider.tag == "Ground")
 			{
@@ -266,82 +263,36 @@ public class CarController : MonoBehaviour
 				isPuased = true;
 			}
 		}
+
+        //ground check
+		//GroundCheck();
+
+		//check is upsidedown
+		//FlipCheck();
+
 	}
 
     void FixedUpdate()
     {
-        //Checks the players health and sets them to not alive if it is below zero
-        if(carHealth <= 0)
-		{
-			isAlive = false;
-			wheelColliders[0].steerAngle = 0;
-			wheelColliders[1].steerAngle = 0;
-			wheelColliders[2].steerAngle = 0;
-			wheelColliders[3].steerAngle = 0;
-			wheelColliders[0].steerAngle = 0;
-			Break (10000);
-		}
+        //car speed in KM/H
+        speed = playerBody.velocity.magnitude * 3.6f;
+        localVel = playerBody.transform.InverseTransformDirection(playerBody.velocity);
 
-        if (XCI.GetButton(XboxButton.B, controller) && DebugControls)
-            isAlive = false;
-
-        if (XCI.GetButton(XboxButton.Y, controller) && DebugControls)
+        if (isAlive)
         {
-            isAlive = true;
-            transform.GetChild(1).gameObject.GetComponent<Renderer>().material.color = debugAlive;
+            if (speed > maxSpeed)
+            {
+                power = 0;
+                reverse = 0;
+            }
+            else
+            {
+                power = XCI.GetAxis(XboxAxis.RightTrigger, controller) * (enginePower * speedMultiplier) * Time.fixedDeltaTime;
+                reverse = XCI.GetAxis(XboxAxis.LeftTrigger, controller) * (enginePower * speedMultiplier) * Time.fixedDeltaTime;
+            }
         }
 
-        //Changes color to grey if the players health is below zero
-        if (!isAlive)
-		{
-			//transform.GetChild(1).gameObject.GetComponent<Renderer>().material.color = death;
-			for (int i = 0; i < carParts.Length; i++)
-			{
-				carParts [i].GetComponent<Renderer> ().material.color = death;
-			}
-		}
-
-        //Calculates the amount of power that will be applied to the wheels, depending on the movement of the player 
-        //and if they are currently alive
-        else
-        {
-            power = XCI.GetAxis(XboxAxis.RightTrigger, controller) * (enginePower * speedMultiplier) * Time.fixedDeltaTime;
-            reverse = XCI.GetAxis(XboxAxis.LeftTrigger, controller) * (enginePower * speedMultiplier) * Time.fixedDeltaTime;
-            localVel = playerBody.transform.InverseTransformDirection(playerBody.velocity);
-        }
-
-        //Sets up controller numbers to ensure that vibration is applied to the correct controller
-        if (controller == XboxController.First)
-            playerID = 1;
-        else if (controller == XboxController.Second)
-            playerID = 2;
-        else if (controller == XboxController.Third)
-            playerID = 3;
-        else if (controller == XboxController.Fourth)
-            playerID = 4;
-        else
-            playerID = 0;
-
-		//ground check
-		GroundCheck();
-
-		//check is upsidedown
-		FlipCheck();
-            
-
-		if (localVel.z >= maxFWVelocity)
-        {
-        	float temp = localVel.z - maxFWVelocity;
-            localVel.z -= temp;
-       	}
-
-        if (localVel.z <= -maxBWVelocity)
-        {
-            float temp = localVel.z + maxBWVelocity;
-        	localVel.z -= temp;
-        }
-
-		if (localVel.z >= lightTrailVelocity)
+		if (speed >= lightTrailSpeed && localVel.z > 0.01f)
 		{
 			leftLightTrail.GetComponent<TrailRenderer> ().enabled = true;
 			rightLightTrail.GetComponent<TrailRenderer> ().enabled = true;
@@ -359,43 +310,34 @@ public class CarController : MonoBehaviour
             if ((XCI.GetAxis(XboxAxis.LeftTrigger, controller) > 0) && (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0) && isAlive)
             {
                 Break(power);
-                //Sets vibration
-                Vibration(playerID, vibrationIntensity, vibrationIntensity);
             }
 
             else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0 && isAlive)
             {
-                Accelerate();
-                //Sets vibration
-                Vibration(playerID, vibrationIntensity, vibrationIntensity);
+                if (localVel.z < -0.01f)
+                {
+                    Break(power);
+                }
+                else
+                {
+                    Accelerate();
+                }
             }
 
             else if (XCI.GetAxis(XboxAxis.LeftTrigger, controller) > 0 && isAlive)
             {
-                if (localVel.z > 8)
+                if (localVel.z > 0.01f)
                 {
-                    Break(power);
-                    //Sets vibration
-                    Vibration(playerID, vibrationIntensity, vibrationIntensity);
+                    Break(reverse);
                 }
-
                 else
                 {
                     Reverse();
-                    //Sets vibration
-                    Vibration(playerID, vibrationIntensity, vibrationIntensity);
                 }
             }
 
             else
             {
-                //Removes vibration to ensure players that are not moving are not vibrating if they are below the threshold
-                if (localVel.z > vibrationThreshold || localVel.z < -vibrationThreshold)
-                    Vibration(playerID, vibrationIntensity, vibrationIntensity);
-
-                else if (localVel.z <= vibrationThreshold || localVel.z >= -vibrationThreshold)
-                    Vibration(playerID, 0.0f, 0.0f);
-
                 if (isGrounded)
                 {
                     if (localVel.z > 7f || localVel.z < -7f)
@@ -428,11 +370,7 @@ public class CarController : MonoBehaviour
 		//turn wheels
 		WheelRotation();
 
-        //Jump
-        if (isGrounded)
-        {
-            Jump();
-        }
+        //Jump();
     }
 
 	//==============================================================================================
@@ -486,5 +424,26 @@ public class CarController : MonoBehaviour
         {
             playerBody.drag = 0;
         }
+    }
+
+    //==============================================================================================
+    public void TakeDamage(float dmgAmount)
+    {
+        carHealth -= dmgAmount;
+        if(carHealth <= 0)
+		{
+			isAlive = false;
+			wheelColliders[0].steerAngle = 0;
+			wheelColliders[1].steerAngle = 0;
+			wheelColliders[2].steerAngle = 0;
+			wheelColliders[3].steerAngle = 0;
+			wheelColliders[0].steerAngle = 0;
+			Break (10000);
+            for (int i = 0; i < carParts.Length; i++)
+			{
+				carParts[i].GetComponent<Renderer> ().material.color = death;
+                carParts[i].GetComponent<carPart>().alive = false;
+			}
+		}
     }
 }

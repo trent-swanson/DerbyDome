@@ -9,27 +9,23 @@ public class carPart : MonoBehaviour {
     public Color heavyDamage = Color.red;
     public float lightDamageThreshold = 800;
     public float heavyDamageThreshold = 200;
-    public int minAttackVelocity = 6;
+    public int minAttackSpeed = 20;
+    
+    [HideInInspector]
+    public bool alive = true;
 
-
-    // Use this for initialization
-    void Start ()
-    {
-		
-	}
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Front Bumper" && other.GetComponent<Damage>().carVelo >= minAttackVelocity)
+        if(other.gameObject.tag == "FrontBumper" && other.GetComponent<Damage>().carSpeed >= minAttackSpeed && alive)
         {
-            float damage = other.gameObject.GetComponent<Damage>().damageTaken;
-            partHealth -= damage;
+            float tempDamage = other.gameObject.GetComponent<Damage>().damageToTake;
+            partHealth -= tempDamage;
 
             if (partHealth <= heavyDamageThreshold)
             {
                 gameObject.GetComponent<Renderer>().material.color = heavyDamage;
             }
-
             else if (partHealth <= lightDamageThreshold)
             {
                 gameObject.GetComponent<Renderer>().material.color = lightDamage;

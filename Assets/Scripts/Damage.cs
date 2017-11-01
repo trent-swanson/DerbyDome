@@ -7,68 +7,65 @@ public class Damage : MonoBehaviour
     Rigidbody rigidBody;
 
     public float attackValue = 100.0f;
-    //change this positivly to increase DMG
-    public float still = 1;
-    public float damageTaken;
-    public float carVelo;
-    public int minAttackVelocity = 6;
+    public float damageToTake;
+    public float carSpeed;
+    public float minAttackSpeed = 20;
+    private Score scoreScript;
+    private CarController carController;
+    public float hitTimer = 3f;
+    public float timer;
 
     // Use this for initialization
     void Start()
     {
         rigidBody = GetComponentInParent<Rigidbody>();
+        scoreScript = GameObject.FindGameObjectWithTag("Manager").GetComponent<Score>();
+        carController = transform.parent.GetComponent<CarController>();
+        timer = 0;
     }
 
     void Update()
     {
-        carVelo = transform.parent.GetComponent<CarController>().localVel.z;
-        damageTaken = (attackValue + ((carVelo * Random.Range(0.1f, 1.0f)) * 10));
-    }
+        carSpeed = carController.speed;
+        damageToTake = attackValue + carSpeed;
 
-    void CarDamage()
-    {
-
+        if(timer > 0) {
+            timer -= Time.deltaTime;
+        }
     }
 
     private void BodyScore()
     {
-        if (rigidBody.transform.parent.name == "Car1")
-            Score.Player1ScoreActual += (int)damageTaken;
-        if (rigidBody.transform.parent.name == "Car2")
-            Score.Player2ScoreActual += (int)damageTaken;
-        if (rigidBody.transform.parent.name == "Car3")
-            Score.Player3ScoreActual += (int)damageTaken;
-        if (rigidBody.transform.parent.name == "Car4")
-            Score.Player4ScoreActual += (int)damageTaken;
+        scoreScript.ScoreIncrease(carController.playerID, (int)damageToTake);
     }
 
     private void BumperScore()
     {
-
+        scoreScript.ScoreIncrease(carController.playerID, (int)damageToTake / 2);
     }
 
-    void OnCollisionEnter(Collision other)
+    void OnTriggerEnter(Collider other)
     {
-        if (carVelo >= minAttackVelocity)
+        if (carSpeed >= minAttackSpeed && timer <= 0)
         {
             //Calculation occurs with head on collision with another car
-            if (other.gameObject.tag == "Front Bumper")
+            /*/if (other.gameObject.tag == "FrontBumper")
             {
-                other.gameObject.GetComponent<CarController>().carHealth -= (damageTaken / 2);
-                //Gets a copy of the damage dealt for the Score.CS NOT NOT DELETE
-                Debug.Log("bumper hit");
-                Debug.Log(transform.parent.GetComponent<CarController>().playerID + ":  " + other.gameObject.GetComponent<CarController>().carHealth);
-                
+                other.transform.parent.gameObject.GetComponent<CarController>().TakeDamage(damageToTake / 2);
+                Debug.Log("BumperHit!!!!!!");
+                BumperScore();
+                Debug.Log(transform.parent.GetComponent<CarController>().playerID + ":  " + other.gameObject.GetComponent<CarController>().carHealth); 
+                timer = hitTimer;               
                 return;
-            }
-
+            }*/
             //Calculation occurs when a player hits anywhere on the other car except for the bumper
-            else if (other.gameObject.tag == "Player")
+            if (other.gameObject.tag == "Player" && other.GetComponent<CarController>().isAlive)
             {
-                other.gameObject.GetComponent<CarController>().carHealth -= damageTaken;
-                //Gets a copy of the damage dealt for the Score.CS NOT NOT DELETE
+                other.gameObject.GetComponent<CarController>().TakeDamage(damageToTake);
+                Debug.Log("body hit");
                 BodyScore();
-                Debug.Log(transform.parent.GetComponent<CarController>().playerID + ":  " + other.gameObject.GetComponent<CarController>().carHealth);
+                Debug.Log("Player" + other.gameObject.GetComponent<CarController>().playerID + ":  " + other.gameObject.GetComponent<CarController>().carHealth);
+                timer = hitTimer;
                 return;
             }
         }
