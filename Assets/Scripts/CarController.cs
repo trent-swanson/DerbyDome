@@ -70,8 +70,6 @@ public class CarController : MonoBehaviour
     private bool isGrounded = false;
     private Rigidbody playerBody;
 	private float CurrentRotation;
-	private bool isPuased = false;
-	private GameObject pauseCanvas;
 
 	[Space]
 	[Space]
@@ -90,7 +88,6 @@ public class CarController : MonoBehaviour
     //=========================================START===============================================
     void Start()
     {
-		pauseCanvas = GameObject.FindGameObjectWithTag ("Pause");
 		playerBody = transform.GetComponent<Rigidbody>();
 		playerBody.centerOfMass = new Vector3(0f, -0.5f, 0.3f);
         playerBody.maxAngularVelocity = 4.5f;
@@ -269,20 +266,6 @@ public class CarController : MonoBehaviour
     //=========================================UPDATE==============================================
 	void Update()
 	{
-		if (XCI.GetButtonUp(XboxButton.Start, controller))
-		{
-			if (isPuased){
-				pauseCanvas.transform.GetChild (0).gameObject.SetActive (false);
-				Time.timeScale = 1f;
-				isPuased = false;
-			}
-			else {
-				pauseCanvas.transform.GetChild (0).gameObject.SetActive (true);
-				Time.timeScale = 0f;
-				isPuased = true;
-			}
-		}
-
 		//GroundCheck();
 
 		//check is upsidedown

@@ -13,6 +13,14 @@ public class Score : MonoBehaviour {
     public Text Player3ScoreText;
     public Text Player4ScoreText;
 
+    void Start()
+    {
+        Player1ScoreText.text = "Player 1: " + Player1Score.ToString();
+        Player2ScoreText.text = "Player 2: " + Player2Score.ToString();
+        Player3ScoreText.text = "Player 3: " + Player3Score.ToString();
+        Player4ScoreText.text = "Player 4: " + Player4Score.ToString();
+    }
+
     public void ScoreIncrease(int playerID, int score)
     {
         if(playerID == 1) {
