@@ -85,13 +85,16 @@ public class CarController : MonoBehaviour
 	public bool DebugControls = false;
 
     private int layerMask;
-    //==============================================================================================
-    // Use this for initialization
+
+
+    //=========================================START===============================================
     void Start()
     {
 		pauseCanvas = GameObject.FindGameObjectWithTag ("Pause");
 		playerBody = transform.GetComponent<Rigidbody>();
 		playerBody.centerOfMass = new Vector3(0f, -0.5f, 0.3f);
+        playerBody.maxAngularVelocity = 4.5f;
+        //playerBody.maxDepenetrationVelocity = 1f;
         layerMask = LayerMask.GetMask("Ground");
         isGrounded = false;
         
@@ -107,49 +110,9 @@ public class CarController : MonoBehaviour
 		//wheelColliders [0].ConfigureVehicleSubsteps (speedTreshold, stepsBelowTreshold, stepsAboveTreshold);
     }
 
-    //==============================================================================================
-    private void Break(float breakValue)
-    {
-        Drag(declDrag);
-
-        //Resets the motorTorque of the car to minimise potential bugs, and to stop the player if they are not alive
-        wheelColliders[0].motorTorque = 0;
-        wheelColliders[1].motorTorque = 0;
-        wheelColliders[2].motorTorque = 0;
-        wheelColliders[3].motorTorque = 0;
-
-        //If the player is alive and currently breaking, the appropriate break torque is applied
-        if (isAlive)
-        {
-            wheelColliders[0].brakeTorque = breakValue;
-            wheelColliders[1].brakeTorque = breakValue;
-            wheelColliders[2].brakeTorque = breakValue;
-            wheelColliders[3].brakeTorque = breakValue;
-        }
-        
-    }
-
-    //==============================================================================================
-    private void Reverse()
-    {
-        Drag(acclDrag);
-
-		wheelColliders[0].brakeTorque = 0;
-		wheelColliders[1].brakeTorque = 0;
-		wheelColliders[2].brakeTorque = 0;
-		wheelColliders[3].brakeTorque = 0;
-
-        if (isAlive)
-        {
-            wheelColliders[0].motorTorque = 0;
-            wheelColliders[1].motorTorque = -reverse;
-            wheelColliders[2].motorTorque = -reverse;
-            wheelColliders[3].motorTorque = 0;
-        }
-    }
-
-    //==============================================================================================
-    private void Drift()
+    //=========================================DRIVE===============================================
+    #region Driving 
+    private void Turning()
     {
         //Drift Steering
         if (XCI.GetButton(XboxButton.X, controller) && isAlive)
@@ -175,7 +138,6 @@ public class CarController : MonoBehaviour
         }
     }
 
-    //==============================================================================================
     private void Accelerate()
     {
         Drag(acclDrag);
@@ -194,8 +156,64 @@ public class CarController : MonoBehaviour
         }
     }
 
-	//==============================================================================================
+    
+    private void Reverse()
+    {
+        Drag(acclDrag);
 
+		wheelColliders[0].brakeTorque = 0;
+		wheelColliders[1].brakeTorque = 0;
+		wheelColliders[2].brakeTorque = 0;
+		wheelColliders[3].brakeTorque = 0;
+
+        if (isAlive)
+        {
+            wheelColliders[0].motorTorque = 0;
+            wheelColliders[1].motorTorque = -reverse;
+            wheelColliders[2].motorTorque = -reverse;
+            wheelColliders[3].motorTorque = 0;
+        }
+    }
+
+    void Drag(float typeOfDrag)
+    {
+        //Checks if the player is on the ground and applies drag to them
+        if (isGrounded)
+        {
+            playerBody.drag = typeOfDrag;
+        }
+
+        //If the player is not on the ground, no drag is applied to them so they dont slow down travelling through the air
+        else
+        {
+            playerBody.drag = 0;
+        }
+    }
+
+    private void Break(float breakValue)
+    {
+        Drag(declDrag);
+
+        //Resets the motorTorque of the car to minimise potential bugs, and to stop the player if they are not alive
+        wheelColliders[0].motorTorque = 0;
+        wheelColliders[1].motorTorque = 0;
+        wheelColliders[2].motorTorque = 0;
+        wheelColliders[3].motorTorque = 0;
+
+        //If the player is alive and currently breaking, the appropriate break torque is applied
+        if (isAlive)
+        {
+            wheelColliders[0].brakeTorque = breakValue;
+            wheelColliders[1].brakeTorque = breakValue;
+            wheelColliders[2].brakeTorque = breakValue;
+            wheelColliders[3].brakeTorque = breakValue;
+        }
+        
+    }
+    #endregion
+
+	//========================================RAYCASTS=============================================
+    #region Flip, Jump, ground check
     private void Jump()
     {
         if (XCI.GetButtonDown(XboxButton.LeftBumper, controller) || XCI.GetButtonDown(XboxButton.RightBumper, controller))
@@ -206,8 +224,6 @@ public class CarController : MonoBehaviour
             }
         }
     }
-
-    //==============================================================================================
 
 	private void GroundCheck()
 	{
@@ -223,7 +239,6 @@ public class CarController : MonoBehaviour
 				isGrounded = false;
 		}
 	}
-
 	private void FlipCheck()
 	{
 		CurrentRotation = transform.eulerAngles.y;
@@ -239,15 +254,19 @@ public class CarController : MonoBehaviour
 			}
 		}
 	}
-	IEnumerator WaitForSeconds() {
+
+	IEnumerator WaitForSeconds()
+    {
 		yield return new WaitForSeconds (3);
 		if (isGrounded == false)
 		{
 			transform.localEulerAngles = new Vector3 (0, CurrentRotation, 0);
 		}
 	}
+    #endregion
 
-    //==============================================================================================
+
+    //=========================================UPDATE==============================================
 	void Update()
 	{
 		if (XCI.GetButtonUp(XboxButton.Start, controller))
@@ -264,16 +283,16 @@ public class CarController : MonoBehaviour
 			}
 		}
 
-        //ground check
 		//GroundCheck();
 
 		//check is upsidedown
 		//FlipCheck();
-
 	}
 
     void FixedUpdate()
     {
+        Debug.Log(playerBody.velocity);
+
         //car speed in KM/H
         speed = playerBody.velocity.magnitude * 3.6f;
         localVel = playerBody.transform.InverseTransformDirection(playerBody.velocity);
@@ -292,7 +311,79 @@ public class CarController : MonoBehaviour
             }
         }
 
-		if (speed >= lightTrailSpeed && localVel.z > 0.01f)
+        //Allows for turning and drift
+        Turning();
+
+        //Allows the players movement if they are still alive
+        if ((XCI.GetAxis(XboxAxis.LeftTrigger, controller) > 0) && (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0) && isAlive)
+        {
+            Break(power);
+        }
+        else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0 && isAlive)
+        {
+            if (localVel.z < -0.01f)
+            {
+                Break(power);
+            }
+            else
+            {
+                Accelerate();
+            }
+        }
+        else if (XCI.GetAxis(XboxAxis.LeftTrigger, controller) > 0 && isAlive)
+        {
+            if (localVel.z > 0.01f)
+            {
+                Break(reverse);
+            }
+            else
+            {
+                Reverse();
+            }
+        }
+        else
+        {
+            if (isGrounded)
+            {
+                if (localVel.z > 7f || localVel.z < -7f)
+                {
+                    playerBody.drag = declDrag / 2;
+                }
+
+                else if (localVel.z > 4f || localVel.z < -4f)
+                {
+                   playerBody.drag = declDrag;
+                }
+
+                else
+                {
+                    playerBody.drag = declDrag * 2;
+                }
+            }
+            else
+            {
+                playerBody.drag = 0;
+            }
+
+            wheelColliders[0].motorTorque = 0;
+            wheelColliders[1].motorTorque = 0;
+            wheelColliders[2].motorTorque = 0;
+            wheelColliders[3].motorTorque = 0;
+        }
+
+		//move wheel visuals
+		WheelRotation();
+
+        //Jump();
+
+        LightTrails();
+    }
+
+	//=========================================OTHER=================================================
+    #region Other
+    void LightTrails()
+    {
+        if (speed >= lightTrailSpeed && localVel.z > 0.01f)
 		{
 			leftLightTrail.GetComponent<TrailRenderer> ().enabled = true;
 			rightLightTrail.GetComponent<TrailRenderer> ().enabled = true;
@@ -302,78 +393,8 @@ public class CarController : MonoBehaviour
 			leftLightTrail.GetComponent<TrailRenderer> ().enabled = false;
 			rightLightTrail.GetComponent<TrailRenderer> ().enabled = false;
 		}
-
-            //Allows for drift mode
-            Drift();
-
-            //Allows the players movement if they are still alive
-            if ((XCI.GetAxis(XboxAxis.LeftTrigger, controller) > 0) && (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0) && isAlive)
-            {
-                Break(power);
-            }
-
-            else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0 && isAlive)
-            {
-                if (localVel.z < -0.01f)
-                {
-                    Break(power);
-                }
-                else
-                {
-                    Accelerate();
-                }
-            }
-
-            else if (XCI.GetAxis(XboxAxis.LeftTrigger, controller) > 0 && isAlive)
-            {
-                if (localVel.z > 0.01f)
-                {
-                    Break(reverse);
-                }
-                else
-                {
-                    Reverse();
-                }
-            }
-
-            else
-            {
-                if (isGrounded)
-                {
-                    if (localVel.z > 7f || localVel.z < -7f)
-                    {
-                        playerBody.drag = declDrag / 2;
-                    }
-
-                    else if (localVel.z > 4f || localVel.z < -4f)
-                    {
-                        playerBody.drag = declDrag;
-                    }
-
-                    else
-                    {
-                        playerBody.drag = declDrag * 2;
-                    }
-                }
-
-                else
-                {
-                    playerBody.drag = 0;
-                }
-
-                wheelColliders[0].motorTorque = 0;
-                wheelColliders[1].motorTorque = 0;
-                wheelColliders[2].motorTorque = 0;
-                wheelColliders[3].motorTorque = 0;
-            }
-
-		//turn wheels
-		WheelRotation();
-
-        //Jump();
     }
 
-	//==============================================================================================
 	void WheelRotation()
 	{
 		if (!driftbool)
@@ -390,8 +411,6 @@ public class CarController : MonoBehaviour
 		wheels[2].Rotate(wheelColliders[1].rpm / 60 * 360 * Time.deltaTime, 0, 0);
 		wheels[3].Rotate(wheelColliders[2].rpm / 60 * 360 * Time.deltaTime, 0, 0);
 	}
-
-    //==============================================================================================
     void Vibration(int playerNum, float left, float right)
     {
         //Sets the vibration if player one is the active player in the update function
@@ -409,24 +428,9 @@ public class CarController : MonoBehaviour
         else
             return;
     }
+    #endregion
 
-    //==============================================================================================
-    void Drag(float typeOfDrag)
-    {
-        //Checks if the player is on the ground and applies drag to them
-        if (isGrounded)
-        {
-            playerBody.drag = typeOfDrag;
-        }
-
-        //If the player is not on the ground, no drag is applied to them so they dont slow down travelling through the air
-        else
-        {
-            playerBody.drag = 0;
-        }
-    }
-
-    //==============================================================================================
+    //=========================================DAMAGE===============================================
     public void TakeDamage(float dmgAmount)
     {
         carHealth -= dmgAmount;
