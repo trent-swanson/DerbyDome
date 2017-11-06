@@ -504,13 +504,13 @@ public class CarController : MonoBehaviour
 		{
 			isAlive = false;
             if (playerID == 1) {
-                Score.player1Deaths++;
+                Score.playerData[0].playerDeaths++;
             } else if (playerID == 2) {
-                Score.player2Deaths++;
+                Score.playerData[1].playerDeaths++;
             } else if (playerID == 3) {
-                Score.player3Deaths++;
+                Score.playerData[2].playerDeaths++;
             } else if (playerID == 4) {
-                Score.player4Deaths++;
+                Score.playerData[3].playerDeaths++;
             }
 			wheelColliders[0].steerAngle = 0;
 			wheelColliders[1].steerAngle = 0;

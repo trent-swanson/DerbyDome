@@ -5,18 +5,9 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class Scoreboard : MonoBehaviour {
-
-    public struct PlayerData {
-        public string playerName;
-        public int playerKills;
-        public int playerDeaths;
-        public int playerScore;
-    }
-
-    private PlayerData[] leaderboard = new PlayerData[4];
-    //private int[] score = new int[4];
-    //private int[] playerNum = new int[4];
     
+    static public Score.PlayerData[] gameLeaderboard = new Score.PlayerData[4];
+
     public Text[] names;
     public Text[] kills;
     public Text[] deaths;
@@ -28,45 +19,23 @@ public class Scoreboard : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        leaderboard[0].playerName = "Player One";
-        leaderboard[1].playerName = "Player Two";
-        leaderboard[2].playerName = "Player Three";
-        leaderboard[3].playerName = "Player Four";
-
-        leaderboard[0].playerKills = Score.player1Kills;
-        leaderboard[1].playerKills = Score.player2Kills;
-        leaderboard[2].playerKills = Score.player3Kills;
-        leaderboard[3].playerKills = Score.player4Kills;
-
-        leaderboard[0].playerDeaths = Score.player1Deaths;
-        leaderboard[1].playerDeaths = Score.player2Deaths;
-        leaderboard[2].playerDeaths = Score.player3Deaths;
-        leaderboard[3].playerDeaths = Score.player4Deaths;
-
-        leaderboard[0].playerScore = Score.player1Score;
-        leaderboard[1].playerScore = Score.player2Score;
-        leaderboard[2].playerScore = Score.player3Score;
-        leaderboard[3].playerScore = Score.player4Score;
-
-        for (int i = 0; i < leaderboard.Length - 1; ++i)
+        gameLeaderboard = Score.playerData;
+        for(int j = 0; j < gameLeaderboard.Length - 1; ++j)
         {
-            for(int j = 0; j < leaderboard.Length - 1; ++j)
+            if(gameLeaderboard[j].playerScore < gameLeaderboard[j + 1].playerScore)
             {
-                if(leaderboard[j].playerScore < leaderboard[j + 1].playerScore)
-                {
-                    PlayerData temp = leaderboard[j];
-                    leaderboard[j] = leaderboard[j + 1];
-                    leaderboard[j + 1] = temp;
-                }
+                Score.PlayerData temp = gameLeaderboard[j];
+                gameLeaderboard[j] = gameLeaderboard[j + 1];
+                gameLeaderboard[j + 1] = temp;
             }
         }
 
-        for(int x = 0; x < leaderboard.Length; ++x)
+        for(int x = 0; x < gameLeaderboard.Length; ++x)
         {
-            names[x].text = leaderboard[x].playerName;
-            kills[x].text = "K[" + leaderboard[x].playerKills.ToString() + "]";
-            deaths[x].text = "D[" + leaderboard[x].playerDeaths.ToString() + "]";
-            scores[x].text = leaderboard[x].playerScore.ToString();
+            names[x].text = gameLeaderboard[x].playerName;
+            kills[x].text = "K[" + gameLeaderboard[x].playerKills.ToString() + "]";
+            deaths[x].text = "D[" + gameLeaderboard[x].playerDeaths.ToString() + "]";
+            scores[x].text = gameLeaderboard[x].playerScore.ToString();
         }
 	}
 	
@@ -76,20 +45,20 @@ public class Scoreboard : MonoBehaviour {
         timer += Time.deltaTime;
         if (timer >= wait)
         {
-            Score.player1Score = 0;
-            Score.player2Score = 0;
-            Score.player3Score = 0;
-            Score.player4Score = 0;
+            Score.playerData[0].playerScore = 0;
+            Score.playerData[1].playerScore = 0;
+            Score.playerData[2].playerScore = 0;
+            Score.playerData[3].playerScore = 0;
 
-            Score.player1Kills = 0;
-            Score.player2Kills = 0;
-            Score.player3Kills = 0;
-            Score.player4Kills = 0;
+            Score.playerData[0].playerKills = 0;
+            Score.playerData[1].playerKills = 0;
+            Score.playerData[2].playerKills = 0;
+            Score.playerData[3].playerKills = 0;
 
-            Score.player1Deaths = 0;
-            Score.player2Deaths = 0;
-            Score.player3Deaths = 0;
-            Score.player4Deaths = 0;
+            Score.playerData[0].playerDeaths = 0;
+            Score.playerData[1].playerDeaths = 0;
+            Score.playerData[2].playerDeaths = 0;
+            Score.playerData[3].playerDeaths = 0;
 
             Score.roundCount = 0;
 

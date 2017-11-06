@@ -18,6 +18,12 @@ public class carPart : MonoBehaviour {
     [HideInInspector]
     public bool alive = true;
 
+    //public float tempVal = 800;
+
+    void Update() {
+        //float temp = tempVal * 0.005f;
+        //Debug.Log(Mathf.Clamp(temp, 1, 3));
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -32,7 +38,7 @@ public class carPart : MonoBehaviour {
             }
             else if (partHealth <= lightDamageThreshold)
             {
-                gameObject.GetComponent<Renderer>().material.color = lightDamage;
+                //gameObject.GetComponent<Renderer>().material.color = lightDamage;
                 gameObject.GetComponent<Renderer>().material.SetTexture("_BumpMap", lightNormal);
                 gameObject.GetComponent<Renderer>().material.SetTexture("_OcclusionMap", lightOcclusion);
                 gameObject.GetComponent<Renderer>().material.SetFloat("_BumpScale", 2.5f);

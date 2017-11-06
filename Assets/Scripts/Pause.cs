@@ -5,12 +5,17 @@ using UnityEngine.EventSystems;
 using UnityEngine;
 using XboxCtrlrInput;
 using XInputDotNetPure;
+using UnityEngine.UI;
 
 public class Pause : MonoBehaviour {
 
 	private bool isPuased = false;
 	private GameObject pauseCanvas;
     private GameObject gameCanvas;
+
+    public Text[] kills;
+    public Text[] deaths;
+    public Text[] scores;
 
 	void Start()
 	{
@@ -26,29 +31,37 @@ public class Pause : MonoBehaviour {
             EventSystem.current.SetSelectedGameObject(EventSystem.current.firstSelectedGameObject);
         }
 
-		if (XCI.GetButtonUp(XboxButton.Start))
+		if (XCI.GetButtonUp(XboxButton.Start, XboxController.All))
 		{
 			if (isPuased){
                 gameCanvas.transform.GetChild (0).gameObject.SetActive (true);
-                gameCanvas.transform.GetChild (1).gameObject.SetActive (true);
 				pauseCanvas.transform.GetChild (0).gameObject.SetActive (false);
 				Time.timeScale = 1f;
 				isPuased = false;
 			}
 			else {
                 gameCanvas.transform.GetChild (0).gameObject.SetActive (false);
-                gameCanvas.transform.GetChild (1).gameObject.SetActive (false);
 				pauseCanvas.transform.GetChild (0).gameObject.SetActive (true);
 				Time.timeScale = 0f;
+				UpdateScoreBoard();
 				isPuased = true;
 			}
 		}
     }
 
+	void UpdateScoreBoard()
+	{
+		for (int i = 0; i < Score.playerData.Length; i++)
+		{
+			kills[i].text = Score.playerData[i].playerKills.ToString();
+			deaths[i].text = Score.playerData[i].playerDeaths.ToString();
+			scores[i].text = Score.playerData[i].playerScore.ToString();
+		}
+	}
+
     public void Continue()
     {
         gameCanvas.transform.GetChild (0).gameObject.SetActive (true);
-        gameCanvas.transform.GetChild (1).gameObject.SetActive (true);
 		pauseCanvas.transform.GetChild (0).gameObject.SetActive (false);
 		Time.timeScale = 1f;
 		isPuased = false;
