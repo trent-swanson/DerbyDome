@@ -76,6 +76,7 @@ public class CarController : MonoBehaviour
 	private float CurrentRotation;
 
     public GameObject skidMarkPrefab;
+    public int startingSkidSpeed = 30;
     private GameObject leftSkidMark;
     private GameObject rightSkidMark;
 
@@ -423,16 +424,19 @@ public class CarController : MonoBehaviour
         bool skidEnd = false;
         bool stopped = false;
 
-        if (speed < 0.5)
+        if (speed < startingSkidSpeed)
             stopped = true;
 
         else
             stopped = false;
 
-        if ((XCI.GetButtonDown(XboxButton.X, controller)) && (XCI.GetAxis(XboxAxis.LeftStickX, controller) > 0 || (XCI.GetAxis(XboxAxis.LeftTrigger, controller) > 0)))
+        if (((XCI.GetButton(XboxButton.X, controller)) && (XCI.GetAxis(XboxAxis.LeftStickX, controller) != 0) || 
+            ((XCI.GetAxis(XboxAxis.LeftTrigger, controller) > 0)) && speed > 30)  || 
+            (stopped && (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0)) ||
+            (stopped && (XCI.GetAxis(XboxAxis.LeftTrigger, controller) > 0)))
             skidStart = true;
 
-        if ((!XCI.GetButton(XboxButton.X, controller)) && (XCI.GetAxis(XboxAxis.LeftTrigger, controller) <= 0))
+        if ((!XCI.GetButton(XboxButton.X, controller)) && (XCI.GetAxis(XboxAxis.LeftTrigger, controller) <= 0) && !stopped)
             skidEnd = true;
 
         if (skidStart && leftSkidMark == null)
