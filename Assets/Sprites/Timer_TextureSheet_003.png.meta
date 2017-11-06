@@ -1,0 +1,616 @@
+fileFormatVersion: 2
+guid: 15e73974dd1e1cf4393f422df908f0c1
+timeCreated: 1509949011
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Timer_TextureSheet_003_0
+    21300002: Timer_TextureSheet_003_1
+    21300004: Timer_TextureSheet_003_2
+    21300006: Timer_TextureSheet_003_3
+    21300008: Timer_TextureSheet_003_4
+    21300010: Timer_TextureSheet_003_5
+    21300012: Timer_TextureSheet_003_6
+    21300014: Timer_TextureSheet_003_7
+    21300016: Timer_TextureSheet_003_8
+    21300018: Timer_TextureSheet_003_9
+    21300020: Timer_TextureSheet_003_10
+    21300022: Timer_TextureSheet_003_11
+    21300024: Timer_TextureSheet_003_12
+    21300026: Timer_TextureSheet_003_13
+    21300028: Timer_TextureSheet_003_14
+    21300030: Timer_TextureSheet_003_15
+    21300032: Timer_TextureSheet_003_16
+    21300034: Timer_TextureSheet_003_17
+    21300036: Timer_TextureSheet_003_18
+    21300038: Timer_TextureSheet_003_19
+    21300040: Timer_TextureSheet_003_20
+    21300042: Timer_TextureSheet_003_21
+    21300044: Timer_TextureSheet_003_22
+    21300046: Timer_TextureSheet_003_23
+    21300048: Timer_TextureSheet_003_24
+    21300050: Timer_TextureSheet_003_25
+    21300052: Timer_TextureSheet_003_26
+    21300054: Timer_TextureSheet_003_27
+    21300056: Timer_TextureSheet_003_28
+    21300058: Timer_TextureSheet_003_29
+    21300060: Timer_TextureSheet_003_30
+    21300062: Timer_TextureSheet_003_31
+    21300064: Timer_TextureSheet_003_32
+    21300066: Timer_TextureSheet_003_33
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: -1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 4096
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: iPhone
+    maxTextureSize: 4096
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 4096
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: WebGL
+    maxTextureSize: 4096
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_0
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 1699
+        width: 693
+        height: 344
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_1
+      rect:
+        serializedVersion: 2
+        x: 887
+        y: 1699
+        width: 694
+        height: 344
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_2
+      rect:
+        serializedVersion: 2
+        x: 1712
+        y: 1699
+        width: 692
+        height: 344
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_3
+      rect:
+        serializedVersion: 2
+        x: 2537
+        y: 1699
+        width: 694
+        height: 344
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_4
+      rect:
+        serializedVersion: 2
+        x: 3363
+        y: 1699
+        width: 694
+        height: 344
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_5
+      rect:
+        serializedVersion: 2
+        x: 4187
+        y: 1699
+        width: 694
+        height: 344
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_6
+      rect:
+        serializedVersion: 2
+        x: 5013
+        y: 1699
+        width: 694
+        height: 344
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_7
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 1282
+        width: 693
+        height: 346
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_8
+      rect:
+        serializedVersion: 2
+        x: 887
+        y: 1282
+        width: 694
+        height: 346
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_9
+      rect:
+        serializedVersion: 2
+        x: 1719
+        y: 1282
+        width: 685
+        height: 346
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_10
+      rect:
+        serializedVersion: 2
+        x: 2545
+        y: 1274
+        width: 686
+        height: 354
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_11
+      rect:
+        serializedVersion: 2
+        x: 3369
+        y: 1274
+        width: 688
+        height: 354
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_12
+      rect:
+        serializedVersion: 2
+        x: 4195
+        y: 1275
+        width: 686
+        height: 353
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_13
+      rect:
+        serializedVersion: 2
+        x: 5019
+        y: 1274
+        width: 688
+        height: 354
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_14
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 859
+        width: 685
+        height: 352
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_15
+      rect:
+        serializedVersion: 2
+        x: 895
+        y: 859
+        width: 686
+        height: 352
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_16
+      rect:
+        serializedVersion: 2
+        x: 1719
+        y: 859
+        width: 685
+        height: 352
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_17
+      rect:
+        serializedVersion: 2
+        x: 2545
+        y: 867
+        width: 686
+        height: 344
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_18
+      rect:
+        serializedVersion: 2
+        x: 3369
+        y: 867
+        width: 694
+        height: 344
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_19
+      rect:
+        serializedVersion: 2
+        x: 4195
+        y: 867
+        width: 694
+        height: 344
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_20
+      rect:
+        serializedVersion: 2
+        x: 5019
+        y: 867
+        width: 693
+        height: 344
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_21
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 451
+        width: 694
+        height: 345
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_22
+      rect:
+        serializedVersion: 2
+        x: 895
+        y: 451
+        width: 686
+        height: 348
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_23
+      rect:
+        serializedVersion: 2
+        x: 1719
+        y: 451
+        width: 685
+        height: 353
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_24
+      rect:
+        serializedVersion: 2
+        x: 2545
+        y: 451
+        width: 686
+        height: 353
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_25
+      rect:
+        serializedVersion: 2
+        x: 3369
+        y: 451
+        width: 688
+        height: 353
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_26
+      rect:
+        serializedVersion: 2
+        x: 4195
+        y: 451
+        width: 686
+        height: 353
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_27
+      rect:
+        serializedVersion: 2
+        x: 5019
+        y: 451
+        width: 688
+        height: 353
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_28
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 35
+        width: 685
+        height: 353
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_29
+      rect:
+        serializedVersion: 2
+        x: 895
+        y: 35
+        width: 686
+        height: 353
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_30
+      rect:
+        serializedVersion: 2
+        x: 1719
+        y: 35
+        width: 685
+        height: 353
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_31
+      rect:
+        serializedVersion: 2
+        x: 2545
+        y: 35
+        width: 686
+        height: 353
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_32
+      rect:
+        serializedVersion: 2
+        x: 3369
+        y: 35
+        width: 688
+        height: 353
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Timer_TextureSheet_003_33
+      rect:
+        serializedVersion: 2
+        x: 4195
+        y: 35
+        width: 686
+        height: 344
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
