@@ -8,6 +8,10 @@ TagManager:
   - Ground
   - Camera1
   - Pivot
+  - FrontBumper
+  - Manager
+  - Pause
+  - Canvas
   layers:
   - Default
   - TransparentFX
