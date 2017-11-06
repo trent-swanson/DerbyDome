@@ -24,18 +24,14 @@ public class levelManager : MonoBehaviour {
 
         if (myTimer <= 0.05f)
         {
-            ++scoreRoundCounter.roundCount;
-            if (scoreRoundCounter.roundCount < 3)
+            ++Score.roundCount;
+            if (Score.roundCount < 3)
                 SceneManager.LoadScene(1);
 
             else
             {
                 Debug.Log("Load End Game Screen");
-                scoreRoundCounter.roundCount = 0;
-                scoreRoundCounter.player1Score = 0;
-                scoreRoundCounter.player2Score = 0;
-                scoreRoundCounter.player3Score = 0;
-                scoreRoundCounter.player4Score = 0;
+                Score.roundCount = 0;
                 SceneManager.LoadScene(2);
             }
         }

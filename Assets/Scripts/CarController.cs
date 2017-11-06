@@ -26,6 +26,10 @@ public class CarController : MonoBehaviour
 	public float maxSpeed = 150.0f;
 	public float maxSteer = 15.0f;
 	public float driftSteer = 35.0f;
+    public float driftSidewaysFriction = 1.5f;
+    public float driftForwardFriction = 1.5f;
+    private float tempSidewaysFriction;
+    private float tempForwardFriction;
 	public float acclDrag = 0.5f;
 	public float declDrag = 2f;
     public float speedMultiplier = 0.0f;
@@ -67,7 +71,7 @@ public class CarController : MonoBehaviour
     [HideInInspector]
     public Color debugAlive = Color.magenta;
 
-    private bool isGrounded = false;
+    public bool isGrounded = false;
     private Rigidbody playerBody;
 	private float CurrentRotation;
 
@@ -82,17 +86,14 @@ public class CarController : MonoBehaviour
 	[Tooltip("B = Kills player || Y = Revives player")]
 	public bool DebugControls = false;
 
-    private int layerMask;
-
 
     //=========================================START===============================================
     void Start()
     {
 		playerBody = transform.GetComponent<Rigidbody>();
 		playerBody.centerOfMass = new Vector3(0f, -0.5f, 0.3f);
-        playerBody.maxAngularVelocity = 4.5f;
+        playerBody.maxAngularVelocity = 3f;
         //playerBody.maxDepenetrationVelocity = 1f;
-        layerMask = LayerMask.GetMask("Ground");
         isGrounded = false;
         
         if(controller == XboxController.First) {
@@ -103,7 +104,11 @@ public class CarController : MonoBehaviour
             playerID = 3;
         } else if(controller == XboxController.Fourth) {
             playerID = 4;
-        } 
+        }
+
+        tempForwardFriction = wheelColliders[0].forwardFriction.stiffness;
+        tempSidewaysFriction = wheelColliders[0].sidewaysFriction.stiffness;
+
 		//wheelColliders [0].ConfigureVehicleSubsteps (speedTreshold, stepsBelowTreshold, stepsAboveTreshold);
     }
 
@@ -117,17 +122,40 @@ public class CarController : MonoBehaviour
             driftbool = true;
             steer = 0;
             steer = -XCI.GetAxis(XboxAxis.LeftStickX, controller) * driftSteer;
+            
+            for (int i = 0; i < wheelColliders.Length; i++)
+            {
+                WheelFrictionCurve frictionCurve = wheelColliders[i].forwardFriction;
+                frictionCurve.stiffness = driftForwardFriction;
+                wheelColliders[i].forwardFriction = frictionCurve;
+
+                WheelFrictionCurve sideFrictionCurve = wheelColliders[i].sidewaysFriction;
+                sideFrictionCurve.stiffness = driftSidewaysFriction;
+                wheelColliders[i].sidewaysFriction = sideFrictionCurve;
+            }
+
             wheelColliders[0].steerAngle = 0;
             wheelColliders[1].steerAngle = steer;
             wheelColliders[2].steerAngle = steer;
             wheelColliders[3].steerAngle = 0;
         }
-
         else if (isAlive)
         {
             driftbool = false;
             steer = 0;
             steer = XCI.GetAxis(XboxAxis.LeftStickX, controller) * maxSteer;
+
+            for (int i = 0; i < wheelColliders.Length; i++)
+            {
+                WheelFrictionCurve frictionCurve = wheelColliders[i].forwardFriction;
+                frictionCurve.stiffness = tempForwardFriction;
+                wheelColliders[i].forwardFriction = frictionCurve;
+
+                WheelFrictionCurve sideFrictionCurve = wheelColliders[i].sidewaysFriction;
+                sideFrictionCurve.stiffness = tempSidewaysFriction;
+                wheelColliders[i].sidewaysFriction = sideFrictionCurve;
+            }
+
             wheelColliders[0].steerAngle = steer;
             wheelColliders[1].steerAngle = 0;
             wheelColliders[2].steerAngle = 0;
@@ -226,16 +254,22 @@ public class CarController : MonoBehaviour
 	{
 		RaycastHit hit;
 		Ray groundCheck = new Ray(transform.position, -transform.up);
-		Debug.DrawRay(transform.position, -transform.up * 0.3f, Color.red);
+		Debug.DrawRay(transform.position, -transform.up * 0.4f, Color.red);
 
-		if (Physics.Raycast(groundCheck, out hit, 0.3f, layerMask))
+
+		if (Physics.Raycast(groundCheck, out hit, 0.4f))
 		{
-			if (hit.collider.tag == "Ground")
+			if (hit.collider.tag == "Ground" || hit.collider.tag == "Player") {
 				isGrounded = true;
-			else
-				isGrounded = false;
-		}
-	}
+            } else {
+                 isGrounded = false;
+            }
+
+	    } else {
+            isGrounded = false;
+        }
+    }
+    
 	private void FlipCheck()
 	{
 		CurrentRotation = transform.eulerAngles.y;
@@ -243,7 +277,7 @@ public class CarController : MonoBehaviour
 		Ray groundCheck = new Ray(transform.position, transform.up);
 		Debug.DrawRay(transform.position, transform.up * 1.4f, Color.yellow);
 
-		if (Physics.Raycast(groundCheck, out hit, 1.4f, layerMask))
+		if (Physics.Raycast(groundCheck, out hit, 1.4f))
 		{
 			if (hit.collider.tag == "Ground")
 			{
@@ -266,15 +300,15 @@ public class CarController : MonoBehaviour
     //=========================================UPDATE==============================================
 	void Update()
 	{
-		//GroundCheck();
+		GroundCheck();
 
 		//check is upsidedown
-		//FlipCheck();
+		FlipCheck();
 	}
 
     void FixedUpdate()
     {
-        Debug.Log(playerBody.velocity);
+        //Debug.Log(playerBody.velocity);
 
         //car speed in KM/H
         speed = playerBody.velocity.magnitude * 3.6f;
@@ -357,7 +391,7 @@ public class CarController : MonoBehaviour
 		//move wheel visuals
 		WheelRotation();
 
-        //Jump();
+        Jump();
 
         LightTrails();
     }
@@ -420,6 +454,15 @@ public class CarController : MonoBehaviour
         if(carHealth <= 0)
 		{
 			isAlive = false;
+            if (playerID == 1) {
+                Score.player1Deaths++;
+            } else if (playerID == 2) {
+                Score.player2Deaths++;
+            } else if (playerID == 3) {
+                Score.player3Deaths++;
+            } else if (playerID == 4) {
+                Score.player4Deaths++;
+            }
 			wheelColliders[0].steerAngle = 0;
 			wheelColliders[1].steerAngle = 0;
 			wheelColliders[2].steerAngle = 0;

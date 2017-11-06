@@ -44,6 +44,11 @@ public class Damage : MonoBehaviour
         scoreScript.ScoreIncrease(carController.playerID, (int)damageToTake / 2);
     }
 
+    private void KillScore()
+    {
+        scoreScript.ScoreIncrease(carController.playerID, 300);
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (carSpeed >= minAttackSpeed && timer <= 0)
@@ -64,6 +69,11 @@ public class Damage : MonoBehaviour
                 other.gameObject.GetComponent<CarController>().TakeDamage(damageToTake);
                 Debug.Log("body hit");
                 BodyScore();
+                if(other.gameObject.GetComponent<CarController>().isAlive == false)
+                {
+                    scoreScript.killIncrease(carController.playerID);
+                    KillScore();
+                }
                 Debug.Log("Player" + other.gameObject.GetComponent<CarController>().playerID + ":  " + other.gameObject.GetComponent<CarController>().carHealth);
                 timer = hitTimer;
                 return;
