@@ -75,7 +75,11 @@ public class CarController : MonoBehaviour
     private Rigidbody playerBody;
 	private float CurrentRotation;
 
-	[Space]
+    public GameObject skidMarkPrefab;
+    private GameObject leftSkidMark;
+    private GameObject rightSkidMark;
+
+    [Space]
 	[Space]
 	public float speedTreshold = 1;
 	public int stepsBelowTreshold = 12;
@@ -304,6 +308,7 @@ public class CarController : MonoBehaviour
 
 		//check is upsidedown
 		FlipCheck();
+        SkidMarks();
 	}
 
     void FixedUpdate()
@@ -412,7 +417,47 @@ public class CarController : MonoBehaviour
 		}
     }
 
-	void WheelRotation()
+    void SkidMarks()
+    {
+        bool skidStart = false;
+        bool skidEnd = false;
+        bool stopped = false;
+
+        if (speed < 0.5)
+            stopped = true;
+
+        else
+            stopped = false;
+
+        if ((XCI.GetButtonDown(XboxButton.X, controller)) && (XCI.GetAxis(XboxAxis.LeftStickX, controller) > 0 || (XCI.GetAxis(XboxAxis.LeftTrigger, controller) > 0)))
+            skidStart = true;
+
+        if ((!XCI.GetButton(XboxButton.X, controller)) && (XCI.GetAxis(XboxAxis.LeftTrigger, controller) <= 0))
+            skidEnd = true;
+
+        if (skidStart && leftSkidMark == null)
+        {
+            leftSkidMark = Instantiate(skidMarkPrefab);
+            rightSkidMark = Instantiate(skidMarkPrefab);
+
+            leftSkidMark.transform.parent = transform;
+            rightSkidMark.transform.parent = transform;
+
+            leftSkidMark.transform.localPosition = wheelColliders[1].transform.localPosition - Vector3.up * 0.38f;
+            rightSkidMark.transform.localPosition = wheelColliders[2].transform.localPosition - Vector3.up * 0.38f;
+        }
+
+        else if (skidEnd && leftSkidMark)
+        {
+            leftSkidMark.transform.parent = null;
+            rightSkidMark.transform.parent = null;
+
+            leftSkidMark = null;
+            rightSkidMark = null;
+        }
+    }
+
+    void WheelRotation()
 	{
 		if (!driftbool)
 		{
