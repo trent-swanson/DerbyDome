@@ -66,6 +66,7 @@ public class Damage : MonoBehaviour
             //Calculation occurs when a player hits anywhere on the other car except for the bumper
             if (other.gameObject.tag == "Player" && other.GetComponent<CarController>().isAlive)
             {
+                transform.parent.GetComponent<CarController>().cameraShake.Shake(0.1f, 0.2f);
                 other.gameObject.GetComponent<CarController>().TakeDamage(damageToTake);
                 Debug.Log("body hit");
                 BodyScore();

@@ -15,6 +15,7 @@ using XInputDotNetPure;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CarController : MonoBehaviour
 {
@@ -37,6 +38,17 @@ public class CarController : MonoBehaviour
     public float vibrationThreshold = 3.5f;
     public float carHealth = 1500;
 	public float JumpHeight = 15000;
+
+    [Space]
+    public float boostSpeed = 250;
+    public float minBoostSpeed = 80;
+    public float boostPower = 100;
+    public float boostTimer = 3;
+    private float tempBoostTimer;
+    public GameObject boostEffect;
+    public Slider boostSlider;
+    public float boostShake = 0.02f;
+    public CamShake cameraShake;
 
 	[Space]
     public Vector3 localVel;
@@ -113,6 +125,10 @@ public class CarController : MonoBehaviour
 
         tempForwardFriction = wheelColliders[0].forwardFriction.stiffness;
         tempSidewaysFriction = wheelColliders[0].sidewaysFriction.stiffness;
+
+        tempBoostTimer = boostTimer;
+        boostSlider.minValue = 0;
+        boostSlider.maxValue = boostTimer;
 
 		//wheelColliders [0].ConfigureVehicleSubsteps (speedTreshold, stepsBelowTreshold, stepsAboveTreshold);
     }
@@ -310,6 +326,8 @@ public class CarController : MonoBehaviour
 		//check is upsidedown
 		FlipCheck();
         SkidMarks();
+
+        boostSlider.value = tempBoostTimer;
 	}
 
     void FixedUpdate()
@@ -322,15 +340,53 @@ public class CarController : MonoBehaviour
 
         if (isAlive)
         {
-            if (speed > maxSpeed)
+            if (XCI.GetButton(XboxButton.A, controller) && tempBoostTimer > 0)
             {
-                power = 0;
-                reverse = 0;
-            }
-            else
+                tempBoostTimer -= Time.deltaTime;
+                boostEffect.SetActive(true);
+                cameraShake.Shake(boostShake);
+                if(XCI.GetAxis(XboxAxis.RightTrigger, controller) != 0)
+                {
+                    if (speed > boostSpeed)
+                    {
+                        power = 0;
+                        reverse = 0;
+                    }
+                    else
+                    {
+                        power = (XCI.GetAxis(XboxAxis.RightTrigger, controller) * (enginePower * speedMultiplier) * Time.fixedDeltaTime) + boostPower;
+                    }
+                } else
+                {
+                    if (speed > minBoostSpeed)
+                    {
+                        power = 0;
+                        reverse = 0;
+                    }
+                    else
+                    {
+                        power = boostPower;
+                    }
+                }
+            } else
             {
-                power = XCI.GetAxis(XboxAxis.RightTrigger, controller) * (enginePower * speedMultiplier) * Time.fixedDeltaTime;
-                reverse = XCI.GetAxis(XboxAxis.LeftTrigger, controller) * (enginePower * speedMultiplier) * Time.fixedDeltaTime;
+                boostEffect.SetActive(false);
+                cameraShake.StopShake();
+                if(tempBoostTimer < boostTimer)
+                {
+                    tempBoostTimer += Time.deltaTime / 4;
+                }
+
+                if (speed > maxSpeed)
+                {
+                    power = 0;
+                    reverse = 0;
+                }
+                else
+                {
+                    power = XCI.GetAxis(XboxAxis.RightTrigger, controller) * (enginePower * speedMultiplier) * Time.fixedDeltaTime;
+                    reverse = XCI.GetAxis(XboxAxis.LeftTrigger, controller) * (enginePower * speedMultiplier) * Time.fixedDeltaTime;
+                }
             }
         }
 
@@ -338,7 +394,11 @@ public class CarController : MonoBehaviour
         Turning();
 
         //Allows the players movement if they are still alive
-        if ((XCI.GetAxis(XboxAxis.LeftTrigger, controller) > 0) && (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0) && isAlive)
+        if(XCI.GetButton(XboxButton.A, controller))
+        {
+            Accelerate();
+        }
+        else if ((XCI.GetAxis(XboxAxis.LeftTrigger, controller) > 0) && (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0) && isAlive)
         {
             Break(power);
         }
@@ -500,6 +560,7 @@ public class CarController : MonoBehaviour
     public void TakeDamage(float dmgAmount)
     {
         carHealth -= dmgAmount;
+        //cameraShake.Shake(0.08f, 0.2f);
         if(carHealth <= 0)
 		{
 			isAlive = false;
