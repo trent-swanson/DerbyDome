@@ -5,6 +5,7 @@ using UnityEngine;
 public class carPart : MonoBehaviour {
 
     public float partHealth = 1200;
+    public float maxHealth = 1200;
     public Color lightDamage = Color.blue;
     public Color heavyDamage = Color.red;
     public Texture2D lightNormal;
@@ -18,11 +19,17 @@ public class carPart : MonoBehaviour {
     [HideInInspector]
     public bool alive = true;
 
+    float otherPercent;
+
     //public float tempVal = 800;
 
     void Update() {
         //float temp = tempVal * 0.005f;
         //Debug.Log(Mathf.Clamp(temp, 1, 3));
+        float percent = partHealth/maxHealth;
+        float inversePercent = 1-percent;
+        otherPercent = (1.5f * inversePercent) + 1 ;
+        Debug.Log(partHealth + " " + percent + " " + inversePercent + " " + otherPercent);
     }
 
     void OnTriggerEnter(Collider other)
@@ -41,7 +48,7 @@ public class carPart : MonoBehaviour {
                 //gameObject.GetComponent<Renderer>().material.color = lightDamage;
                 gameObject.GetComponent<Renderer>().material.SetTexture("_BumpMap", lightNormal);
                 gameObject.GetComponent<Renderer>().material.SetTexture("_OcclusionMap", lightOcclusion);
-                gameObject.GetComponent<Renderer>().material.SetFloat("_BumpScale", 2.5f);
+                gameObject.GetComponent<Renderer>().material.SetFloat("_BumpScale", otherPercent);
             }
         }
     }

@@ -24,7 +24,9 @@ public class CarController : MonoBehaviour
 	[Space]
 
 	public float enginePower = 100.0f;
+    public float breakPower;
 	public float maxSpeed = 150.0f;
+    private float tempMaxSpeed;
 	public float maxSteer = 15.0f;
 	public float driftSteer = 35.0f;
     public float driftSidewaysFriction = 1.5f;
@@ -40,14 +42,14 @@ public class CarController : MonoBehaviour
 	public float JumpHeight = 15000;
 
     [Space]
-    public float boostSpeed = 250;
-    public float minBoostSpeed = 80;
+    public float boostSpeed = 200;
     public float boostPower = 100;
     public float boostTimer = 3;
     private float tempBoostTimer;
     public GameObject boostEffect;
     public Slider boostSlider;
     public float boostShake = 0.02f;
+    private bool isBoosting = false;
     public CamShake cameraShake;
 
 	[Space]
@@ -111,6 +113,7 @@ public class CarController : MonoBehaviour
 		playerBody.centerOfMass = new Vector3(0f, -0.5f, 0.3f);
         playerBody.maxAngularVelocity = 3f;
         //playerBody.maxDepenetrationVelocity = 1f;
+        tempMaxSpeed = maxSpeed;
         isGrounded = false;
         
         if(controller == XboxController.First) {
@@ -241,19 +244,15 @@ public class CarController : MonoBehaviour
         Drag(declDrag);
 
         //Resets the motorTorque of the car to minimise potential bugs, and to stop the player if they are not alive
-        wheelColliders[0].motorTorque = 0;
-        wheelColliders[1].motorTorque = 0;
-        wheelColliders[2].motorTorque = 0;
-        wheelColliders[3].motorTorque = 0;
+        //wheelColliders[0].motorTorque = 0;
+        //wheelColliders[1].motorTorque = 0;
+        //wheelColliders[2].motorTorque = 0;
+        //wheelColliders[3].motorTorque = 0;
 
-        //If the player is alive and currently breaking, the appropriate break torque is applied
-        if (isAlive)
-        {
-            wheelColliders[0].brakeTorque = breakValue;
-            wheelColliders[1].brakeTorque = breakValue;
-            wheelColliders[2].brakeTorque = breakValue;
-            wheelColliders[3].brakeTorque = breakValue;
-        }
+        wheelColliders[0].brakeTorque = breakValue;
+        wheelColliders[1].brakeTorque = breakValue;
+        wheelColliders[2].brakeTorque = breakValue;
+        wheelColliders[3].brakeTorque = breakValue;
         
     }
     #endregion
@@ -338,55 +337,40 @@ public class CarController : MonoBehaviour
         speed = playerBody.velocity.magnitude * 3.6f;
         localVel = playerBody.transform.InverseTransformDirection(playerBody.velocity);
 
-        if (isAlive)
+        if (XCI.GetButton(XboxButton.A, controller) && tempBoostTimer > 0 && isAlive)
         {
-            if (XCI.GetButton(XboxButton.A, controller) && tempBoostTimer > 0)
+            isBoosting = true;
+            tempBoostTimer -= Time.deltaTime;
+            boostEffect.SetActive(true);
+            cameraShake.Shake(boostShake);
+            tempMaxSpeed = boostSpeed;
+            if (speed < tempMaxSpeed)
             {
-                tempBoostTimer -= Time.deltaTime;
-                boostEffect.SetActive(true);
-                cameraShake.Shake(boostShake);
-                if(XCI.GetAxis(XboxAxis.RightTrigger, controller) != 0)
-                {
-                    if (speed > boostSpeed)
-                    {
-                        power = 0;
-                        reverse = 0;
-                    }
-                    else
-                    {
-                        power = (XCI.GetAxis(XboxAxis.RightTrigger, controller) * (enginePower * speedMultiplier) * Time.fixedDeltaTime) + boostPower;
-                    }
-                } else
-                {
-                    if (speed > minBoostSpeed)
-                    {
-                        power = 0;
-                        reverse = 0;
-                    }
-                    else
-                    {
-                        power = boostPower;
-                    }
-                }
-            } else
+                playerBody.AddRelativeForce(Vector3.forward * boostPower, ForceMode.Force);
+            }
+        } else
+        {
+            isBoosting = false;
+            tempMaxSpeed = maxSpeed;
+            boostEffect.SetActive(false);
+            cameraShake.StopShake();
+            if(tempBoostTimer < boostTimer)
             {
-                boostEffect.SetActive(false);
-                cameraShake.StopShake();
-                if(tempBoostTimer < boostTimer)
-                {
-                    tempBoostTimer += Time.deltaTime / 4;
-                }
+                tempBoostTimer += Time.deltaTime / 4;
+            }
+        }
 
-                if (speed > maxSpeed)
-                {
-                    power = 0;
-                    reverse = 0;
-                }
-                else
-                {
-                    power = XCI.GetAxis(XboxAxis.RightTrigger, controller) * (enginePower * speedMultiplier) * Time.fixedDeltaTime;
-                    reverse = XCI.GetAxis(XboxAxis.LeftTrigger, controller) * (enginePower * speedMultiplier) * Time.fixedDeltaTime;
-                }
+        if(XCI.GetAxis(XboxAxis.RightTrigger, controller) != 0 && isAlive || XCI.GetAxis(XboxAxis.LeftTrigger, controller) != 0 && isAlive)
+        {
+            if (speed > tempMaxSpeed)
+            {
+                power = 0;
+                reverse = 0;
+            }
+            else
+            {
+                power = XCI.GetAxis(XboxAxis.RightTrigger, controller) * (enginePower * speedMultiplier) * Time.fixedDeltaTime;
+                reverse = XCI.GetAxis(XboxAxis.LeftTrigger, controller) * (enginePower * speedMultiplier) * Time.fixedDeltaTime;
             }
         }
 
@@ -394,30 +378,32 @@ public class CarController : MonoBehaviour
         Turning();
 
         //Allows the players movement if they are still alive
-        if(XCI.GetButton(XboxButton.A, controller))
+        if ((XCI.GetAxis(XboxAxis.LeftTrigger, controller) > 0) && (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0) && isAlive)
         {
-            Accelerate();
-        }
-        else if ((XCI.GetAxis(XboxAxis.LeftTrigger, controller) > 0) && (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0) && isAlive)
-        {
-            Break(power);
+            if (!isBoosting)
+            {
+                Break(breakPower);
+            } else
+            {
+                return;
+            }
         }
         else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0 && isAlive)
         {
             if (localVel.z < -0.01f)
             {
-                Break(power);
+                Break(breakPower);
             }
             else
             {
                 Accelerate();
             }
         }
-        else if (XCI.GetAxis(XboxAxis.LeftTrigger, controller) > 0 && isAlive)
+        else if (XCI.GetAxis(XboxAxis.LeftTrigger, controller) > 0 && isAlive && !isBoosting)
         {
             if (localVel.z > 0.01f)
             {
-                Break(reverse);
+                Break(breakPower);
             }
             else
             {
@@ -578,7 +564,7 @@ public class CarController : MonoBehaviour
 			wheelColliders[2].steerAngle = 0;
 			wheelColliders[3].steerAngle = 0;
 			wheelColliders[0].steerAngle = 0;
-			Break (10000);
+			Break (breakPower);
             for (int i = 0; i < carParts.Length; i++)
 			{
 				carParts[i].GetComponent<Renderer> ().material.color = death;
