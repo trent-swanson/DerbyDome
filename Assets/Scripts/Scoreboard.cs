@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using XboxCtrlrInput;
+using XInputDotNetPure;
 
 public class Scoreboard : MonoBehaviour {
     
-    static public Score.PlayerData[] gameLeaderboard = new Score.PlayerData[4];
+    static public Game_Manager.PlayerData[] gameLeaderboard = new Game_Manager.PlayerData[4];
 
     public Text[] names;
     public Text[] kills;
@@ -19,14 +21,20 @@ public class Scoreboard : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        gameLeaderboard = Score.playerData;
-        for(int j = 0; j < gameLeaderboard.Length - 1; ++j)
+        Cursor.visible = false;
+        
+        //gameLeaderboard = Game_Manager.playerData;
+        System.Array.Copy(Game_Manager.playerData, gameLeaderboard, 4);
+        for (int i = 0; i < gameLeaderboard.Length; i++)
         {
-            if(gameLeaderboard[j].playerScore < gameLeaderboard[j + 1].playerScore)
+            for(int j = 0; j < gameLeaderboard.Length - 1; ++j)
             {
-                Score.PlayerData temp = gameLeaderboard[j];
-                gameLeaderboard[j] = gameLeaderboard[j + 1];
-                gameLeaderboard[j + 1] = temp;
+                if(gameLeaderboard[j].playerScore < gameLeaderboard[j + 1].playerScore)
+                {
+                    Game_Manager.PlayerData temp = gameLeaderboard[j];
+                    gameLeaderboard[j] = gameLeaderboard[j + 1];
+                    gameLeaderboard[j + 1] = temp;
+                }
             }
         }
 
@@ -43,24 +51,25 @@ public class Scoreboard : MonoBehaviour {
 	void Update ()
     {
         timer += Time.deltaTime;
-        if (timer >= wait)
+        if (timer >= wait || XCI.GetButtonDown(XboxButton.Start, XboxController.All) || XCI.GetButtonDown(XboxButton.B, XboxController.All))
         {
-            Score.playerData[0].playerScore = 0;
-            Score.playerData[1].playerScore = 0;
-            Score.playerData[2].playerScore = 0;
-            Score.playerData[3].playerScore = 0;
+            Game_Manager.playerData[0].playerScore = 0;
+            Game_Manager.playerData[1].playerScore = 0;
+            Game_Manager.playerData[2].playerScore = 0;
+            Game_Manager.playerData[3].playerScore = 0;
 
-            Score.playerData[0].playerKills = 0;
-            Score.playerData[1].playerKills = 0;
-            Score.playerData[2].playerKills = 0;
-            Score.playerData[3].playerKills = 0;
+            Game_Manager.playerData[0].playerKills = 0;
+            Game_Manager.playerData[1].playerKills = 0;
+            Game_Manager.playerData[2].playerKills = 0;
+            Game_Manager.playerData[3].playerKills = 0;
 
-            Score.playerData[0].playerDeaths = 0;
-            Score.playerData[1].playerDeaths = 0;
-            Score.playerData[2].playerDeaths = 0;
-            Score.playerData[3].playerDeaths = 0;
+            Game_Manager.playerData[0].playerDeaths = 0;
+            Game_Manager.playerData[1].playerDeaths = 0;
+            Game_Manager.playerData[2].playerDeaths = 0;
+            Game_Manager.playerData[3].playerDeaths = 0;
 
-            Score.roundCount = 0;
+            Game_Manager.roundCount = 0;
+            Game_Manager.SortLeaderBoard();
 
             SceneManager.LoadScene(0);
         }

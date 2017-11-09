@@ -10,7 +10,10 @@ public class levelManager : MonoBehaviour {
     public GameObject gameManager;
 
     // Use this for initialization
-    void Start(){}
+    void Start()
+    {
+        Cursor.visible = false;
+    }
 
     // Update is called once per frame
     void FixedUpdate()
@@ -24,14 +27,14 @@ public class levelManager : MonoBehaviour {
 
         if (myTimer <= 0.05f)
         {
-            ++Score.roundCount;
-            if (Score.roundCount < 3)
+            ++Game_Manager.roundCount;
+            Debug.Log(Game_Manager.roundCount);
+            if (Game_Manager.roundCount < 3)
                 SceneManager.LoadScene(1);
 
             else
             {
                 Debug.Log("Load End Game Screen");
-                Score.roundCount = 0;
                 SceneManager.LoadScene(2);
             }
         }

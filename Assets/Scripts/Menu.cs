@@ -6,7 +6,11 @@ using UnityEngine;
 
 public class Menu : MonoBehaviour {
 	
-	// Update is called once per frame
+	void Start()
+    {
+        Cursor.visible = false;
+    }
+
 	void Update ()
     {
         if (EventSystem.current.currentSelectedGameObject == null)

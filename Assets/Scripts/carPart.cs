@@ -21,21 +21,15 @@ public class carPart : MonoBehaviour {
 
     float otherPercent;
 
-    //public float tempVal = 800;
-
-    void Update() {
-        //float temp = tempVal * 0.005f;
-        //Debug.Log(Mathf.Clamp(temp, 1, 3));
-        float percent = partHealth/maxHealth;
-        float inversePercent = 1-percent;
-        otherPercent = (1.5f * inversePercent) + 1 ;
-        Debug.Log(partHealth + " " + percent + " " + inversePercent + " " + otherPercent);
-    }
-
     void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "FrontBumper" && other.GetComponent<Damage>().carSpeed >= minAttackSpeed && alive)
         {
+            float percent = partHealth/maxHealth;
+            float inversePercent = 1-percent;
+            otherPercent = (1.5f * inversePercent) + 2;
+            //Debug.Log(partHealth + " " + percent + " " + inversePercent + " " + otherPercent);
+            
             float tempDamage = other.gameObject.GetComponent<Damage>().damageToTake;
             partHealth -= tempDamage;
 

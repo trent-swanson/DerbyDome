@@ -19,7 +19,7 @@ public class Damage : MonoBehaviour
     void Start()
     {
         rigidBody = GetComponentInParent<Rigidbody>();
-        scoreScript = GameObject.FindGameObjectWithTag("Manager").GetComponent<Score>();
+        scoreScript = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<Score>();
         carController = transform.parent.GetComponent<CarController>();
         timer = 0;
     }

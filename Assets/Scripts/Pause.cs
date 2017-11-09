@@ -47,15 +47,23 @@ public class Pause : MonoBehaviour {
 				isPuased = true;
 			}
 		}
+
+		if (isPuased && XCI.GetButtonUp(XboxButton.B, XboxController.All))
+		{
+			gameCanvas.transform.GetChild (0).gameObject.SetActive (true);
+			pauseCanvas.transform.GetChild (0).gameObject.SetActive (false);
+			Time.timeScale = 1f;
+			isPuased = false;
+		}
     }
 
 	void UpdateScoreBoard()
 	{
-		for (int i = 0; i < Score.playerData.Length; i++)
+		for (int i = 0; i < Game_Manager.playerData.Length; i++)
 		{
-			kills[i].text = Score.playerData[i].playerKills.ToString();
-			deaths[i].text = Score.playerData[i].playerDeaths.ToString();
-			scores[i].text = Score.playerData[i].playerScore.ToString();
+			kills[i].text = Game_Manager.playerData[i].playerKills.ToString();
+			deaths[i].text = Game_Manager.playerData[i].playerDeaths.ToString();
+			scores[i].text = Game_Manager.playerData[i].playerScore.ToString();
 		}
 	}
 

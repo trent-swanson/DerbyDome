@@ -8,11 +8,36 @@ public class PlayerIcon : MonoBehaviour {
 	public Transform playerTransform;
 	public Camera playerCam;
 	public int camNumber;
+	public int playerNumber;
+
+	[Space]
+	public Sprite arrow;
+	public Sprite crown;
+
 	Image image;
+
+	void OnEnable()
+    {
+        Score.OnUpdatePlayerIcons += ChangeIcon;
+    }
+    
+    
+    void OnDisable()
+    {
+        Score.OnUpdatePlayerIcons -= ChangeIcon;
+    }
 
 	void Start()
 	{
 		image = transform.GetComponent<Image>();
+		
+		if (playerNumber == Game_Manager.leaderboard[0].playerID)
+		{
+			image.sprite = crown;
+		} else
+		{
+			image.sprite = arrow;
+		}
 	}
 	
 	// Update is called once per frame
@@ -33,6 +58,17 @@ public class PlayerIcon : MonoBehaviour {
 			} else if (camNumber == 4) {
 				transform.position = new Vector3(Mathf.Clamp(screenPos.x, Screen.width / 2, Screen.width), Mathf.Clamp(screenPos.y + 35, 0, Screen.height / 2), 0);
 			}
+		}
+	}
+
+	void ChangeIcon()
+	{
+		if (playerNumber == Game_Manager.leaderboard[0].playerID)
+		{
+			image.sprite = crown;
+		} else
+		{
+			image.sprite = arrow;
 		}
 	}
 }

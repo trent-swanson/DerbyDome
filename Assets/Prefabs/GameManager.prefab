@@ -19,8 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4892571219629474}
-  - component: {fileID: 114443808120068600}
-  - component: {fileID: 114851535546801812}
+  - component: {fileID: 114755383319185342}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Manager
@@ -41,7 +40,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114443808120068600
+--- !u!114 &114755383319185342
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -49,29 +48,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1038215863102736}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65f07b1f9e6a3774596b01eeff42c3fe, type: 3}
+  m_Script: {fileID: 11500000, guid: 45b645b84e214a04fac6053cb93d3d6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myTimer: 120
-  timerText: {fileID: 0}
-  gameManager: {fileID: 1038215863102736}
---- !u!114 &114851535546801812
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1038215863102736}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f71adb67986b2b3449a8c5a9f02b8469, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Player1ScoreText: {fileID: 0}
-  Player2ScoreText: {fileID: 0}
-  Player3ScoreText: {fileID: 0}
-  Player4ScoreText: {fileID: 0}
-  iconLeaderBoards:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}

@@ -11,13 +11,18 @@ public class LeaderBoard : MonoBehaviour {
 
 	void Start()
 	{
-		carImage[0].color = carColour[0];
-		carImage[1].color = carColour[1];
-		carImage[2].color = carColour[2];
-		carImage[3].color = carColour[3];
+		if (Game_Manager.roundCount == 0)
+		{
+			carImage[0].color = carColour[0];
+			carImage[1].color = carColour[1];
+			carImage[2].color = carColour[2];
+			carImage[3].color = carColour[3];
+		} else {
+			UpdateLeaderBoard(Game_Manager.SortLeaderBoardReturn());
+		}
 	}
 	
-	public void UpdateLeaderBoard(Score.PlayerData[] tempPlayerData)
+	public void UpdateLeaderBoard(Game_Manager.PlayerData[] tempPlayerData)
 	{
 		for (int i = 0; i < tempPlayerData.Length; i++)
 		{
