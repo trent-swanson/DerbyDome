@@ -1045,6 +1045,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1968024300394586
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4325782458553904}
+  m_Layer: 5
+  m_Name: CameraFocus
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &4005214527461306
 Transform:
   m_ObjectHideFlags: 1
@@ -1299,6 +1314,20 @@ Transform:
   m_Father: {fileID: 4550706999479532}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4325782458553904
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1968024300394586}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.01000024, y: 1.3099997, z: -0.019001286}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_Children:
+  - {fileID: 4464877040151280}
+  m_Father: {fileID: 4497136619127914}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4341699091406562
 Transform:
   m_ObjectHideFlags: 1
@@ -1398,8 +1427,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1447728911352810}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -50.6, y: -5, z: 15.7}
+  m_LocalRotation: {x: -0, y: 0.87938476, z: -0, w: 0.47611177}
+  m_LocalPosition: {x: -54.17, y: -5, z: 36.87}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4056815789909838}
@@ -1412,20 +1441,20 @@ Transform:
   - {fileID: 4642782892118110}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 123.13701, z: 0}
 --- !u!4 &4464877040151280
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1827821220693480}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.010000229, y: 1.3099997, z: -0.019000053}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4213415324183928}
-  m_Father: {fileID: 4497136619127914}
-  m_RootOrder: 1
+  m_Father: {fileID: 4325782458553904}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4476044281434612
 Transform:
@@ -1452,7 +1481,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4233073394213296}
-  - {fileID: 4464877040151280}
+  - {fileID: 4325782458553904}
   m_Father: {fileID: 4419957902812238}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4275,10 +4304,10 @@ WheelCollider:
   m_Center: {x: 0, y: 0, z: 0}
   m_Radius: 0.35
   m_SuspensionSpring:
-    spring: 54085.086
-    damper: 8653.614
+    spring: 54085.176
+    damper: 8653.628
     targetPosition: 0.5
-  m_SuspensionDistance: 0.3
+  m_SuspensionDistance: 0.29999998
   m_ForceAppPointDistance: 0.50045025
   m_Mass: 10
   m_WheelDampingRate: 0.25
@@ -4304,10 +4333,10 @@ WheelCollider:
   m_Center: {x: 0, y: 0, z: 0}
   m_Radius: 0.35
   m_SuspensionSpring:
-    spring: 70929.586
-    damper: 11348.733
+    spring: 70929.77
+    damper: 11348.765
     targetPosition: 0.5
-  m_SuspensionDistance: 0.29999998
+  m_SuspensionDistance: 0.3
   m_ForceAppPointDistance: 0.48845014
   m_Mass: 10
   m_WheelDampingRate: 0.25
@@ -4333,8 +4362,8 @@ WheelCollider:
   m_Center: {x: 0, y: 0, z: 0}
   m_Radius: 0.35
   m_SuspensionSpring:
-    spring: 70908.38
-    damper: 11345.342
+    spring: 70908.29
+    damper: 11345.327
     targetPosition: 0.5
   m_SuspensionDistance: 0.3
   m_ForceAppPointDistance: 0.4824501
@@ -4362,8 +4391,8 @@ WheelCollider:
   m_Center: {x: 0, y: 0, z: 0}
   m_Radius: 0.35
   m_SuspensionSpring:
-    spring: 54076.945
-    damper: 8652.312
+    spring: 54076.758
+    damper: 8652.281
     targetPosition: 0.5
   m_SuspensionDistance: 0.3
   m_ForceAppPointDistance: 0.4954501
