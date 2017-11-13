@@ -123,6 +123,19 @@ public class CarController : MonoBehaviour
     public Transform carFront;
     public GameObject camRig;
 
+    public GameObject impactEffect;
+    public float hitImpactTimer = 3f;
+    private float impactTimer;
+    public float minAttackSpeed = 30f;
+    public float impactShake = 0.02f;
+    public float impactShakeTime = 0.02f;
+
+    [Space]
+    [Space]
+    //[FMODUnity.EventRef]
+	public string selectsound = "event:/Audio";
+	//FMOD.Studio.EventInstance soundevent;
+
 
     //=========================================START===============================================
     void OnEnable()
@@ -137,6 +150,9 @@ public class CarController : MonoBehaviour
 
     void Start()
     {
+        //soundevent = FMODUnity.RuntimeManager.CreateInstance(selectsound);
+
+        impactTimer = hitImpactTimer;
 		playerBody = transform.GetComponent<Rigidbody>();
 		playerBody.centerOfMass = new Vector3(0f, -0.5f, 0.3f);
         playerBody.maxAngularVelocity = 3f;
@@ -220,6 +236,7 @@ public class CarController : MonoBehaviour
     private void Accelerate()
     {
         Drag(acclDrag);
+        //soundevent.start();
 
         wheelColliders[0].brakeTorque = 0;
         wheelColliders[1].brakeTorque = 0;
@@ -356,7 +373,7 @@ public class CarController : MonoBehaviour
         groundedRR = wheelColliders[2].GetGroundHit(out hit);
         groundedFR = wheelColliders[3].GetGroundHit(out hit);
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && playerID == 1)
             TakeDamage(3000);
 
 		GroundCheck();
@@ -366,6 +383,10 @@ public class CarController : MonoBehaviour
         SkidMarks();
 
         boostSlider.value = tempBoostTimer;
+
+        if (impactTimer > 0) {
+            impactTimer -= Time.deltaTime;
+        }
 	}
 
     void FixedUpdate()
@@ -381,7 +402,7 @@ public class CarController : MonoBehaviour
             isBoosting = true;
             tempBoostTimer -= Time.deltaTime;
             boostEffect.SetActive(true);
-            cameraShake.Shake(boostShake);
+            cameraShake.BoostShake(boostShake);
             tempMaxSpeed = boostSpeed;
             if (speed < tempMaxSpeed)
             {
@@ -392,7 +413,7 @@ public class CarController : MonoBehaviour
             isBoosting = false;
             tempMaxSpeed = maxSpeed;
             boostEffect.SetActive(false);
-            cameraShake.StopShake();
+            cameraShake.StopBoostShake();
             if(tempBoostTimer < boostTimer)
             {
                 tempBoostTimer += Time.deltaTime / 4;
@@ -482,7 +503,7 @@ public class CarController : MonoBehaviour
 		//move wheel visuals
 		WheelRotation();
 
-        Jump();
+        //Jump();
 
         LightTrails();
     }
@@ -638,7 +659,7 @@ public class CarController : MonoBehaviour
     public void TakeDamage(float dmgAmount)
     {
         carHealth -= dmgAmount;
-        //cameraShake.Shake(0.08f, 0.2f);
+        cameraShake.Shake(impactShake, impactShakeTime);
         if(carHealth <= 0)
 		{
 			isAlive = false;
@@ -662,13 +683,20 @@ public class CarController : MonoBehaviour
 				//carParts[i].GetComponent<Renderer> ().material.color = death;
                 carParts[i].GetComponent<carPart>().alive = false;
 			}
-            camRig.SetActive(false);
-            GameObject tempGhost = Instantiate(ghostCar, ghostSpawn.position, transform.localRotation);
-            CarController tempGhostScript = tempGhost.GetComponent<CarController>();
-            tempGhostScript.controller = controller;
-            this.enabled = false;
+            StartCoroutine("GhostMode");
 		}
     }
+
+    IEnumerator GhostMode()
+    {
+        yield return new WaitForSeconds (3);
+        camRig.SetActive(false);
+        GameObject tempGhost = Instantiate(ghostCar, ghostSpawn.position, transform.localRotation);
+        CarController tempGhostScript = tempGhost.GetComponent<CarController>();
+        tempGhostScript.controller = controller;
+        this.enabled = false;
+    }
+
 
     public void CameraSetUp()
     {
@@ -693,6 +721,19 @@ public class CarController : MonoBehaviour
             tempPlayerCam.transform.parent.GetComponent<SmoothCamera>().NewPlayerSetUp(this.transform, cameraDesiredPosition, cameraFocus, cameraPivot, carFront);
             cameraShake = tempPlayerCam.GetComponent<CamShake>();
             boostSlider = GameObject.FindGameObjectWithTag("BoostSlider4").GetComponent<Slider>();
+        }
+    }
+
+    void OnCollisionEnter(Collision other)
+    {
+        if (speed >= minAttackSpeed && impactTimer <= 0)
+        {
+            if (other.gameObject.tag == "Player")
+            {
+                cameraShake.Shake(impactShake, impactShakeTime);
+                GameObject tempImpactEffect = Instantiate(impactEffect, other.contacts[0].point, Quaternion.identity);
+                impactTimer = hitImpactTimer;
+            }
         }
     }
 }

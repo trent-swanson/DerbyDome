@@ -28,7 +28,6 @@ public class levelManager : MonoBehaviour {
         if (myTimer <= 0.05f)
         {
             ++Game_Manager.roundCount;
-            Debug.Log(Game_Manager.roundCount);
             if (Game_Manager.roundCount < 3)
                 SceneManager.LoadScene(1);
 

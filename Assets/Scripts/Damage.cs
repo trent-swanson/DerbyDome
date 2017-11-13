@@ -68,7 +68,6 @@ public class Damage : MonoBehaviour
             {
                 transform.parent.GetComponent<CarController>().cameraShake.Shake(0.1f, 0.2f);
                 other.gameObject.GetComponent<CarController>().TakeDamage(damageToTake);
-                Debug.Log("body hit");
                 BodyScore();
                 if(other.gameObject.GetComponent<CarController>().isAlive == false)
                 {

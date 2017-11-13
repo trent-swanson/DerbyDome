@@ -156,6 +156,5 @@ public class SmoothCamera : MonoBehaviour
         cameraFocus = _cameraFocus;
         cameraPivot = _cameraPivot;
         carFront = _carFront;
-        Debug.Log("Setup new player");
     }
 }
