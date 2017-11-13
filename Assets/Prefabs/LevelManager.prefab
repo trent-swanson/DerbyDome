@@ -72,6 +72,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65f07b1f9e6a3774596b01eeff42c3fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myTimer: 120
+  myTimer: 60
   timerText: {fileID: 0}
   gameManager: {fileID: 0}

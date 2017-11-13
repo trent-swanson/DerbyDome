@@ -75,7 +75,6 @@ public class Damage : MonoBehaviour
                     scoreScript.killIncrease(carController.playerID);
                     KillScore();
                 }
-                Debug.Log("Player" + other.gameObject.GetComponent<CarController>().playerID + ":  " + other.gameObject.GetComponent<CarController>().carHealth);
                 timer = hitTimer;
                 return;
             }

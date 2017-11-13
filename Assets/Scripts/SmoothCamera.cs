@@ -18,11 +18,14 @@ public class SmoothCamera : MonoBehaviour
     
     [Space]
 
-    public Transform cameraDesiredPosition;
-    public Transform cameraFocus;
-    public Transform cameraPivot;
-    public Transform carFront;
+    private Transform player;
+    private Transform cameraDesiredPosition;
+    private Transform cameraFocus;
+    private Transform cameraPivot;
+    private Transform carFront;
     public Transform mapCentre;
+    private Transform leader;
+    public int playerNum;
 
     bool showingCentreView = false;
 
@@ -48,6 +51,24 @@ public class SmoothCamera : MonoBehaviour
     private float ctrlY = 0.0f;
     private float finalInputX = 0.0f;
     private float finalInputY = 0.0f;
+    private bool isLeader = false;
+
+    void OnEnable()
+    {
+        Score.OnLateUpdatePlayerLeader += NewLeader;
+    }
+    
+    
+    void OnDisable()
+    {
+        Score.OnLateUpdatePlayerLeader -= NewLeader;
+    }
+
+    void Start()
+    {
+        if (Game_Manager.roundCount == 0)
+            isLeader = true;
+    }
     
     private void FixedUpdate()
     {
@@ -77,6 +98,19 @@ public class SmoothCamera : MonoBehaviour
         }        
     }
 
+    void NewLeader()
+    {
+        if (Game_Manager.leaderboard[0].playerID == playerNum)
+        {
+            isLeader = true;
+            showingCentreView = false;
+        } else
+        {
+            leader = GameObject.FindGameObjectWithTag("Leader").transform;
+            isLeader = false;
+        }
+    }
+
     void CamFocus()
     {
         if (!showingCentreView)
@@ -86,7 +120,11 @@ public class SmoothCamera : MonoBehaviour
            
         } else
         {
-            cameraFocus.transform.LookAt(mapCentre);
+            if(isLeader) {
+                cameraFocus.transform.LookAt(mapCentre);
+            } else {
+                cameraFocus.transform.LookAt(leader);
+            }
             SmoothFollow();
         }  
     }
@@ -109,5 +147,15 @@ public class SmoothCamera : MonoBehaviour
         cameraPivot.localRotation = Quaternion.Slerp(cameraPivot.localRotation, camRotation, Time.deltaTime * rotSmoothing);
 
         SmoothFollow();
+    }
+
+    public void NewPlayerSetUp(Transform _player, Transform _cameraDesiredPosition, Transform _cameraFocus, Transform _cameraPivot, Transform _carFront)
+    {
+        player = _player;
+        cameraDesiredPosition = _cameraDesiredPosition;
+        cameraFocus = _cameraFocus;
+        cameraPivot = _cameraPivot;
+        carFront = _carFront;
+        Debug.Log("Setup new player");
     }
 }

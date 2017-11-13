@@ -18,13 +18,13 @@ public class PlayerIcon : MonoBehaviour {
 
 	void OnEnable()
     {
-        Score.OnUpdatePlayerIcons += ChangeIcon;
+        Score.OnUpdatePlayerLeader += ChangeIcon;
     }
     
     
     void OnDisable()
     {
-        Score.OnUpdatePlayerIcons -= ChangeIcon;
+        Score.OnUpdatePlayerLeader -= ChangeIcon;
     }
 
 	void Start()

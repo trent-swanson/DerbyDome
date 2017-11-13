@@ -47,7 +47,7 @@ public class CarController : MonoBehaviour
     public float boostTimer = 3;
     private float tempBoostTimer;
     public GameObject boostEffect;
-    public Slider boostSlider;
+    private Slider boostSlider;
     public float boostShake = 0.02f;
     private bool isBoosting = false;
     public CamShake cameraShake;
@@ -94,6 +94,8 @@ public class CarController : MonoBehaviour
     private GameObject leftSkidMark;
     private GameObject rightSkidMark;
 
+    public GameObject leaderPosition;
+
     [Space]
 	[Space]
 	public float speedTreshold = 1;
@@ -105,8 +107,28 @@ public class CarController : MonoBehaviour
 	[Tooltip("B = Kills player || Y = Revives player")]
 	public bool DebugControls = false;
 
+    [Space]
+    [Space]
+    public GameObject ghostCar;
+    public Transform ghostSpawn;
+    public Transform cameraDesiredPosition;
+    public Transform cameraFocus;
+    public Transform cameraPivot;
+    public Transform carFront;
+    public GameObject camRig;
+
 
     //=========================================START===============================================
+    void OnEnable()
+    {
+        Score.OnUpdatePlayerLeader += IsNewLeader;
+    }    
+    
+    void OnDisable()
+    {
+        Score.OnUpdatePlayerLeader -= IsNewLeader;
+    }
+
     void Start()
     {
 		playerBody = transform.GetComponent<Rigidbody>();
@@ -128,6 +150,8 @@ public class CarController : MonoBehaviour
 
         tempForwardFriction = wheelColliders[0].forwardFriction.stiffness;
         tempSidewaysFriction = wheelColliders[0].sidewaysFriction.stiffness;
+
+        CameraSetUp();
 
         tempBoostTimer = boostTimer;
         boostSlider.minValue = 0;
@@ -320,6 +344,9 @@ public class CarController : MonoBehaviour
     //=========================================UPDATE==============================================
 	void Update()
 	{
+        if(Input.GetKeyDown(KeyCode.Space))
+            TakeDamage(3000);
+
 		GroundCheck();
 
 		//check is upsidedown
@@ -540,6 +567,17 @@ public class CarController : MonoBehaviour
         else
             return;
     }
+
+    void IsNewLeader()
+    {
+        if (playerID == Game_Manager.leaderboard[0].playerID)
+        {
+            leaderPosition.SetActive(true);
+        } else
+        {
+            leaderPosition.SetActive(false);
+        }
+    }
     #endregion
 
     //=========================================DAMAGE===============================================
@@ -567,9 +605,40 @@ public class CarController : MonoBehaviour
 			Break (breakPower);
             for (int i = 0; i < carParts.Length; i++)
 			{
-				carParts[i].GetComponent<Renderer> ().material.color = death;
+				//carParts[i].GetComponent<Renderer> ().material.color = death;
                 carParts[i].GetComponent<carPart>().alive = false;
 			}
+            camRig.SetActive(false);
+            GameObject tempGhost = Instantiate(ghostCar, ghostSpawn.position, transform.localRotation);
+            CarController tempGhostScript = tempGhost.GetComponent<CarController>();
+            tempGhostScript.controller = controller;
+            this.enabled = false;
 		}
+    }
+
+    public void CameraSetUp()
+    {
+        if (playerID == 1) {
+            Debug.Log("Found Cam1");
+            GameObject tempPlayerCam = GameObject.FindGameObjectWithTag("Cam1");
+            tempPlayerCam.transform.parent.GetComponent<SmoothCamera>().NewPlayerSetUp(this.transform, cameraDesiredPosition, cameraFocus, cameraPivot, carFront);
+            cameraShake = tempPlayerCam.GetComponent<CamShake>();
+            boostSlider = GameObject.FindGameObjectWithTag("BoostSlider1").GetComponent<Slider>();
+        } else if (playerID == 2) {
+            GameObject tempPlayerCam = GameObject.FindGameObjectWithTag("Cam2");
+            tempPlayerCam.transform.parent.GetComponent<SmoothCamera>().NewPlayerSetUp(this.transform, cameraDesiredPosition, cameraFocus, cameraPivot, carFront);
+            cameraShake = tempPlayerCam.GetComponent<CamShake>();
+            boostSlider = GameObject.FindGameObjectWithTag("BoostSlider2").GetComponent<Slider>();
+        } else if (playerID == 3) {
+            GameObject tempPlayerCam = GameObject.FindGameObjectWithTag("Cam3");
+            tempPlayerCam.transform.parent.GetComponent<SmoothCamera>().NewPlayerSetUp(this.transform, cameraDesiredPosition, cameraFocus, cameraPivot, carFront);
+            cameraShake = tempPlayerCam.GetComponent<CamShake>();
+            boostSlider = GameObject.FindGameObjectWithTag("BoostSlider3").GetComponent<Slider>();
+        } else if (playerID == 4) {
+            GameObject tempPlayerCam = GameObject.FindGameObjectWithTag("Cam4");
+            tempPlayerCam.transform.parent.GetComponent<SmoothCamera>().NewPlayerSetUp(this.transform, cameraDesiredPosition, cameraFocus, cameraPivot, carFront);
+            cameraShake = tempPlayerCam.GetComponent<CamShake>();
+            boostSlider = GameObject.FindGameObjectWithTag("BoostSlider4").GetComponent<Slider>();
+        }
     }
 }

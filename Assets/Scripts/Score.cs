@@ -3,8 +3,11 @@ using UnityEngine.UI;
 
 public class Score : MonoBehaviour {
     
-    public delegate void UpdatePlayerIconsAction();
-    public static event UpdatePlayerIconsAction OnUpdatePlayerIcons;
+    public delegate void UpdatePlayerLeaderAction();
+    public static event UpdatePlayerLeaderAction OnUpdatePlayerLeader;
+
+    public delegate void LateUpdatePlayerLeaderAction();
+    public static event LateUpdatePlayerLeaderAction OnLateUpdatePlayerLeader;
     
     public Text Player1ScoreText;
     public Text Player2ScoreText;
@@ -63,8 +66,9 @@ public class Score : MonoBehaviour {
         iconLeaderBoards[1].UpdateLeaderBoard(Game_Manager.leaderboard);
         iconLeaderBoards[2].UpdateLeaderBoard(Game_Manager.leaderboard);
         iconLeaderBoards[3].UpdateLeaderBoard(Game_Manager.leaderboard);
-        if(OnUpdatePlayerIcons != null)
-                OnUpdatePlayerIcons();
+        if(OnUpdatePlayerLeader != null)
+                OnUpdatePlayerLeader();
+                OnLateUpdatePlayerLeader();
     }
 
     void Update()
