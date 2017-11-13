@@ -93,6 +93,12 @@ public class CarController : MonoBehaviour
     public int startingSkidSpeed = 30;
     private GameObject leftSkidMark;
     private GameObject rightSkidMark;
+    private GameObject leftFrontSkidMark;
+    private GameObject rightFrontSkidMark;
+    private bool groundedFL;
+    private bool groundedRL;
+    private bool groundedRR;
+    private bool groundedFR;
 
     public GameObject leaderPosition;
 
@@ -344,7 +350,13 @@ public class CarController : MonoBehaviour
     //=========================================UPDATE==============================================
 	void Update()
 	{
-        if(Input.GetKeyDown(KeyCode.Space))
+        WheelHit hit;
+        groundedFL = wheelColliders[0].GetGroundHit(out hit);
+        groundedRL = wheelColliders[1].GetGroundHit(out hit);
+        groundedRR = wheelColliders[2].GetGroundHit(out hit);
+        groundedFR = wheelColliders[3].GetGroundHit(out hit);
+
+        if (Input.GetKeyDown(KeyCode.Space))
             TakeDamage(3000);
 
 		GroundCheck();
@@ -495,42 +507,84 @@ public class CarController : MonoBehaviour
     {
         bool skidStart = false;
         bool skidEnd = false;
-        bool stopped = false;
+        bool minSkidSpeed = false;
 
         if (speed < startingSkidSpeed)
-            stopped = true;
-
+            minSkidSpeed = true;
         else
-            stopped = false;
+            minSkidSpeed = false;
 
-        if (((XCI.GetButton(XboxButton.X, controller)) && (XCI.GetAxis(XboxAxis.LeftStickX, controller) != 0) || 
-            ((XCI.GetAxis(XboxAxis.LeftTrigger, controller) > 0)) && speed > 30)  || 
-            (stopped && (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0)) ||
-            (stopped && (XCI.GetAxis(XboxAxis.LeftTrigger, controller) > 0)))
+        bool accelSkid = (minSkidSpeed && (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0));
+        bool driftSkid = (XCI.GetButton(XboxButton.X, controller) && XCI.GetAxis(XboxAxis.LeftStickX, controller) != 0);
+        bool reverseSkid = (XCI.GetAxis(XboxAxis.LeftTrigger, controller) > 0) && (XCI.GetAxis(XboxAxis.LeftStickX, controller) != 0);
+        bool brakeSkid = (!minSkidSpeed && XCI.GetAxis(XboxAxis.LeftTrigger, controller) > 0) && localVel.z > 0.01f;
+
+        if (accelSkid || driftSkid || reverseSkid || brakeSkid)
             skidStart = true;
-
-        if ((!XCI.GetButton(XboxButton.X, controller)) && (XCI.GetAxis(XboxAxis.LeftTrigger, controller) <= 0) && !stopped)
+        else if (!(groundedFL || groundedRL || groundedRR || groundedFR))
+            skidEnd = true;
+        else
             skidEnd = true;
 
-        if (skidStart && leftSkidMark == null)
+        if (skidStart && (leftRearSkidMark == null))
         {
-            leftSkidMark = Instantiate(skidMarkPrefab);
-            rightSkidMark = Instantiate(skidMarkPrefab);
+            if (groundedRL)
+            {
+                leftRearSkidMark = Instantiate(skidMarkPrefab);
+                leftRearSkidMark.transform.parent = transform;
+                leftRearSkidMark.transform.localPosition = wheelColliders[1].transform.localPosition - Vector3.up * 0.38f;
+            }
 
-            leftSkidMark.transform.parent = transform;
-            rightSkidMark.transform.parent = transform;
+            if (groundedRR)
+            {
+                rightRearSkidMark = Instantiate(skidMarkPrefab);
+                rightRearSkidMark.transform.parent = transform;
+                rightRearSkidMark.transform.localPosition = wheelColliders[2].transform.localPosition - Vector3.up * 0.38f;
+            }
 
-            leftSkidMark.transform.localPosition = wheelColliders[1].transform.localPosition - Vector3.up * 0.38f;
-            rightSkidMark.transform.localPosition = wheelColliders[2].transform.localPosition - Vector3.up * 0.38f;
+            if (driftSkid)
+            {
+                if (groundedFL)
+                {
+                    leftFrontSkidMark = Instantiate(skidMarkPrefab);
+                    leftFrontSkidMark.transform.parent = transform;
+                    leftFrontSkidMark.transform.localPosition = wheelColliders[0].transform.localPosition - Vector3.up * 0.38f;
+                }
+
+                if (groundedFR)
+                {
+                    rightFrontSkidMark = Instantiate(skidMarkPrefab);
+                    rightFrontSkidMark.transform.parent = transform;
+                    rightFrontSkidMark.transform.localPosition = wheelColliders[3].transform.localPosition - Vector3.up * 0.38f;
+                }
+            }
         }
 
-        else if (skidEnd && leftSkidMark)
+        else if (skidEnd && leftRearSkidMark)
         {
-            leftSkidMark.transform.parent = null;
-            rightSkidMark.transform.parent = null;
+            if (leftRearSkidMark != null)
+            {
+                leftRearSkidMark.transform.parent = null;
+                leftRearSkidMark = null;
+            }
 
-            leftSkidMark = null;
-            rightSkidMark = null;
+            if (rightRearSkidMark != null)
+            {
+                rightRearSkidMark.transform.parent = null;
+                rightRearSkidMark = null;
+            }
+
+            if (leftFrontSkidMark != null)
+            {
+                leftFrontSkidMark.transform.parent = null;
+                leftFrontSkidMark = null;
+            }
+
+            if (rightFrontSkidMark != null)
+            {
+                rightFrontSkidMark.transform.parent = null;
+                rightFrontSkidMark = null;
+            }
         }
     }
 
