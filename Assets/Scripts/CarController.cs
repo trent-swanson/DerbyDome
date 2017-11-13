@@ -91,8 +91,8 @@ public class CarController : MonoBehaviour
 
     public GameObject skidMarkPrefab;
     public int startingSkidSpeed = 30;
-    private GameObject leftSkidMark;
-    private GameObject rightSkidMark;
+    private GameObject leftRearSkidMark;
+    private GameObject rightRearSkidMark;
     private GameObject leftFrontSkidMark;
     private GameObject rightFrontSkidMark;
     private bool groundedFL;
