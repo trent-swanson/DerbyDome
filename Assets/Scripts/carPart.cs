@@ -10,6 +10,7 @@ public class carPart : MonoBehaviour {
     public Color heavyDamage = Color.red;
     public Texture2D lightNormal;
     public Texture2D lightOcclusion;
+    public Texture2D lightAlpha;
 
     [Space]
     public float lightDamageThreshold = 800;
@@ -40,9 +41,11 @@ public class carPart : MonoBehaviour {
             else if (partHealth <= lightDamageThreshold)
             {
                 //gameObject.GetComponent<Renderer>().material.color = lightDamage;
-                gameObject.GetComponent<Renderer>().material.SetTexture("_BumpMap", lightNormal);
-                gameObject.GetComponent<Renderer>().material.SetTexture("_OcclusionMap", lightOcclusion);
-                gameObject.GetComponent<Renderer>().material.SetFloat("_BumpScale", otherPercent);
+                gameObject.GetComponent<Renderer>().material.SetTexture("_normalMap", lightNormal);
+                gameObject.GetComponent<Renderer>().material.SetTexture("_occlusionMap", lightOcclusion);
+                gameObject.GetComponent<Renderer>().material.SetTexture("_alphaMap", lightAlpha);
+                gameObject.GetComponent<Renderer>().material.SetFloat("_alphaCutOff", 1f);
+                //gameObject.GetComponent<Renderer>().material.SetFloat("_BumpScale", otherPercent);
             }
         }
     }

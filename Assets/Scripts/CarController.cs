@@ -377,10 +377,8 @@ public class CarController : MonoBehaviour
             TakeDamage(3000);
 
 		GroundCheck();
-
-		//check is upsidedown
 		FlipCheck();
-        SkidMarks();
+        //SkidMarks();
 
         boostSlider.value = tempBoostTimer;
 

@@ -9,10 +9,10 @@ public class Score : MonoBehaviour {
     public delegate void LateUpdatePlayerLeaderAction();
     public static event LateUpdatePlayerLeaderAction OnLateUpdatePlayerLeader;
     
-    public Text Player1ScoreText;
-    public Text Player2ScoreText;
-    public Text Player3ScoreText;
-    public Text Player4ScoreText;
+    //public Text Player1ScoreText;
+    //public Text Player2ScoreText;
+    //public Text Player3ScoreText;
+    //public Text Player4ScoreText;
 
     [Space]
     public LeaderBoard[] iconLeaderBoards;
@@ -22,26 +22,26 @@ public class Score : MonoBehaviour {
 
     void Start()
     {
-        Player1ScoreText.text = "Score: " + Game_Manager.playerData[0].playerScore.ToString();
-        Player2ScoreText.text = "Score: " + Game_Manager.playerData[1].playerScore.ToString();
-        Player3ScoreText.text = "Score: " + Game_Manager.playerData[2].playerScore.ToString();
-        Player4ScoreText.text = "Score: " + Game_Manager.playerData[3].playerScore.ToString();
+        //Player1ScoreText.text = "Score: " + Game_Manager.playerData[0].playerScore.ToString();
+        //Player2ScoreText.text = "Score: " + Game_Manager.playerData[1].playerScore.ToString();
+        //Player3ScoreText.text = "Score: " + Game_Manager.playerData[2].playerScore.ToString();
+        //Player4ScoreText.text = "Score: " + Game_Manager.playerData[3].playerScore.ToString();
     }
 
     public void ScoreIncrease(int playerID, int score)
     {
         if(playerID == 1) {
             Game_Manager.playerData[0].playerScore += score;
-            Player1ScoreText.text = "Score: " + Game_Manager.playerData[0].playerScore.ToString();
+            //Player1ScoreText.text = "Score: " + Game_Manager.playerData[0].playerScore.ToString();
         } else if(playerID == 2) {
             Game_Manager.playerData[1].playerScore += score;
-            Player2ScoreText.text = "Score: " + Game_Manager.playerData[1].playerScore.ToString();
+            //Player2ScoreText.text = "Score: " + Game_Manager.playerData[1].playerScore.ToString();
         } else if(playerID == 3) {
             Game_Manager.playerData[2].playerScore += score;
-            Player3ScoreText.text = "Score: " + Game_Manager.playerData[2].playerScore.ToString();
+            //Player3ScoreText.text = "Score: " + Game_Manager.playerData[2].playerScore.ToString();
         } else if(playerID == 4) {
             Game_Manager.playerData[3].playerScore += score;
-            Player4ScoreText.text = "Score: " + Game_Manager.playerData[3].playerScore.ToString();
+            //Player4ScoreText.text = "Score: " + Game_Manager.playerData[3].playerScore.ToString();
         }
         UpdateLeaderBoard();
     }

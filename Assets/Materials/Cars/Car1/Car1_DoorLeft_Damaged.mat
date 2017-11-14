@@ -12,7 +12,7 @@ Material:
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: 3000
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -54,12 +54,28 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _alpha:
+        m_Texture: {fileID: 2800000, guid: f8986c37d1a1f0045a6c988b55ad5785, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _alphaMap:
+        m_Texture: {fileID: 2800000, guid: f8986c37d1a1f0045a6c988b55ad5785, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _glossMap:
+        m_Texture: {fileID: 2800000, guid: e5bdffead7f69ab40a79f56acf916230, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _node_2312:
         m_Texture: {fileID: 2800000, guid: 42054ce938a693e459b0352ab9bc5bbe, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _node_2951:
         m_Texture: {fileID: 2800000, guid: 42054ce938a693e459b0352ab9bc5bbe, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _node_2951_copy:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _node_3268:
@@ -82,7 +98,26 @@ Material:
         m_Texture: {fileID: 2800000, guid: f8986c37d1a1f0045a6c988b55ad5785, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _normal:
+        m_Texture: {fileID: 2800000, guid: 574f4383795b50e478e9713551499969, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _normalMap:
+        m_Texture: {fileID: 2800000, guid: 574f4383795b50e478e9713551499969, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _normal_copy:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _occlusionMap:
+        m_Texture: {fileID: 2800000, guid: fa8ff3fcab8212f4c8c66ab86abfe32c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _AlphaCutOff: 1
+    - _AlphaCutoOff: 1
+    - _BaseGloss: 0.75
     - _BumpScale: 1
     - _Cutoff: 0
     - _DetailNormalMapScale: 1
@@ -92,9 +127,10 @@ Material:
     - _Glossiness: 0.8
     - _GlossyReflections: 1
     - _Max: 0
-    - _Metallic: 0.8
+    - _Metallic: 1
     - _Min: 0
     - _Mode: 1
+    - _Normal: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
@@ -102,9 +138,12 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
+    - _alphaCutOff: 0
     - _node_6087: 0.215
-    - _node_8768: 0.1
+    - _node_6981: 1
+    - _node_8768: 0.55
     m_Colors:
     - _Color: {r: 0.7205882, g: 0.058282852, b: 0.058282852, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _node_4010: {r: 0.5, g: 0.5, b: 1, a: 1}
     - _node_4043: {r: 0.7205882, g: 0.058282852, b: 0.058282852, a: 1}

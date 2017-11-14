@@ -52,10 +52,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f71adb67986b2b3449a8c5a9f02b8469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player1ScoreText: {fileID: 0}
-  Player2ScoreText: {fileID: 0}
-  Player3ScoreText: {fileID: 0}
-  Player4ScoreText: {fileID: 0}
   iconLeaderBoards:
   - {fileID: 0}
   - {fileID: 0}
@@ -72,6 +68,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65f07b1f9e6a3774596b01eeff42c3fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myTimer: 60
+  myTimer: 90
   timerText: {fileID: 0}
   gameManager: {fileID: 0}
