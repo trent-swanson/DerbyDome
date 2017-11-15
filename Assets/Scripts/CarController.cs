@@ -42,6 +42,7 @@ public class CarController : MonoBehaviour
 	public float JumpHeight = 15000;
 
     [Space]
+
     public float boostSpeed = 200;
     public float boostPower = 100;
     public float boostTimer = 3;
@@ -53,20 +54,27 @@ public class CarController : MonoBehaviour
     public CamShake cameraShake;
 
 	[Space]
+
     public Vector3 localVel;
     public float speed;
 
 	[Space]
 	[Space]
+
 	public GameObject[] carParts;
+
 	[Space]
+
     public Color death = Color.grey;
+
 	[Space]
+
 	public GameObject leftLightTrail;
 	public GameObject rightLightTrail;
 	public float lightTrailSpeed;
 
 	[Space]
+
     public WheelCollider[] wheelColliders;
 	public Transform[] wheels;
 
@@ -104,17 +112,20 @@ public class CarController : MonoBehaviour
 
     [Space]
 	[Space]
+
 	public float speedTreshold = 1;
 	public int stepsBelowTreshold = 12;
 	public int stepsAboveTreshold = 15;
 
 	[Space]
 	[Space]
+
 	[Tooltip("B = Kills player || Y = Revives player")]
 	public bool DebugControls = false;
 
     [Space]
     [Space]
+
     public GameObject ghostCar;
     public Transform ghostSpawn;
     public Transform cameraDesiredPosition;
@@ -132,6 +143,7 @@ public class CarController : MonoBehaviour
 
     [Space]
     [Space]
+
     //[FMODUnity.EventRef]
 	public string selectsound = "event:/Audio";
 	//FMOD.Studio.EventInstance soundevent;
@@ -291,10 +303,10 @@ public class CarController : MonoBehaviour
         Drag(declDrag);
 
         //Resets the motorTorque of the car to minimise potential bugs, and to stop the player if they are not alive
-        //wheelColliders[0].motorTorque = 0;
-        //wheelColliders[1].motorTorque = 0;
-        //wheelColliders[2].motorTorque = 0;
-        //wheelColliders[3].motorTorque = 0;
+        wheelColliders[0].motorTorque = 0;
+        wheelColliders[1].motorTorque = 0;
+        wheelColliders[2].motorTorque = 0;
+        wheelColliders[3].motorTorque = 0;
 
         wheelColliders[0].brakeTorque = breakValue;
         wheelColliders[1].brakeTorque = breakValue;
@@ -378,7 +390,7 @@ public class CarController : MonoBehaviour
 
 		GroundCheck();
 		FlipCheck();
-        //SkidMarks();
+        SkidMarks();
 
         boostSlider.value = tempBoostTimer;
 
@@ -389,8 +401,6 @@ public class CarController : MonoBehaviour
 
     void FixedUpdate()
     {
-        //Debug.Log(playerBody.velocity);
-
         //car speed in KM/H
         speed = playerBody.velocity.magnitude * 3.6f;
         localVel = playerBody.transform.InverseTransformDirection(playerBody.velocity);
@@ -406,7 +416,8 @@ public class CarController : MonoBehaviour
             {
                 playerBody.AddRelativeForce(Vector3.forward * boostPower, ForceMode.Force);
             }
-        } else
+        }
+        else
         {
             isBoosting = false;
             tempMaxSpeed = maxSpeed;
@@ -441,7 +452,8 @@ public class CarController : MonoBehaviour
             if (!isBoosting)
             {
                 Break(breakPower);
-            } else
+            }
+            else
             {
                 return;
             }
@@ -524,86 +536,93 @@ public class CarController : MonoBehaviour
 
     void SkidMarks()
     {
-        bool skidStart = false;
-        bool skidEnd = false;
+        bool skidStartFL = false;
+        bool skidStartFR = false;
+        bool skidStartRL = false;
+        bool skidStartRR = false;
+
         bool minSkidSpeed = false;
 
+        //Checks the speed to see if the car is below the threshold to spin out
         if (speed < startingSkidSpeed)
             minSkidSpeed = true;
         else
             minSkidSpeed = false;
 
+        //Checks all 4 skidmark conditions and stores them in a bool
         bool accelSkid = (minSkidSpeed && (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0));
         bool driftSkid = (XCI.GetButton(XboxButton.X, controller) && XCI.GetAxis(XboxAxis.LeftStickX, controller) != 0);
         bool reverseSkid = (XCI.GetAxis(XboxAxis.LeftTrigger, controller) > 0) && (XCI.GetAxis(XboxAxis.LeftStickX, controller) != 0);
         bool brakeSkid = (!minSkidSpeed && XCI.GetAxis(XboxAxis.LeftTrigger, controller) > 0) && localVel.z > 0.01f;
 
-        if (accelSkid || driftSkid || reverseSkid || brakeSkid)
-            skidStart = true;
-        else if (!(groundedFL || groundedRL || groundedRR || groundedFR))
-            skidEnd = true;
-        else
-            skidEnd = true;
+        //Checks if any of the skidmark conditions were fulfilled, if they were, it commences the skidmark trail
+        if (driftSkid && groundedFL)
+            skidStartFL = true;
+        if (driftSkid && groundedFR)
+            skidStartFR = true;
+        if ((accelSkid || driftSkid || reverseSkid || brakeSkid) && groundedRL)
+            skidStartRL = true;
+        if ((accelSkid || driftSkid || reverseSkid || brakeSkid) && groundedRR)
+            skidStartRR = true;
 
-        if (skidStart && (leftRearSkidMark == null))
+        if (skidStartFL)
         {
-            if (groundedRL)
+            if (leftFrontSkidMark == null)
+            {
+                leftFrontSkidMark = Instantiate(skidMarkPrefab);
+                leftFrontSkidMark.transform.parent = transform;
+                leftFrontSkidMark.transform.localPosition = wheelColliders[0].transform.localPosition - Vector3.up * 0.45f;
+            }
+        }
+        else if (leftFrontSkidMark != null)
+        {
+            leftFrontSkidMark.transform.parent = null;
+            leftFrontSkidMark = null;
+        }
+
+        if (skidStartFR)
+        {
+            if (rightFrontSkidMark == null)
+            {
+                rightFrontSkidMark = Instantiate(skidMarkPrefab);
+                rightFrontSkidMark.transform.parent = transform;
+                rightFrontSkidMark.transform.localPosition = wheelColliders[3].transform.localPosition - Vector3.up * 0.45f;
+            }
+        }
+        else if (rightFrontSkidMark != null)
+        {
+            rightFrontSkidMark.transform.parent = null;
+            rightFrontSkidMark = null;
+        }
+
+        if (skidStartRL)
+        {
+            if (leftRearSkidMark == null)
             {
                 leftRearSkidMark = Instantiate(skidMarkPrefab);
                 leftRearSkidMark.transform.parent = transform;
-                leftRearSkidMark.transform.localPosition = wheelColliders[1].transform.localPosition - Vector3.up * 0.38f;
+                leftRearSkidMark.transform.localPosition = wheelColliders[1].transform.localPosition - Vector3.up * 0.45f;
             }
+        }
+        else if (leftRearSkidMark != null)
+        {
+            leftRearSkidMark.transform.parent = null;
+            leftRearSkidMark = null;
+        }
 
-            if (groundedRR)
+        if (skidStartRR)
+        {
+            if (rightRearSkidMark == null)
             {
                 rightRearSkidMark = Instantiate(skidMarkPrefab);
                 rightRearSkidMark.transform.parent = transform;
-                rightRearSkidMark.transform.localPosition = wheelColliders[2].transform.localPosition - Vector3.up * 0.38f;
-            }
-
-            if (driftSkid)
-            {
-                if (groundedFL)
-                {
-                    leftFrontSkidMark = Instantiate(skidMarkPrefab);
-                    leftFrontSkidMark.transform.parent = transform;
-                    leftFrontSkidMark.transform.localPosition = wheelColliders[0].transform.localPosition - Vector3.up * 0.38f;
-                }
-
-                if (groundedFR)
-                {
-                    rightFrontSkidMark = Instantiate(skidMarkPrefab);
-                    rightFrontSkidMark.transform.parent = transform;
-                    rightFrontSkidMark.transform.localPosition = wheelColliders[3].transform.localPosition - Vector3.up * 0.38f;
-                }
+                rightRearSkidMark.transform.localPosition = wheelColliders[2].transform.localPosition - Vector3.up * 0.45f;
             }
         }
-
-        else if (skidEnd && leftRearSkidMark)
+        else if (rightRearSkidMark != null)
         {
-            if (leftRearSkidMark != null)
-            {
-                leftRearSkidMark.transform.parent = null;
-                leftRearSkidMark = null;
-            }
-
-            if (rightRearSkidMark != null)
-            {
-                rightRearSkidMark.transform.parent = null;
-                rightRearSkidMark = null;
-            }
-
-            if (leftFrontSkidMark != null)
-            {
-                leftFrontSkidMark.transform.parent = null;
-                leftFrontSkidMark = null;
-            }
-
-            if (rightFrontSkidMark != null)
-            {
-                rightFrontSkidMark.transform.parent = null;
-                rightFrontSkidMark = null;
-            }
+            rightRearSkidMark.transform.parent = null;
+            rightRearSkidMark = null;
         }
     }
 
