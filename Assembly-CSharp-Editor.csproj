@@ -135,6 +135,7 @@
      <None Include="Assets\3rdParty\ShaderForge\Editor\InternalResources\GPU Rendering\SFN_VertexColor\SFN_VertexColor.shader" />
      <None Include="Assets\3rdParty\ShaderForge\Editor\InternalResources\GPU Rendering\SFN_Blend\SFN_Blend_Lighten.shader" />
      <None Include="Assets\3rdParty\ShaderForge\Editor\InternalResources\GPU Rendering\SFN_Matrix4x4Property\SFN_Matrix4x4Property.shader" />
+     <None Include="Assets\Shaders\kong_shader.shader" />
      <None Include="Assets\3rdParty\ShaderForge\Editor\InternalResources\Shader Presets\PresetCustomLighting.shader" />
      <None Include="Assets\3rdParty\ShaderForge\Editor\InternalResources\GPU Rendering\SFN_Parallax\SFN_Parallax_DEP_REF.shader" />
      <None Include="Assets\3rdParty\ShaderForge\Editor\InternalResources\GPU Rendering\SFN_Set\SFN_Set.shader" />
@@ -246,11 +247,13 @@
      <None Include="Assets\3rdParty\ShaderForge\Editor\InternalResources\GPU Rendering\SFN_Reciprocal\SFN_Reciprocal.shader" />
      <None Include="Assets\3rdParty\ShaderForge\Editor\InternalResources\GPU Rendering\SFN_Sign\SFN_Sign.shader" />
      <None Include="Assets\3rdParty\ShaderForge\Editor\InternalResources\GPU Rendering\SFN_ScreenParameters\SFN_ScreenParameters.shader" />
+     <None Include="Assets\Shaders\CarDamage.shader" />
      <None Include="Assets\3rdParty\ShaderForge\Editor\InternalResources\GPU Rendering\SFN_Dot\SFN_Dot_STD.shader" />
      <None Include="Assets\3rdParty\ShaderForge\Editor\InternalResources\GPU Rendering\SFN_Tex2d\SFN_Tex2d_NoInputs.shader" />
      <None Include="Assets\3rdParty\ShaderForge\Editor\InternalResources\GPU Rendering\SFN_DDY\SFN_DDY.shader" />
      <None Include="Assets\PostProcessing\Resources\Shaders\Bloom.cginc" />
      <None Include="Assets\3rdParty\ShaderForge\Editor\InternalResources\GPU Rendering\SFN_Add\SFN_Add_4.shader" />
+     <None Include="Assets\Shaders\Car.shader" />
      <None Include="Assets\3rdParty\ShaderForge\Editor\InternalResources\GPU Rendering\SFN_Round\SFN_Round.shader" />
      <None Include="Assets\PostProcessing\Resources\Shaders\TAA.shader" />
      <None Include="Assets\3rdParty\ShaderForge\Editor\InternalResources\GPU Rendering\SFN_ArcSin\SFN_ArcSin.shader" />
@@ -315,6 +318,7 @@
      <None Include="Assets\3rdParty\ShaderForge\Editor\InternalResources\GPU Rendering\SFN_Dot\SFN_Dot_NRM.shader" />
      <None Include="Assets\3rdParty\ShaderForge\Editor\InternalResources\GPU Rendering\SFN_Rotator\SFN_Rotator_ANG.shader" />
      <None Include="Assets\3rdParty\ShaderForge\Editor\InternalResources\GPU Rendering\SFN_ConstantClamp\SFN_ConstantClamp.shader" />
+     <None Include="Assets\Shaders\UnderCar.shader" />
      <None Include="Assets\PostProcessing\Resources\Shaders\AmbientOcclusion.cginc" />
      <None Include="Assets\3rdParty\ShaderForge\Editor\InternalResources\GPU Rendering\SFN_Blend\SFN_Blend_Subtract.shader" />
      <None Include="Assets\3rdParty\ShaderForge\Editor\InternalResources\GPU Rendering\SFN_LightAttenuation\SFN_LightAttenuation.shader" />
