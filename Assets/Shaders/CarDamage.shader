@@ -1,20 +1,21 @@
 // Shader created with Shader Forge v1.38 
 // Shader Forge (c) Neat Corporation / Joachim Holmer - http://www.acegikmo.com/shaderforge/
 // Note: Manually altering this data may prevent you from opening it in Shader Forge
-/*SF_DATA;ver:1.38;sub:START;pass:START;ps:flbk:,iptp:0,cusa:False,bamd:0,cgin:,lico:1,lgpr:1,limd:3,spmd:1,trmd:0,grmd:0,uamb:True,mssp:True,bkdf:True,hqlp:False,rprd:True,enco:False,rmgx:True,imps:True,rpth:1,vtps:0,hqsc:True,nrmq:1,nrsp:0,vomd:0,spxs:False,tesm:0,olmd:1,culm:0,bsrc:0,bdst:1,dpts:2,wrdp:True,dith:0,atcv:False,rfrpo:True,rfrpn:Refraction,coma:15,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,stcl:False,atwp:False,stva:128,stmr:255,stmw:255,stcp:6,stps:0,stfa:0,stfz:0,ofsf:0,ofsu:0,f2p0:False,fnsp:False,fnfb:False,fsmp:False;n:type:ShaderForge.SFN_Final,id:2865,x:32719,y:32712,varname:node_2865,prsc:2|diff-7336-OUT,spec-358-OUT,gloss-2791-OUT,normal-2833-OUT,difocc-4082-R;n:type:ShaderForge.SFN_Color,id:6665,x:31607,y:32221,ptovrint:False,ptlb:Color,ptin:_Color,varname:_Color,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,c1:1,c2:0,c3:0,c4:1;n:type:ShaderForge.SFN_Slider,id:358,x:32180,y:32915,ptovrint:False,ptlb:Metallic,ptin:_Metallic,varname:node_358,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,min:0,cur:0.8025304,max:1;n:type:ShaderForge.SFN_Tex2d,id:8945,x:31554,y:32744,ptovrint:False,ptlb:alphaMap,ptin:_alphaMap,varname:node_8945,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:1ae211ad9a159e641b355742c22e7e14,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:2951,x:31945,y:33159,ptovrint:False,ptlb:normalMap,ptin:_normalMap,varname:node_2951,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:42054ce938a693e459b0352ab9bc5bbe,ntxv:3,isnm:True;n:type:ShaderForge.SFN_Lerp,id:7336,x:32165,y:32434,varname:node_7336,prsc:2|A-6665-RGB,B-3946-RGB,T-1754-OUT;n:type:ShaderForge.SFN_Tex2d,id:3946,x:31607,y:32398,ptovrint:False,ptlb:node_3946,ptin:_node_3946,varname:node_3946,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:5df1ba9cdaf061a4aacca6efdf7187a1,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Slider,id:8768,x:31453,y:32959,ptovrint:False,ptlb:alphaCutOff,ptin:_alphaCutOff,varname:node_8768,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,min:0,cur:1,max:1;n:type:ShaderForge.SFN_Slider,id:6981,x:31823,y:33340,ptovrint:False,ptlb:Normal,ptin:_Normal,varname:node_6981,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,min:0,cur:1,max:1;n:type:ShaderForge.SFN_Lerp,id:2833,x:32294,y:33123,varname:node_2833,prsc:2|A-9628-OUT,B-2951-RGB,T-6981-OUT;n:type:ShaderForge.SFN_Tex2d,id:4082,x:32294,y:33289,ptovrint:False,ptlb:occlusionMap,ptin:_occlusionMap,varname:node_4082,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:4675,x:32074,y:31962,ptovrint:False,ptlb:glossMap,ptin:_glossMap,varname:node_4675,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Vector3,id:9628,x:32047,y:32983,varname:node_9628,prsc:2,v1:0.5019608,v2:0.5019608,v3:1;n:type:ShaderForge.SFN_Lerp,id:2791,x:32488,y:32442,varname:node_2791,prsc:2|A-2489-OUT,B-4675-RGB,T-1754-OUT;n:type:ShaderForge.SFN_Slider,id:2489,x:32180,y:32717,ptovrint:False,ptlb:Base Gloss,ptin:_BaseGloss,varname:node_2489,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,min:0,cur:0,max:1;n:type:ShaderForge.SFN_Lerp,id:1754,x:31774,y:32656,varname:node_1754,prsc:2|A-9877-OUT,B-8945-R,T-8768-OUT;n:type:ShaderForge.SFN_Vector3,id:9877,x:31554,y:32639,varname:node_9877,prsc:2,v1:0,v2:0,v3:0;proporder:6665-358-2951-8945-3946-8768-6981-4082-4675-2489;pass:END;sub:END;*/
+/*SF_DATA;ver:1.38;sub:START;pass:START;ps:flbk:,iptp:0,cusa:False,bamd:0,cgin:,lico:1,lgpr:1,limd:3,spmd:1,trmd:0,grmd:0,uamb:True,mssp:True,bkdf:True,hqlp:False,rprd:True,enco:False,rmgx:True,imps:True,rpth:1,vtps:0,hqsc:True,nrmq:1,nrsp:0,vomd:0,spxs:False,tesm:0,olmd:1,culm:0,bsrc:0,bdst:1,dpts:2,wrdp:True,dith:0,atcv:False,rfrpo:True,rfrpn:Refraction,coma:15,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,stcl:False,atwp:False,stva:128,stmr:255,stmw:255,stcp:6,stps:0,stfa:0,stfz:0,ofsf:0,ofsu:0,f2p0:False,fnsp:False,fnfb:False,fsmp:False;n:type:ShaderForge.SFN_Final,id:2865,x:32719,y:32712,varname:node_2865,prsc:2|diff-7336-OUT,spec-358-OUT,gloss-2791-OUT,normal-1068-OUT,difocc-4082-R;n:type:ShaderForge.SFN_Color,id:6665,x:31607,y:32221,ptovrint:False,ptlb:Color,ptin:_Color,varname:_Color,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,c1:1,c2:0,c3:0,c4:1;n:type:ShaderForge.SFN_Slider,id:358,x:32099,y:32815,ptovrint:False,ptlb:Metallic,ptin:_Metallic,varname:node_358,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,min:0,cur:0.8025304,max:1;n:type:ShaderForge.SFN_Tex2d,id:8945,x:31554,y:32744,ptovrint:False,ptlb:alphaMap,ptin:_alphaMap,varname:node_8945,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:1ae211ad9a159e641b355742c22e7e14,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Lerp,id:7336,x:32165,y:32434,varname:node_7336,prsc:2|A-6665-RGB,B-3946-RGB,T-1754-OUT;n:type:ShaderForge.SFN_Tex2d,id:3946,x:31607,y:32398,ptovrint:False,ptlb:node_3946,ptin:_node_3946,varname:node_3946,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:5df1ba9cdaf061a4aacca6efdf7187a1,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Slider,id:8768,x:31453,y:32959,ptovrint:False,ptlb:alphaCutOff,ptin:_alphaCutOff,varname:node_8768,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,min:0,cur:1,max:1;n:type:ShaderForge.SFN_Tex2d,id:4082,x:32099,y:32899,ptovrint:False,ptlb:occlusionMap,ptin:_occlusionMap,varname:node_4082,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:4675,x:32037,y:32022,ptovrint:False,ptlb:glossMap,ptin:_glossMap,varname:node_4675,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Vector3,id:9628,x:31852,y:33024,varname:node_9628,prsc:2,v1:0.5019608,v2:0.5019608,v3:1;n:type:ShaderForge.SFN_Lerp,id:2791,x:32488,y:32442,varname:node_2791,prsc:2|A-2489-OUT,B-4675-RGB,T-1754-OUT;n:type:ShaderForge.SFN_Slider,id:2489,x:32180,y:32717,ptovrint:False,ptlb:Base Gloss,ptin:_BaseGloss,varname:node_2489,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,min:0,cur:0,max:1;n:type:ShaderForge.SFN_Lerp,id:1754,x:31774,y:32656,varname:node_1754,prsc:2|A-9877-OUT,B-8945-R,T-8768-OUT;n:type:ShaderForge.SFN_Vector3,id:9877,x:31554,y:32639,varname:node_9877,prsc:2,v1:0,v2:0,v3:0;n:type:ShaderForge.SFN_Tex2d,id:3553,x:31709,y:33319,ptovrint:False,ptlb:damageNnormalMap,ptin:_damageNnormalMap,varname:_damageNnormalMap_copy,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:42054ce938a693e459b0352ab9bc5bbe,ntxv:3,isnm:True;n:type:ShaderForge.SFN_Tex2d,id:2163,x:31946,y:33541,ptovrint:False,ptlb:normalMap,ptin:_normalMap,varname:_normalMap_copy,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,ntxv:3,isnm:True;n:type:ShaderForge.SFN_Lerp,id:1068,x:32124,y:33363,varname:node_1068,prsc:2|A-3553-RGB,B-2163-RGB,T-5024-OUT;n:type:ShaderForge.SFN_Slider,id:5024,x:31773,y:33209,ptovrint:False,ptlb:dmgNomal,ptin:_dmgNomal,varname:node_5024,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,min:0,cur:1,max:1;proporder:6665-358-8945-3946-8768-4082-4675-2489-3553-2163-5024;pass:END;sub:END;*/
 
 Shader "Shader Forge/CarDamage" {
     Properties {
         _Color ("Color", Color) = (1,0,0,1)
         _Metallic ("Metallic", Range(0, 1)) = 0.8025304
-        _normalMap ("normalMap", 2D) = "bump" {}
         _alphaMap ("alphaMap", 2D) = "white" {}
         _node_3946 ("node_3946", 2D) = "white" {}
         _alphaCutOff ("alphaCutOff", Range(0, 1)) = 1
-        _Normal ("Normal", Range(0, 1)) = 1
         _occlusionMap ("occlusionMap", 2D) = "white" {}
         _glossMap ("glossMap", 2D) = "white" {}
         _BaseGloss ("Base Gloss", Range(0, 1)) = 0
+        _damageNnormalMap ("damageNnormalMap", 2D) = "bump" {}
+        _normalMap ("normalMap", 2D) = "bump" {}
+        _dmgNomal ("dmgNomal", Range(0, 1)) = 1
     }
     SubShader {
         Tags {
@@ -49,13 +50,14 @@ Shader "Shader Forge/CarDamage" {
             uniform float4 _Color;
             uniform float _Metallic;
             uniform sampler2D _alphaMap; uniform float4 _alphaMap_ST;
-            uniform sampler2D _normalMap; uniform float4 _normalMap_ST;
             uniform sampler2D _node_3946; uniform float4 _node_3946_ST;
             uniform float _alphaCutOff;
-            uniform float _Normal;
             uniform sampler2D _occlusionMap; uniform float4 _occlusionMap_ST;
             uniform sampler2D _glossMap; uniform float4 _glossMap_ST;
             uniform float _BaseGloss;
+            uniform sampler2D _damageNnormalMap; uniform float4 _damageNnormalMap_ST;
+            uniform sampler2D _normalMap; uniform float4 _normalMap_ST;
+            uniform float _dmgNomal;
             struct VertexInput {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
@@ -107,8 +109,9 @@ Shader "Shader Forge/CarDamage" {
                 i.normalDir = normalize(i.normalDir);
                 float3x3 tangentTransform = float3x3( i.tangentDir, i.bitangentDir, i.normalDir);
                 float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
+                float3 _damageNnormalMap_var = UnpackNormal(tex2D(_damageNnormalMap,TRANSFORM_TEX(i.uv0, _damageNnormalMap)));
                 float3 _normalMap_var = UnpackNormal(tex2D(_normalMap,TRANSFORM_TEX(i.uv0, _normalMap)));
-                float3 normalLocal = lerp(float3(0.5019608,0.5019608,1),_normalMap_var.rgb,_Normal);
+                float3 normalLocal = lerp(_damageNnormalMap_var.rgb,_normalMap_var.rgb,_dmgNomal);
                 float3 normalDirection = normalize(mul( normalLocal, tangentTransform )); // Perturbed normals
                 float3 viewReflectDirection = reflect( -viewDirection, normalDirection );
 ////// Lighting:
@@ -210,13 +213,14 @@ Shader "Shader Forge/CarDamage" {
             uniform float4 _Color;
             uniform float _Metallic;
             uniform sampler2D _alphaMap; uniform float4 _alphaMap_ST;
-            uniform sampler2D _normalMap; uniform float4 _normalMap_ST;
             uniform sampler2D _node_3946; uniform float4 _node_3946_ST;
             uniform float _alphaCutOff;
-            uniform float _Normal;
             uniform sampler2D _occlusionMap; uniform float4 _occlusionMap_ST;
             uniform sampler2D _glossMap; uniform float4 _glossMap_ST;
             uniform float _BaseGloss;
+            uniform sampler2D _damageNnormalMap; uniform float4 _damageNnormalMap_ST;
+            uniform sampler2D _normalMap; uniform float4 _normalMap_ST;
+            uniform float _dmgNomal;
             struct VertexInput {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
@@ -267,8 +271,9 @@ Shader "Shader Forge/CarDamage" {
                 i.normalDir = normalize(i.normalDir);
                 float3x3 tangentTransform = float3x3( i.tangentDir, i.bitangentDir, i.normalDir);
                 float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
+                float3 _damageNnormalMap_var = UnpackNormal(tex2D(_damageNnormalMap,TRANSFORM_TEX(i.uv0, _damageNnormalMap)));
                 float3 _normalMap_var = UnpackNormal(tex2D(_normalMap,TRANSFORM_TEX(i.uv0, _normalMap)));
-                float3 normalLocal = lerp(float3(0.5019608,0.5019608,1),_normalMap_var.rgb,_Normal);
+                float3 normalLocal = lerp(_damageNnormalMap_var.rgb,_normalMap_var.rgb,_dmgNomal);
                 float3 normalDirection = normalize(mul( normalLocal, tangentTransform )); // Perturbed normals
                 float3 viewReflectDirection = reflect( -viewDirection, normalDirection );
                 float3 lightDirection = normalize(_WorldSpaceLightPos0.xyz);
@@ -410,12 +415,13 @@ Shader "Shader Forge/CarDamage" {
             uniform float4 _Color;
             uniform float _Metallic;
             uniform sampler2D _alphaMap; uniform float4 _alphaMap_ST;
-            uniform sampler2D _normalMap; uniform float4 _normalMap_ST;
             uniform sampler2D _node_3946; uniform float4 _node_3946_ST;
             uniform float _alphaCutOff;
-            uniform float _Normal;
             uniform sampler2D _glossMap; uniform float4 _glossMap_ST;
             uniform float _BaseGloss;
+            uniform sampler2D _damageNnormalMap; uniform float4 _damageNnormalMap_ST;
+            uniform sampler2D _normalMap; uniform float4 _normalMap_ST;
+            uniform float _dmgNomal;
             struct VertexInput {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
@@ -455,8 +461,9 @@ Shader "Shader Forge/CarDamage" {
                 i.normalDir = normalize(i.normalDir);
                 float3x3 tangentTransform = float3x3( i.tangentDir, i.bitangentDir, i.normalDir);
                 float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
+                float3 _damageNnormalMap_var = UnpackNormal(tex2D(_damageNnormalMap,TRANSFORM_TEX(i.uv0, _damageNnormalMap)));
                 float3 _normalMap_var = UnpackNormal(tex2D(_normalMap,TRANSFORM_TEX(i.uv0, _normalMap)));
-                float3 normalLocal = lerp(float3(0.5019608,0.5019608,1),_normalMap_var.rgb,_Normal);
+                float3 normalLocal = lerp(_damageNnormalMap_var.rgb,_normalMap_var.rgb,_dmgNomal);
                 float3 normalDirection = normalize(mul( normalLocal, tangentTransform )); // Perturbed normals
                 float3 lightDirection = normalize(lerp(_WorldSpaceLightPos0.xyz, _WorldSpaceLightPos0.xyz - i.posWorld.xyz,_WorldSpaceLightPos0.w));
                 float3 lightColor = _LightColor0.rgb;

@@ -70,6 +70,14 @@ Material:
         m_Texture: {fileID: 2800000, guid: f8986c37d1a1f0045a6c988b55ad5785, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _damageNnormalMap:
+        m_Texture: {fileID: 2800000, guid: 06e22a99e25f5414b93d86ba24a37972, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _damageNnormalMap_copy:
+        m_Texture: {fileID: 2800000, guid: 06e22a99e25f5414b93d86ba24a37972, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _glossMap:
         m_Texture: {fileID: 2800000, guid: e5bdffead7f69ab40a79f56acf916230, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -91,11 +99,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _normalMap:
+        m_Texture: {fileID: 2800000, guid: 96a38c2f0903ac6489989ca8a0c241c2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _normalMap_copy:
         m_Texture: {fileID: 2800000, guid: 574f4383795b50e478e9713551499969, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _occlusionMap:
-        m_Texture: {fileID: 2800000, guid: fa8ff3fcab8212f4c8c66ab86abfe32c, type: 3}
+        m_Texture: {fileID: 2800000, guid: 6444ba1c6a3c0ee42a8b3cc51e99aa65, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -122,7 +134,9 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     - _alphaCutOff: 0
+    - _damageNormal: 1
+    - _dmgNomal: 1
     m_Colors:
-    - _Color: {r: 0.7205882, g: 0.058282882, b: 0.058282882, a: 1}
+    - _Color: {r: 0.72156864, g: 0.05882353, b: 0.05882353, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _node_4010: {r: 0.5, g: 0.5, b: 1, a: 1}

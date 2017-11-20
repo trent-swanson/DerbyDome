@@ -1059,7 +1059,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1565938562077022
 GameObject:
   m_ObjectHideFlags: 1
@@ -5625,8 +5625,8 @@ MonoBehaviour:
   vibrationThreshold: 0
   carHealth: 1500
   JumpHeight: 15000
-  boostSpeed: 185
-  boostPower: 45000
+  boostSpeed: 165
+  boostPower: 40000
   boostTimer: 3
   boostEffect: {fileID: 1806487281664748}
   boostShake: 0.04
@@ -5675,7 +5675,7 @@ MonoBehaviour:
   stepsBelowTreshold: 12
   stepsAboveTreshold: 15
   DebugControls: 0
-  ghostCar: {fileID: 1260955865920012, guid: 65d6a13f644d2214e97925c891269e72, type: 2}
+  ghostCar: {fileID: 1857328314090722, guid: 8a8faec5a54fe604db996b2609cdff2f, type: 2}
   ghostSpawn: {fileID: 4265255826532068}
   cameraDesiredPosition: {fileID: 4213415324183928}
   cameraFocus: {fileID: 4325782458553904}
@@ -5882,9 +5882,9 @@ WheelCollider:
   m_Radius: 0.35
   m_SuspensionSpring:
     spring: 32451.236
-    damper: 5192.1978
+    damper: 5192.198
     targetPosition: 0.5
-  m_SuspensionDistance: 0.29999998
+  m_SuspensionDistance: 0.3
   m_ForceAppPointDistance: 0.50045025
   m_Mass: 10
   m_WheelDampingRate: 0.25

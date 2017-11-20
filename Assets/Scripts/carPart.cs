@@ -8,9 +8,8 @@ public class carPart : MonoBehaviour {
     public float maxHealth = 1200;
     public Color lightDamage = Color.blue;
     public Color heavyDamage = Color.red;
-    public Texture2D lightNormal;
     public Texture2D lightOcclusion;
-    public Texture2D lightAlpha;
+
 
     [Space]
     public float lightDamageThreshold = 800;
@@ -25,14 +24,14 @@ public class carPart : MonoBehaviour {
     void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "FrontBumper" && other.GetComponent<Damage>().carSpeed >= minAttackSpeed && alive)
-        {
+        {            
+            float tempDamage = other.gameObject.GetComponent<Damage>().damageToTake;
+            partHealth -= tempDamage;
+
             float percent = partHealth/maxHealth;
             float inversePercent = 1-percent;
             otherPercent = (1.5f * inversePercent) + 2;
-            //Debug.Log(partHealth + " " + percent + " " + inversePercent + " " + otherPercent);
-            
-            float tempDamage = other.gameObject.GetComponent<Damage>().damageToTake;
-            partHealth -= tempDamage;
+            Debug.Log(partHealth + " percent:" + percent + " inversePercent:" + inversePercent + " otherPercent:" + otherPercent);
 
             if (partHealth <= heavyDamageThreshold)
             {
@@ -41,11 +40,9 @@ public class carPart : MonoBehaviour {
             else if (partHealth <= lightDamageThreshold)
             {
                 //gameObject.GetComponent<Renderer>().material.color = lightDamage;
-                gameObject.GetComponent<Renderer>().material.SetTexture("_normalMap", lightNormal);
                 gameObject.GetComponent<Renderer>().material.SetTexture("_occlusionMap", lightOcclusion);
-                gameObject.GetComponent<Renderer>().material.SetTexture("_alphaMap", lightAlpha);
                 gameObject.GetComponent<Renderer>().material.SetFloat("_alphaCutOff", 1f);
-                //gameObject.GetComponent<Renderer>().material.SetFloat("_BumpScale", otherPercent);
+                gameObject.GetComponent<Renderer>().material.SetFloat("_dmgNomal", 0.5f);
             }
         }
     }
