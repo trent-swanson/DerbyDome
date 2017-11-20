@@ -13,18 +13,22 @@ public class PlayerIcon : MonoBehaviour {
 	[Space]
 	public Sprite arrow;
 	public Sprite crown;
+	public Sprite death;
 
 	Image image;
+	bool playerDead = false;
 
 	void OnEnable()
     {
         Score.OnUpdatePlayerLeader += ChangeIcon;
+		CarController.OnPlayerDead += DeathIcon;
     }
     
     
     void OnDisable()
     {
         Score.OnUpdatePlayerLeader -= ChangeIcon;
+		CarController.OnPlayerDead -= DeathIcon;
     }
 
 	void Start()
@@ -61,14 +65,23 @@ public class PlayerIcon : MonoBehaviour {
 		}
 	}
 
+	void DeathIcon()
+	{
+		image.sprite = death;
+		playerDead = true;
+	}
+
 	void ChangeIcon()
 	{
-		if (playerNumber == Game_Manager.leaderboard[0].playerID)
+		if(!playerDead)
 		{
-			image.sprite = crown;
-		} else
-		{
-			image.sprite = arrow;
+			if (playerNumber == Game_Manager.leaderboard[0].playerID)
+			{
+				image.sprite = crown;
+			} else
+			{
+				image.sprite = arrow;
+			}
 		}
 	}
 }

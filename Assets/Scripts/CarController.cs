@@ -142,6 +142,7 @@ public class CarController : MonoBehaviour
     public float minAttackSpeed = 30f;
     public float impactShake = 0.02f;
     public float impactShakeTime = 0.02f;
+    public GameObject explosion;
 
     [Space]
     [Space]
@@ -383,7 +384,7 @@ public class CarController : MonoBehaviour
 
         if (DebugControls)
         {
-            if (Input.GetKeyDown(KeyCode.Space) && playerID == 1)
+            if (Input.GetKeyDown(KeyCode.Space))
                 TakeDamage(3000);
         }
 
@@ -675,6 +676,7 @@ public class CarController : MonoBehaviour
 				//carParts[i].GetComponent<Renderer> ().material.color = death;
                 carParts[i].GetComponent<carPart>().alive = false;
 			}
+            explosion.SetActive(true);
             OnPlayerDead();
             StartCoroutine("GhostMode");
 		}
