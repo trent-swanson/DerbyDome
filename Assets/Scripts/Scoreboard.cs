@@ -51,7 +51,14 @@ public class Scoreboard : MonoBehaviour {
 	void Update ()
     {
         timer += Time.deltaTime;
-        if (timer >= wait || XCI.GetButtonDown(XboxButton.Start, XboxController.All) || XCI.GetButtonDown(XboxButton.B, XboxController.All))
+        if (timer >= wait || XCI.GetButtonDown(XboxButton.Start, XboxController.First) ||
+            XCI.GetButtonDown(XboxButton.Start, XboxController.Second) ||
+            XCI.GetButtonDown(XboxButton.Start, XboxController.Third) ||
+            XCI.GetButtonDown(XboxButton.Start, XboxController.Fourth) ||
+            XCI.GetButtonDown(XboxButton.B, XboxController.First) ||
+            XCI.GetButtonDown(XboxButton.B, XboxController.Second) ||
+            XCI.GetButtonDown(XboxButton.B, XboxController.Third) ||
+            XCI.GetButtonDown(XboxButton.B, XboxController.Fourth))
         {
             Game_Manager.playerData[0].playerScore = 0;
             Game_Manager.playerData[1].playerScore = 0;
