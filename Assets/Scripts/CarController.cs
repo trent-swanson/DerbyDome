@@ -150,6 +150,9 @@ public class CarController : MonoBehaviour
 	public string selectsound = "event:/Audio";
 	//FMOD.Studio.EventInstance soundevent;
 
+    public delegate void PlayerDeadAction();
+    public static event PlayerDeadAction OnPlayerDead;
+
 
     //=========================================START===============================================
     void OnEnable()
@@ -672,6 +675,7 @@ public class CarController : MonoBehaviour
 				//carParts[i].GetComponent<Renderer> ().material.color = death;
                 carParts[i].GetComponent<carPart>().alive = false;
 			}
+            OnPlayerDead();
             StartCoroutine("GhostMode");
 		}
     }

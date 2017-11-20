@@ -1,32 +1,52 @@
 fileFormatVersion: 2
-guid: 9c5c3776cb93b3a45b53dd18e0377a7b
-timeCreated: 1511151644
+guid: 8b40a5961ed6fd443984fef498660ea6
+timeCreated: 1511153778
 licenseType: Pro
 ModelImporter:
   serializedVersion: 21
   fileIDToRecycleName:
     100000: //RootNode
-    100002: Car_Body
-    100004: Front_Car_Bar
-    100006: Front_Left_Fender
-    100008: Front_Right_Fender1
-    100010: Left_Door2
-    100012: Rear_Left_Fender
-    100014: Rear_Right_Fender
-    100016: Rearbar
-    100018: Right_Door1
-    100020: Roof1
+    100002: Front_Car_Bar
+    100004: Front_Left_Fender
+    100006: Front_Right_Fender1
+    100008: Left_Door2
+    100010: Rear_Left_Fender
+    100012: Rear_Right_Fender
+    100014: Rearbar
+    100016: Right_Door1
+    100018: Roof1
+    100020: Undercar_Low
+    100022: Front_Bar
+    100024: Front_Right_Fender2
+    100026: Left_Door3
+    100028: Rear_bar
+    100030: Right_Door2
+    100032: Right_Rear_Fender1
+    100034: Roof2
+    100036: transform11
+    100038: Under_Car
     400000: //RootNode
-    400002: Car_Body
-    400004: Front_Car_Bar
-    400006: Front_Left_Fender
-    400008: Front_Right_Fender1
-    400010: Left_Door2
-    400012: Rear_Left_Fender
-    400014: Rear_Right_Fender
-    400016: Rearbar
-    400018: Right_Door1
-    400020: Roof1
+    400002: Front_Car_Bar
+    400004: Front_Left_Fender
+    400006: Front_Right_Fender1
+    400008: Left_Door2
+    400010: Rear_Left_Fender
+    400012: Rear_Right_Fender
+    400014: Rearbar
+    400016: Right_Door1
+    400018: Roof1
+    400020: Undercar_Low
+    400022: Front_Bar
+    400024: Front_Right_Fender2
+    400026: Left_Door3
+    400028: Rear_bar
+    400030: Right_Door2
+    400032: Right_Rear_Fender1
+    400034: Roof2
+    400036: transform11
+    400038: Under_Car
+    2300000: Undercar_Low
+    3300000: Undercar_Low
     4300000: Front_Car_Bar
     4300002: Front_Left_Fender
     4300004: Left_Door2
@@ -35,7 +55,16 @@ ModelImporter:
     4300010: Right_Door1
     4300012: Front_Right_Fender1
     4300014: Rear_Right_Fender
-    4300016: Rearbar
+    4300016: Undercar_Low
+    4300018: Rearbar
+    4300020: Front_Bar
+    4300022: Left_Door3
+    4300024: Roof2
+    4300026: Right_Door2
+    4300028: Front_Right_Fender2
+    4300030: Right_Rear_Fender1
+    4300032: Under_Car
+    4300034: Rear_bar
     9500000: //RootNode
     13700000: Front_Car_Bar
     13700002: Front_Left_Fender
@@ -46,8 +75,16 @@ ModelImporter:
     13700012: Rearbar
     13700014: Right_Door1
     13700016: Roof1
+    13700018: Front_Bar
+    13700020: Front_Right_Fender2
+    13700022: Left_Door3
+    13700024: Rear_bar
+    13700026: Right_Door2
+    13700028: Right_Rear_Fender1
+    13700030: Roof2
+    13700032: Under_Car
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
@@ -76,16 +113,16 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
-    importVisibility: 1
+    importVisibility: 0
     importBlendShapes: 1
-    importCameras: 1
-    importLights: 1
+    importCameras: 0
+    importLights: 0
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0
-    weldVertices: 1
+    weldVertices: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
@@ -96,7 +133,7 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
-  importAnimation: 1
+  importAnimation: 0
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2

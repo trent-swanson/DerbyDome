@@ -141,9 +141,9 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
-    - _alphaCutOff: 0
+    - _alphaCutOff: 1
     - _damageNormal: 1
-    - _dmgNomal: 1
+    - _dmgNomal: 0.5
     - _node_8768: 1
     m_Colors:
     - _Color: {r: 0.7205882, g: 0.058282882, b: 0.058282882, a: 1}
