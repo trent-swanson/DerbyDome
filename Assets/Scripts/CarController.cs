@@ -92,6 +92,8 @@ public class CarController : MonoBehaviour
     public bool isAlive = true;
     [HideInInspector]
     public Color debugAlive = Color.magenta;
+    [HideInInspector]
+    public static bool canControl;
 
     public bool isGrounded = false;
     private Rigidbody playerBody;
@@ -172,15 +174,14 @@ public class CarController : MonoBehaviour
         tempMaxSpeed = maxSpeed;
         isGrounded = false;
         
-        if(controller == XboxController.First) {
+        if(controller == XboxController.First)
             playerID = 1;
-        } else if(controller == XboxController.Second) {
+        else if(controller == XboxController.Second)
             playerID = 2;
-        } else if(controller == XboxController.Third) {
+        else if(controller == XboxController.Third)
             playerID = 3;
-        } else if(controller == XboxController.Fourth) {
+        else if(controller == XboxController.Fourth)
             playerID = 4;
-        }
 
         tempForwardFriction = wheelColliders[0].forwardFriction.stiffness;
         tempSidewaysFriction = wheelColliders[0].sidewaysFriction.stiffness;
@@ -323,9 +324,7 @@ public class CarController : MonoBehaviour
         if (XCI.GetButtonDown(XboxButton.LeftBumper, controller) || XCI.GetButtonDown(XboxButton.RightBumper, controller))
         {
             if(isGrounded == true)
-            {
                 playerBody.AddForce(Vector3.up * JumpHeight, ForceMode.Impulse);
-            }
         }
     }
 
@@ -338,15 +337,13 @@ public class CarController : MonoBehaviour
 
 		if (Physics.Raycast(groundCheck, out hit, 0.4f))
 		{
-			if (hit.collider.tag == "Ground" || hit.collider.tag == "Player") {
+			if (hit.collider.tag == "Ground" || hit.collider.tag == "Player")
 				isGrounded = true;
-            } else {
+            else
                  isGrounded = false;
-            }
-
-	    } else {
+	    }
+        else
             isGrounded = false;
-        }
     }
     
 	private void FlipCheck()
@@ -359,9 +356,7 @@ public class CarController : MonoBehaviour
 		if (Physics.Raycast(groundCheck, out hit, 1.4f))
 		{
 			if (hit.collider.tag == "Ground")
-			{
 				StartCoroutine ("WaitForSeconds");
-			}
 		}
 	}
 
@@ -369,9 +364,7 @@ public class CarController : MonoBehaviour
     {
 		yield return new WaitForSeconds (3);
 		if (isGrounded == false)
-		{
 			transform.localEulerAngles = new Vector3 (0, CurrentRotation, 0);
-		}
 	}
     #endregion
 
@@ -385,8 +378,11 @@ public class CarController : MonoBehaviour
         groundedRR = wheelColliders[2].GetGroundHit(out hit);
         groundedFR = wheelColliders[3].GetGroundHit(out hit);
 
-        if (Input.GetKeyDown(KeyCode.Space) && playerID == 1)
-            TakeDamage(3000);
+        if (DebugControls)
+        {
+            if (Input.GetKeyDown(KeyCode.Space) && playerID == 1)
+                TakeDamage(3000);
+        }
 
 		GroundCheck();
 		FlipCheck();
@@ -394,128 +390,105 @@ public class CarController : MonoBehaviour
 
         boostSlider.value = tempBoostTimer;
 
-        if (impactTimer > 0) {
+        if (impactTimer > 0)
             impactTimer -= Time.deltaTime;
-        }
 	}
 
     void FixedUpdate()
     {
-        //car speed in KM/H
-        speed = playerBody.velocity.magnitude * 3.6f;
-        localVel = playerBody.transform.InverseTransformDirection(playerBody.velocity);
+        if (canControl)
+        {
+            //car speed in KM/H
+            speed = playerBody.velocity.magnitude * 3.6f;
+            localVel = playerBody.transform.InverseTransformDirection(playerBody.velocity);
 
-        if (XCI.GetButton(XboxButton.A, controller) && tempBoostTimer > 0 && isAlive)
-        {
-            isBoosting = true;
-            tempBoostTimer -= Time.deltaTime;
-            boostEffect.SetActive(true);
-            cameraShake.BoostShake(boostShake);
-            tempMaxSpeed = boostSpeed;
-            if (speed < tempMaxSpeed)
+            if (XCI.GetButton(XboxButton.A, controller) && tempBoostTimer > 0 && isAlive)
             {
-                playerBody.AddRelativeForce(Vector3.forward * boostPower, ForceMode.Force);
-            }
-        }
-        else
-        {
-            isBoosting = false;
-            tempMaxSpeed = maxSpeed;
-            boostEffect.SetActive(false);
-            cameraShake.StopBoostShake();
-            if(tempBoostTimer < boostTimer)
-            {
-                tempBoostTimer += Time.deltaTime / 4;
-            }
-        }
-
-        if(XCI.GetAxis(XboxAxis.RightTrigger, controller) != 0 && isAlive || XCI.GetAxis(XboxAxis.LeftTrigger, controller) != 0 && isAlive)
-        {
-            if (speed > tempMaxSpeed)
-            {
-                power = 0;
-                reverse = 0;
+                isBoosting = true;
+                tempBoostTimer -= Time.deltaTime;
+                boostEffect.SetActive(true);
+                cameraShake.BoostShake(boostShake);
+                tempMaxSpeed = boostSpeed;
+                if (speed < tempMaxSpeed)
+                    playerBody.AddRelativeForce(Vector3.forward * boostPower, ForceMode.Force);
             }
             else
             {
-                power = XCI.GetAxis(XboxAxis.RightTrigger, controller) * (enginePower * speedMultiplier) * Time.fixedDeltaTime;
-                reverse = XCI.GetAxis(XboxAxis.LeftTrigger, controller) * (enginePower * speedMultiplier) * Time.fixedDeltaTime;
+                isBoosting = false;
+                tempMaxSpeed = maxSpeed;
+                boostEffect.SetActive(false);
+                cameraShake.StopBoostShake();
+                if (tempBoostTimer < boostTimer)
+                    tempBoostTimer += Time.deltaTime / 4;
             }
-        }
 
-        //Allows for turning and drift
-        Turning();
-
-        //Allows the players movement if they are still alive
-        if ((XCI.GetAxis(XboxAxis.LeftTrigger, controller) > 0) && (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0) && isAlive)
-        {
-            if (!isBoosting)
+            if (XCI.GetAxis(XboxAxis.RightTrigger, controller) != 0 && isAlive || XCI.GetAxis(XboxAxis.LeftTrigger, controller) != 0 && isAlive)
             {
-                Break(breakPower);
-            }
-            else
-            {
-                return;
-            }
-        }
-        else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0 && isAlive)
-        {
-            if (localVel.z < -0.01f)
-            {
-                Break(breakPower);
-            }
-            else
-            {
-                Accelerate();
-            }
-        }
-        else if (XCI.GetAxis(XboxAxis.LeftTrigger, controller) > 0 && isAlive && !isBoosting)
-        {
-            if (localVel.z > 0.01f)
-            {
-                Break(breakPower);
-            }
-            else
-            {
-                Reverse();
-            }
-        }
-        else
-        {
-            if (isGrounded)
-            {
-                if (localVel.z > 7f || localVel.z < -7f)
+                if (speed > tempMaxSpeed)
                 {
-                    playerBody.drag = declDrag / 2;
+                    power = 0;
+                    reverse = 0;
                 }
-
-                else if (localVel.z > 4f || localVel.z < -4f)
-                {
-                   playerBody.drag = declDrag;
-                }
-
                 else
                 {
-                    playerBody.drag = declDrag * 2;
+                    power = XCI.GetAxis(XboxAxis.RightTrigger, controller) * (enginePower * speedMultiplier) * Time.fixedDeltaTime;
+                    reverse = XCI.GetAxis(XboxAxis.LeftTrigger, controller) * (enginePower * speedMultiplier) * Time.fixedDeltaTime;
                 }
+            }
+
+            //Allows for turning and drift
+            Turning();
+
+            //Allows the players movement if they are still alive
+            if ((XCI.GetAxis(XboxAxis.LeftTrigger, controller) > 0) && (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0) && isAlive)
+            {
+                if (!isBoosting)
+                    Break(breakPower);
+                else
+                    return;
+            }
+            else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0 && isAlive)
+            {
+                if (localVel.z < -0.01f)
+                    Break(breakPower);
+                else
+                    Accelerate();
+            }
+            else if (XCI.GetAxis(XboxAxis.LeftTrigger, controller) > 0 && isAlive && !isBoosting)
+            {
+                if (localVel.z > 0.01f)
+                    Break(breakPower);
+                else
+                    Reverse();
             }
             else
             {
-                playerBody.drag = 0;
+                if (isGrounded)
+                {
+                    if (localVel.z > 7f || localVel.z < -7f)
+                        playerBody.drag = declDrag / 2;
+
+                    else if (localVel.z > 4f || localVel.z < -4f)
+                        playerBody.drag = declDrag;
+
+                    else
+                        playerBody.drag = declDrag * 2;
+                }
+                else
+                    playerBody.drag = 0;
+
+                wheelColliders[0].motorTorque = 0;
+                wheelColliders[1].motorTorque = 0;
+                wheelColliders[2].motorTorque = 0;
+                wheelColliders[3].motorTorque = 0;
             }
 
-            wheelColliders[0].motorTorque = 0;
-            wheelColliders[1].motorTorque = 0;
-            wheelColliders[2].motorTorque = 0;
-            wheelColliders[3].motorTorque = 0;
+            //move wheel visuals
+            WheelRotation();
+
+            //Jump();
+            LightTrails();
         }
-
-		//move wheel visuals
-		WheelRotation();
-
-        //Jump();
-
-        LightTrails();
     }
 
 	//=========================================OTHER=================================================
@@ -632,11 +605,13 @@ public class CarController : MonoBehaviour
 		{
 			wheels [0].localEulerAngles = new Vector3 (wheels [0].localEulerAngles.x, wheelColliders [0].steerAngle - wheels [0].localEulerAngles.z, wheels [0].localEulerAngles.z);
 			wheels [1].localEulerAngles = new Vector3 (wheels [1].localEulerAngles.x, (wheelColliders [3].steerAngle - wheels [1].localEulerAngles.z) + 180, wheels [1].localEulerAngles.z);
-		} else
+		}
+        else
 		{
 			wheels [0].localEulerAngles = new Vector3 (wheels [0].localEulerAngles.x, -(wheelColliders [1].steerAngle - wheels [0].localEulerAngles.z), wheels [0].localEulerAngles.z);
 			wheels [1].localEulerAngles = new Vector3 (wheels [1].localEulerAngles.x, -((wheelColliders [2].steerAngle - wheels [1].localEulerAngles.z) + 180), wheels [1].localEulerAngles.z);
 		}
+
 		wheels[0].Rotate(wheelColliders[0].rpm / 60 * 360 * Time.deltaTime, 0, 0);
 		wheels[1].Rotate(wheelColliders[3].rpm / 60 * 360 * Time.deltaTime, 0, 0);
 		wheels[2].Rotate(wheelColliders[1].rpm / 60 * 360 * Time.deltaTime, 0, 0);
@@ -663,12 +638,9 @@ public class CarController : MonoBehaviour
     void IsNewLeader()
     {
         if (playerID == Game_Manager.leaderboard[0].playerID)
-        {
             leaderPosition.SetActive(true);
-        } else
-        {
+        else
             leaderPosition.SetActive(false);
-        }
     }
     #endregion
 
@@ -680,15 +652,15 @@ public class CarController : MonoBehaviour
         if(carHealth <= 0)
 		{
 			isAlive = false;
-            if (playerID == 1) {
+            if (playerID == 1)
                 Game_Manager.playerData[0].playerDeaths++;
-            } else if (playerID == 2) {
+            else if (playerID == 2)
                 Game_Manager.playerData[1].playerDeaths++;
-            } else if (playerID == 3) {
+            else if (playerID == 3)
                 Game_Manager.playerData[2].playerDeaths++;
-            } else if (playerID == 4) {
+            else if (playerID == 4)
                 Game_Manager.playerData[3].playerDeaths++;
-            }
+
 			wheelColliders[0].steerAngle = 0;
 			wheelColliders[1].steerAngle = 0;
 			wheelColliders[2].steerAngle = 0;
@@ -711,29 +683,36 @@ public class CarController : MonoBehaviour
         GameObject tempGhost = Instantiate(ghostCar, ghostSpawn.position, transform.localRotation);
         CarController tempGhostScript = tempGhost.GetComponent<CarController>();
         tempGhostScript.controller = controller;
-        this.enabled = false;
+        enabled = false;
     }
 
 
     public void CameraSetUp()
     {
-        if (playerID == 1) {
+        if (playerID == 1)
+        {
             Debug.Log("Found Cam1");
             GameObject tempPlayerCam = GameObject.FindGameObjectWithTag("Cam1");
             tempPlayerCam.transform.parent.GetComponent<SmoothCamera>().NewPlayerSetUp(this.transform, cameraDesiredPosition, cameraFocus, cameraPivot, carFront);
             cameraShake = tempPlayerCam.GetComponent<CamShake>();
             boostSlider = GameObject.FindGameObjectWithTag("BoostSlider1").GetComponent<Slider>();
-        } else if (playerID == 2) {
+        }
+        else if (playerID == 2)
+        {
             GameObject tempPlayerCam = GameObject.FindGameObjectWithTag("Cam2");
             tempPlayerCam.transform.parent.GetComponent<SmoothCamera>().NewPlayerSetUp(this.transform, cameraDesiredPosition, cameraFocus, cameraPivot, carFront);
             cameraShake = tempPlayerCam.GetComponent<CamShake>();
             boostSlider = GameObject.FindGameObjectWithTag("BoostSlider2").GetComponent<Slider>();
-        } else if (playerID == 3) {
+        }
+        else if (playerID == 3)
+        {
             GameObject tempPlayerCam = GameObject.FindGameObjectWithTag("Cam3");
             tempPlayerCam.transform.parent.GetComponent<SmoothCamera>().NewPlayerSetUp(this.transform, cameraDesiredPosition, cameraFocus, cameraPivot, carFront);
             cameraShake = tempPlayerCam.GetComponent<CamShake>();
             boostSlider = GameObject.FindGameObjectWithTag("BoostSlider3").GetComponent<Slider>();
-        } else if (playerID == 4) {
+        }
+        else if (playerID == 4)
+        {
             GameObject tempPlayerCam = GameObject.FindGameObjectWithTag("Cam4");
             tempPlayerCam.transform.parent.GetComponent<SmoothCamera>().NewPlayerSetUp(this.transform, cameraDesiredPosition, cameraFocus, cameraPivot, carFront);
             cameraShake = tempPlayerCam.GetComponent<CamShake>();

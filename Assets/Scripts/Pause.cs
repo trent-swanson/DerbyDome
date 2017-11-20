@@ -7,9 +7,9 @@ using XboxCtrlrInput;
 using XInputDotNetPure;
 using UnityEngine.UI;
 
-public class Pause : MonoBehaviour {
-
-	private bool isPuased = false;
+public class Pause : MonoBehaviour
+{
+    private bool isPaused = false;
 	private GameObject pauseCanvas;
     private GameObject gameCanvas;
 
@@ -31,29 +31,29 @@ public class Pause : MonoBehaviour {
             EventSystem.current.SetSelectedGameObject(EventSystem.current.firstSelectedGameObject);
         }
 
-		if (XCI.GetButtonUp(XboxButton.Start, XboxController.All))
+		if (XCI.GetButtonUp(XboxButton.Start, XboxController.First) || XCI.GetButtonUp(XboxButton.Start, XboxController.Second))
 		{
-			if (isPuased){
+			if (isPaused){
                 gameCanvas.transform.GetChild (0).gameObject.SetActive (true);
 				pauseCanvas.transform.GetChild (0).gameObject.SetActive (false);
 				Time.timeScale = 1f;
-				isPuased = false;
+                isPaused = false;
 			}
 			else {
                 gameCanvas.transform.GetChild (0).gameObject.SetActive (false);
 				pauseCanvas.transform.GetChild (0).gameObject.SetActive (true);
 				Time.timeScale = 0f;
 				UpdateScoreBoard();
-				isPuased = true;
+                isPaused = true;
 			}
 		}
 
-		if (isPuased && XCI.GetButtonUp(XboxButton.B, XboxController.All))
+		if (isPaused && XCI.GetButtonUp(XboxButton.B, XboxController.All))
 		{
 			gameCanvas.transform.GetChild (0).gameObject.SetActive (true);
 			pauseCanvas.transform.GetChild (0).gameObject.SetActive (false);
 			Time.timeScale = 1f;
-			isPuased = false;
+            isPaused = false;
 		}
     }
 
@@ -72,7 +72,7 @@ public class Pause : MonoBehaviour {
         gameCanvas.transform.GetChild (0).gameObject.SetActive (true);
 		pauseCanvas.transform.GetChild (0).gameObject.SetActive (false);
 		Time.timeScale = 1f;
-		isPuased = false;
+        isPaused = false;
     }
 
     public void Exit()

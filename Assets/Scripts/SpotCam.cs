@@ -24,8 +24,11 @@ public class SpotCam : MonoBehaviour {
 
 	void Update()
 	{
-		transform.position = leader.GetChild(0).transform.position;
-		leader.Rotate(Vector3.up * 30 * Time.deltaTime);
-		transform.LookAt(leader);
+        if (leader)
+        {
+            transform.position = leader.GetChild(0).transform.position;
+            leader.Rotate(Vector3.up * 30 * Time.deltaTime);
+            transform.LookAt(leader);
+        }
 	}
 }
