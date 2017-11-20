@@ -12,6 +12,7 @@ public class Pause : MonoBehaviour
     private bool isPaused = false;
 	private GameObject pauseCanvas;
     private GameObject gameCanvas;
+    public GameObject startOption;
 
     public Text[] kills;
     public Text[] deaths;
@@ -25,27 +26,29 @@ public class Pause : MonoBehaviour
 
 	void Update ()
     {
-        if (EventSystem.current.currentSelectedGameObject == null)
+        if (isPaused && EventSystem.current.currentSelectedGameObject == null)
         {
             Debug.Log("Reselecting first input");
-            EventSystem.current.SetSelectedGameObject(EventSystem.current.firstSelectedGameObject);
+            EventSystem.current.SetSelectedGameObject(startOption);
         }
 
-		if (XCI.GetButtonUp(XboxButton.Start, XboxController.First) || 
+        if (XCI.GetButtonUp(XboxButton.Start, XboxController.First) || 
             XCI.GetButtonUp(XboxButton.Start, XboxController.Second) || 
             XCI.GetButtonUp(XboxButton.Start, XboxController.Third) || 
             XCI.GetButtonUp(XboxButton.Start, XboxController.Fourth))
 		{
 			if (isPaused){
                 gameCanvas.transform.GetChild (0).gameObject.SetActive (true);
-				pauseCanvas.transform.GetChild (0).gameObject.SetActive (false);
+                EventSystem.current.SetSelectedGameObject(null);
+                pauseCanvas.transform.GetChild (0).gameObject.SetActive (false);
 				Time.timeScale = 1f;
                 isPaused = false;
 			}
 			else {
                 gameCanvas.transform.GetChild (0).gameObject.SetActive (false);
 				pauseCanvas.transform.GetChild (0).gameObject.SetActive (true);
-				Time.timeScale = 0f;
+                EventSystem.current.SetSelectedGameObject(startOption);
+                Time.timeScale = 0f;
 				UpdateScoreBoard();
                 isPaused = true;
 			}
@@ -72,6 +75,7 @@ public class Pause : MonoBehaviour
 
     public void Continue()
     {
+        EventSystem.current.SetSelectedGameObject(null);
         gameCanvas.transform.GetChild (0).gameObject.SetActive (true);
 		pauseCanvas.transform.GetChild (0).gameObject.SetActive (false);
 		Time.timeScale = 1f;
