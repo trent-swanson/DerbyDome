@@ -12,6 +12,16 @@ TagManager:
   - Manager
   - Pause
   - Canvas
+  - LevelManager
+  - Leader
+  - Cam1
+  - Cam2
+  - Cam3
+  - Cam4
+  - BoostSlider1
+  - BoostSlider2
+  - BoostSlider3
+  - BoostSlider4
   layers:
   - Default
   - TransparentFX
@@ -22,19 +32,19 @@ TagManager:
   - 
   - 
   - Car
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - PLayer1Icon
+  - PLayer2Icon
+  - PLayer3Icon
+  - PLayer4Icon
+  - Ghost1
+  - Ghost2
+  - Ghost3
+  - Ghost4
+  - SpotCam
+  - TopCars
+  - BottomCars
+  - TopCarsWall
+  - BottomCarsWall
   - 
   - 
   - 

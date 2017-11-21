@@ -65,10 +65,13 @@ public class PlayerIcon : MonoBehaviour {
 		}
 	}
 
-	void DeathIcon()
+	void DeathIcon(int num)
 	{
-		image.sprite = death;
-		playerDead = true;
+		if(num == playerNumber)
+		{
+			image.sprite = death;
+			playerDead = true;
+		}
 	}
 
 	void ChangeIcon()

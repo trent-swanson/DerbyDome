@@ -34,10 +34,10 @@ public class Game_Manager : MonoBehaviour {
         {
         	spawned = true;
             DontDestroyOnLoad(gameObject);
-			playerData[0] = new PlayerData("Player One", 1, 0, 0, 0);
-			playerData[1] = new PlayerData("Player Two", 2, 0, 0, 0);
-			playerData[2] = new PlayerData("Player Three", 3, 0, 0, 0);
-			playerData[3] = new PlayerData("Player Four", 4, 0, 0, 0);
+			playerData[0] = new PlayerData("RED", 1, 0, 0, 0);
+			playerData[1] = new PlayerData("BLUE", 2, 0, 0, 0);
+			playerData[2] = new PlayerData("WHITE", 3, 0, 0, 0);
+			playerData[3] = new PlayerData("PINK", 4, 0, 0, 0);
         }
     	else
         {

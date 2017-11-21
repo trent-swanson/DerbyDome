@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 0928bf2f7a9505e499af70f35f7763de
+timeCreated: 1511244806
+licenseType: Pro
+ShaderImporter:
+  defaultTextures:
+  - _fogtexture: {fileID: 2800000, guid: 39e835a91e8cea347884a2289f537917, type: 3}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -22,6 +22,7 @@ public class CarController : MonoBehaviour
 	public XboxController controller;
 
 	[Space]
+    public GameObject spawner;
 
 	public float enginePower = 100.0f;
     public float breakPower;
@@ -151,7 +152,7 @@ public class CarController : MonoBehaviour
 	public string selectsound = "event:/Audio";
 	//FMOD.Studio.EventInstance soundevent;
 
-    public delegate void PlayerDeadAction();
+    public delegate void PlayerDeadAction(int num);
     public static event PlayerDeadAction OnPlayerDead;
 
 
@@ -169,6 +170,8 @@ public class CarController : MonoBehaviour
     void Start()
     {
         //soundevent = FMODUnity.RuntimeManager.CreateInstance(selectsound);
+
+        Instantiate(spawner, transform.position, Quaternion.identity);
 
         impactTimer = hitImpactTimer;
 		playerBody = transform.GetComponent<Rigidbody>();
@@ -495,6 +498,21 @@ public class CarController : MonoBehaviour
             //Jump();
             LightTrails();
         }
+        else
+        {
+            wheelColliders[0].steerAngle = 0;
+			wheelColliders[1].steerAngle = 0;
+			wheelColliders[2].steerAngle = 0;
+			wheelColliders[3].steerAngle = 0;
+			wheelColliders[0].steerAngle = 0;
+			Break (breakPower);
+            isBoosting = false;
+            tempMaxSpeed = maxSpeed;
+            boostEffect.SetActive(false);
+            cameraShake.StopBoostShake();
+            if (tempBoostTimer < boostTimer)
+                tempBoostTimer = boostTimer;
+        }
     }
 
 	//=========================================OTHER=================================================
@@ -673,13 +691,19 @@ public class CarController : MonoBehaviour
 			wheelColliders[3].steerAngle = 0;
 			wheelColliders[0].steerAngle = 0;
 			Break (breakPower);
+            isBoosting = false;
+            tempMaxSpeed = maxSpeed;
+            boostEffect.SetActive(false);
+            cameraShake.StopBoostShake();
+            if (tempBoostTimer < boostTimer)
+                tempBoostTimer = boostTimer;
             for (int i = 0; i < carParts.Length; i++)
 			{
 				//carParts[i].GetComponent<Renderer> ().material.color = death;
                 carParts[i].GetComponent<carPart>().alive = false;
 			}
             explosion.SetActive(true);
-            OnPlayerDead();
+            OnPlayerDead(playerID);
             StartCoroutine("GhostMode");
 		}
     }

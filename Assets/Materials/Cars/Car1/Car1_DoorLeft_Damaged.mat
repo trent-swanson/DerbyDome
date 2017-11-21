@@ -12,7 +12,7 @@ Material:
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: 0
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -60,6 +60,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _alphaMap:
         m_Texture: {fileID: 2800000, guid: f8986c37d1a1f0045a6c988b55ad5785, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _damageNnormalMap:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _glossMap:
@@ -139,6 +143,7 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     - _alphaCutOff: 0
+    - _dmgNormal: 1
     - _node_6087: 0.215
     - _node_6981: 1
     - _node_8768: 0.55

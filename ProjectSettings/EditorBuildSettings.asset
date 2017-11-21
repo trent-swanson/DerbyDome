@@ -7,10 +7,10 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
-    guid: 8f4a90f6227c6bc48a604071e3479828
+    guid: c27a4be95513dc64dbecb57a3d8c7d10
   - enabled: 1
-    path: Assets/Scenes/temp.unity
-    guid: f4133fa75915b0f46af3690cd7784448
+    path: Assets/Scenes/Main.unity
+    guid: 21222ef05c39cc04f8ab9c6bd128279f
   - enabled: 1
-    path: Assets/Scenes/endGameScoreboard.unity
-    guid: 806d0e6ce015d5a4f81572aa2c2babb9
+    path: Assets/Scenes/ScoreBoard.unity
+    guid: 99dd2b445d38a344bb6fd26b8f4e06fc

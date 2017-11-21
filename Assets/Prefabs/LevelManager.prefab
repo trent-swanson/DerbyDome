@@ -71,3 +71,11 @@ MonoBehaviour:
   myTimer: 90
   timerText: {fileID: 0}
   gameManager: {fileID: 0}
+  player1Round: {fileID: 0}
+  player2Round: {fileID: 0}
+  player3Round: {fileID: 0}
+  player4Round: {fileID: 0}
+  player1Timer: {fileID: 0}
+  player2Timer: {fileID: 0}
+  player3Timer: {fileID: 0}
+  player4Timer: {fileID: 0}
