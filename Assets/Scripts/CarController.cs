@@ -418,10 +418,12 @@ public class CarController : MonoBehaviour
             }
             else
             {
+                if(isBoosting)
+                    cameraShake.StopBoostShake();
+
                 isBoosting = false;
                 tempMaxSpeed = maxSpeed;
                 boostEffect.SetActive(false);
-                cameraShake.StopBoostShake();
                 if (tempBoostTimer < boostTimer)
                     tempBoostTimer += Time.deltaTime / 4;
             }
