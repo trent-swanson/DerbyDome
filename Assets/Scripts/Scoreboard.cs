@@ -14,6 +14,8 @@ public class Scoreboard : MonoBehaviour {
     public Text[] kills;
     public Text[] deaths;
     public Text[] scores;
+    public Material[] carMaterials;
+    public Color[] carColours;
 
     private float timer;
     public float wait = 10.0f;
@@ -45,10 +47,12 @@ public class Scoreboard : MonoBehaviour {
             deaths[x].text = "D[" + gameLeaderboard[x].playerDeaths.ToString() + "]";
             scores[x].text = gameLeaderboard[x].playerScore.ToString();
         }
-	}
-	
-	// Update is called once per frame
-	void Update ()
+
+        carColour();
+    }
+
+    // Update is called once per frame
+    void Update ()
     {
         timer += Time.deltaTime;
         if (timer >= wait || XCI.GetButtonDown(XboxButton.Start, XboxController.First) ||
@@ -81,4 +85,18 @@ public class Scoreboard : MonoBehaviour {
             SceneManager.LoadScene(0);
         }
 	}
+
+    void carColour()
+    {
+        int first = gameLeaderboard[0].playerID - 1;
+        int second = gameLeaderboard[1].playerID - 1;
+        int third = gameLeaderboard[2].playerID - 1;
+        int fourth = gameLeaderboard[3].playerID - 1;
+
+        carMaterials[0].color = carColours[first];
+        carMaterials[1].color = carColours[second];
+        carMaterials[2].color = carColours[third];
+        carMaterials[3].color = carColours[fourth];
+
+    }
 }
