@@ -23,6 +23,7 @@ public class CarController : MonoBehaviour
 
 	[Space]
     public GameObject spawner;
+    public bool isGhost = false;
 
 	public float enginePower = 100.0f;
     public float breakPower;
@@ -171,7 +172,8 @@ public class CarController : MonoBehaviour
     {
         //soundevent = FMODUnity.RuntimeManager.CreateInstance(selectsound);
 
-        Instantiate(spawner, transform.position, Quaternion.identity);
+        if (!isGhost)
+            Instantiate(spawner, transform.position, Quaternion.identity);
 
         impactTimer = hitImpactTimer;
 		playerBody = transform.GetComponent<Rigidbody>();
@@ -714,6 +716,7 @@ public class CarController : MonoBehaviour
         camRig.SetActive(false);
         GameObject tempGhost = Instantiate(ghostCar, ghostSpawn.position, transform.localRotation);
         CarController tempGhostScript = tempGhost.GetComponent<CarController>();
+        tempGhostScript.isGhost = true;
         tempGhostScript.controller = controller;
         enabled = false;
     }
