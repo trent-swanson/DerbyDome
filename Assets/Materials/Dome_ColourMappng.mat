@@ -96,7 +96,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 10
     - _FORFresnel: 0.64
-    - _FresnelSlider: 2.2
+    - _FresnelSlider: 1.5
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
