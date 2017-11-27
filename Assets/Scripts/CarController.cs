@@ -149,6 +149,9 @@ public class CarController : MonoBehaviour
     public float impactShake = 0.02f;
     public float impactShakeTime = 0.02f;
     public GameObject explosion;
+    public GameObject stage1Smoke;
+    public GameObject stage2Smoke;
+    public GameObject stage3Smoke;
 
     [Space]
     [Space]
@@ -429,11 +432,39 @@ public class CarController : MonoBehaviour
         if (impactTimer > 0)
             impactTimer -= Time.deltaTime;
 
-        if (speed >= 70 && isDamaged) {
+        if (speed >= 70 && isDamaged)
             carAnimator.SetBool("Moving", true);
-        } else {
+        else
             carAnimator.SetBool("Moving", false);
+
+        if (carHealth <= savedCarHealth / 10)
+        {
+            stage1Smoke.SetActive(false);
+            stage2Smoke.SetActive(false);
+            stage3Smoke.SetActive(true);
         }
+
+        else if (carHealth <= savedCarHealth / 4)
+        {
+            stage1Smoke.SetActive(false);
+            stage2Smoke.SetActive(true);
+            stage3Smoke.SetActive(false);
+        }
+
+        else if (carHealth <= savedCarHealth / 2)
+        {
+            stage1Smoke.SetActive(true);
+            stage2Smoke.SetActive(false);
+            stage3Smoke.SetActive(false);
+        }
+
+        else
+        {
+            stage1Smoke.SetActive(false);
+            stage2Smoke.SetActive(false);
+            stage3Smoke.SetActive(false);
+        }
+
 	}
 
     void FixedUpdate()
@@ -692,11 +723,16 @@ public class CarController : MonoBehaviour
         carHealth -= dmgAmount;
         StartCoroutine(DmgHueFade(0.3f));
         cameraShake.Shake(impactShake, impactShakeTime);
-        if (carHealth < savedCarHealth/2) {
+
+        if (carHealth < savedCarHealth/2)
+        {
             isDamaged = true;
-        } else {
+        }
+        else
+        {
             isDamaged = false;
         }
+
         if(carHealth <= 0)
 		{
 			isAlive = false;
