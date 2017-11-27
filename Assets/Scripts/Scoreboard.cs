@@ -54,6 +54,11 @@ public class Scoreboard : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
+        GamePad.SetVibration(PlayerIndex.One, 0.0f, 0.0f);
+        GamePad.SetVibration(PlayerIndex.Two, 0.0f, 0.0f);
+        GamePad.SetVibration(PlayerIndex.Three, 0.0f, 0.0f);
+        GamePad.SetVibration(PlayerIndex.Four, 0.0f, 0.0f);
+
         timer += Time.deltaTime;
         if (timer >= wait || XCI.GetButtonDown(XboxButton.Start, XboxController.First) ||
             XCI.GetButtonDown(XboxButton.Start, XboxController.Second) ||

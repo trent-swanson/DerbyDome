@@ -4,14 +4,16 @@ using UnityEngine;
 using XboxCtrlrInput;
 using XInputDotNetPure;
 
-public class CamShake : MonoBehaviour {
+public class CamShake : MonoBehaviour
+{
 
 	float shakeAmount = 0;
     public XboxController controller;
 
 	public void Shake(float amount, float length)
 	{
-        vibration(1.0f);
+        PlayerIndex playerNum = checkPlayer(controller);
+        vibration(playerNum, 1.0f);
         shakeAmount = amount;
 		InvokeRepeating("DoShake", 0, 0.01f);
         Invoke("StopShake", length);
@@ -26,9 +28,10 @@ public class CamShake : MonoBehaviour {
 
     public void BoostShake(float amount)
 	{
-		shakeAmount = amount;
+        PlayerIndex playerNum = checkPlayer(controller);
+        shakeAmount = amount;
 		InvokeRepeating("DoBoostShake", 0, 0.01f);
-        vibration(0.3f);
+        vibration(playerNum, 0.3f);
     }
 
     void DoShake()
@@ -36,10 +39,8 @@ public class CamShake : MonoBehaviour {
 		if(shakeAmount > 0)
 		{
 			if(gameObject.transform.position.x > 0.15f || gameObject.transform.position.x < -0.15f ||
-			gameObject.transform.position.y < -0.15f || gameObject.transform.position.y < -0.15f)
-			{
-				gameObject.transform.localPosition = Vector3.zero;
-			}
+			gameObject.transform.position.y < -0.15f || gameObject.transform.position.y < -0.15f)			
+				gameObject.transform.localPosition = Vector3.zero;			
 
 			Vector3 camPos = gameObject.transform.position;
 
@@ -57,10 +58,8 @@ public class CamShake : MonoBehaviour {
 		if(shakeAmount > 0)
 		{
 			if(gameObject.transform.position.x > 0.15f || gameObject.transform.position.x < -0.15f ||
-			gameObject.transform.position.y < -0.15f || gameObject.transform.position.y < -0.15f)
-			{
-				gameObject.transform.localPosition = Vector3.zero;
-			}
+			gameObject.transform.position.y < -0.15f || gameObject.transform.position.y < -0.15f)			
+				gameObject.transform.localPosition = Vector3.zero;			
 
 			Vector3 camPos = gameObject.transform.position;
 
@@ -81,75 +80,40 @@ public class CamShake : MonoBehaviour {
 
     public void StopShakeVibration()
     {
-        stopVibration();
+        PlayerIndex playerNum = checkPlayer(controller);
+        stopVibration(playerNum);
     }
 
     public void StopBoostShake()
 	{
-		CancelInvoke("DoBoostShake");
+        PlayerIndex playerNum = checkPlayer(controller);
+
+        CancelInvoke("DoBoostShake");
 		gameObject.transform.localPosition = Vector3.zero;
-        stopVibration();
+        stopVibration(playerNum);
 	}
 
-    void vibration(float intensity)
-    {
-        int playerNum;
-
-        if (controller == XboxController.First)
-            playerNum = 1;
-        else if (controller == XboxController.Second)
-            playerNum = 2;
-        else if (controller == XboxController.Third)
-            playerNum = 3;
-        else if (controller == XboxController.Fourth)
-            playerNum = 4;
-        else
-            playerNum = 0;
-
-        //Sets the vibration if player one is the active player in the update function
-        if (playerNum == 1)
-            GamePad.SetVibration(PlayerIndex.One, intensity, intensity);
-        //Sets the vibration if player two is the active player in the update function
-        else if (playerNum == 2)
-            GamePad.SetVibration(PlayerIndex.Two, intensity, intensity);
-        //Sets the vibration if player three is the active player in the update function
-        else if (playerNum == 3)
-            GamePad.SetVibration(PlayerIndex.Three, intensity, intensity);
-        //Sets the vibration if player four is the active player in the update function
-        else if (playerNum == 4)
-            GamePad.SetVibration(PlayerIndex.Four, intensity, intensity);
-        else
-            return;
+    void vibration(PlayerIndex playerNum ,float intensity)
+    {       
+        GamePad.SetVibration(playerNum, intensity, intensity);
     }
 
-    void stopVibration()
+    void stopVibration(PlayerIndex playerNum)
     {
-        int playerNum;
+        GamePad.SetVibration(playerNum, 0.0f, 0.0f);
+    }
 
+    PlayerIndex checkPlayer(XboxController control)
+    {
         if (controller == XboxController.First)
-            playerNum = 1;
+            return PlayerIndex.One;
         else if (controller == XboxController.Second)
-            playerNum = 2;
+            return PlayerIndex.Two;
         else if (controller == XboxController.Third)
-            playerNum = 3;
+            return PlayerIndex.Three;
         else if (controller == XboxController.Fourth)
-            playerNum = 4;
+            return PlayerIndex.Four;
         else
-            playerNum = 0;
-
-        //Sets the vibration if player one is the active player in the update function
-        if (playerNum == 1)
-            GamePad.SetVibration(PlayerIndex.One, 0.0f, 0.0f);
-        //Sets the vibration if player two is the active player in the update function
-        else if (playerNum == 2)
-            GamePad.SetVibration(PlayerIndex.Two, 0.0f, 0.0f);
-        //Sets the vibration if player three is the active player in the update function
-        else if (playerNum == 3)
-            GamePad.SetVibration(PlayerIndex.Three, 0.0f, 0.0f);
-        //Sets the vibration if player four is the active player in the update function
-        else if (playerNum == 4)
-            GamePad.SetVibration(PlayerIndex.Four, 0.0f, 0.0f);
-        else
-            return;
+            return 0;
     }
 }

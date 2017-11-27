@@ -39,8 +39,6 @@ public class CarController : MonoBehaviour
 	public float acclDrag = 0.5f;
 	public float declDrag = 2f;
     public float speedMultiplier = 0.0f;
-    public float vibrationIntensity = 0.3f;
-    public float vibrationThreshold = 3.5f;
     public float carHealth = 1500;
     private float savedCarHealth;
     private bool isDamaged = false;
@@ -678,23 +676,6 @@ public class CarController : MonoBehaviour
 		wheels[2].Rotate(wheelColliders[1].rpm / 60 * 360 * Time.deltaTime, 0, 0);
 		wheels[3].Rotate(wheelColliders[2].rpm / 60 * 360 * Time.deltaTime, 0, 0);
 	}
-    void Vibration(int playerNum, float left, float right)
-    {
-        //Sets the vibration if player one is the active player in the update function
-        if (playerNum == 1)
-            GamePad.SetVibration(PlayerIndex.One, left, right);
-        //Sets the vibration if player two is the active player in the update function
-        else if (playerNum == 2)
-            GamePad.SetVibration(PlayerIndex.Two, left, right);
-        //Sets the vibration if player three is the active player in the update function
-        else if (playerNum == 3)
-            GamePad.SetVibration(PlayerIndex.Three, left, right);
-        //Sets the vibration if player four is the active player in the update function
-        else if (playerNum == 4)
-            GamePad.SetVibration(PlayerIndex.Four, left, right);
-        else
-            return;
-    }
 
     void IsNewLeader()
     {
