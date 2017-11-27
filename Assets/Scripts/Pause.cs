@@ -37,14 +37,16 @@ public class Pause : MonoBehaviour
             XCI.GetButtonUp(XboxButton.Start, XboxController.Third) || 
             XCI.GetButtonUp(XboxButton.Start, XboxController.Fourth))
 		{
-			if (isPaused){
+			if (isPaused)
+            {
                 gameCanvas.transform.GetChild (0).gameObject.SetActive (true);
                 EventSystem.current.SetSelectedGameObject(null);
                 pauseCanvas.transform.GetChild (0).gameObject.SetActive (false);
 				Time.timeScale = 1f;
                 isPaused = false;
 			}
-			else {
+			else
+            {
                 gameCanvas.transform.GetChild (0).gameObject.SetActive (false);
 				pauseCanvas.transform.GetChild (0).gameObject.SetActive (true);
                 EventSystem.current.SetSelectedGameObject(startOption);

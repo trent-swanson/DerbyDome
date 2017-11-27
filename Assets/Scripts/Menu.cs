@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Menu : MonoBehaviour {
-	
-	void Start()
+public class Menu : MonoBehaviour
+{
+    void Start()
     {
         Cursor.visible = false;
     }
@@ -15,7 +16,6 @@ public class Menu : MonoBehaviour {
     {
         if (EventSystem.current.currentSelectedGameObject == null)
         {
-            Debug.Log("Reselecting first input");
             EventSystem.current.SetSelectedGameObject(EventSystem.current.firstSelectedGameObject);
         }
     }

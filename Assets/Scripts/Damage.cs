@@ -29,9 +29,8 @@ public class Damage : MonoBehaviour
         carSpeed = carController.speed;
         damageToTake = attackValue + carSpeed;
 
-        if(timer > 0) {
+        if(timer > 0)
             timer -= Time.deltaTime;
-        }
     }
 
     private void BodyScore()
