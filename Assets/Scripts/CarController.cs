@@ -56,7 +56,7 @@ public class CarController : MonoBehaviour
     private bool isBoosting = false;
     public CamShake cameraShake;
     public PostProcessingProfile m_Profile;
-    public GameObject playerCam;
+    private GameObject playerCam;
 
 	[Space]
 
@@ -164,17 +164,7 @@ public class CarController : MonoBehaviour
     void OnEnable()
     {
         Score.OnUpdatePlayerLeader += IsNewLeader;
-
-        PostProcessingBehaviour behaviour = playerCam.GetComponent<PostProcessingBehaviour>();
-        if (behaviour.profile == null)
-        {
-            enabled = false;
-            return;
-        }
-
-        m_Profile = Instantiate(behaviour.profile);
-        behaviour.profile = m_Profile;
-    }    
+    }
     
     void OnDisable()
     {
@@ -209,6 +199,16 @@ public class CarController : MonoBehaviour
         tempSidewaysFriction = wheelColliders[0].sidewaysFriction.stiffness;
 
         CameraSetUp();
+
+        PostProcessingBehaviour behaviour = playerCam.GetComponent<PostProcessingBehaviour>();
+        if (behaviour.profile == null)
+        {
+            enabled = false;
+            return;
+        }
+
+        m_Profile = Instantiate(behaviour.profile);
+        behaviour.profile = m_Profile;
 
         tempBoostTimer = boostTimer;
         boostSlider.minValue = 0;
@@ -687,7 +687,7 @@ public class CarController : MonoBehaviour
     public void TakeDamage(float dmgAmount)
     {
         carHealth -= dmgAmount;
-        StartCoroutine(HueFadeIn(2f));
+        StartCoroutine(HueFade(0.3f));
         cameraShake.Shake(impactShake, impactShakeTime);
         if(carHealth <= 0)
 		{
@@ -735,7 +735,7 @@ public class CarController : MonoBehaviour
         enabled = false;
     }
 
-    IEnumerator HueFadeIn(float time)
+    IEnumerator HueFade(float time)
     {
         
        if (m_Profile == null)
@@ -745,12 +745,31 @@ public class CarController : MonoBehaviour
         float elapsedTime = 0;
         while (elapsedTime < time)
         {
-            vignette.color = Color.Lerp(vignette.color, new Color(0.6f, 0, 0), (elapsedTime / time));
-            vignette.intensity = Mathf.Lerp(0.585f, 0.452f, (elapsedTime / time));
-            vignette.smoothness = Mathf.Lerp(0.208f, 0.513f, (elapsedTime / time));
-            vignette.roundness = Mathf.Lerp(0.282f, 1f, (elapsedTime / time));
+            vignette.color = Color.Lerp(vignette.color, new Color(0.8f, 0, 0), (elapsedTime / time));
+            vignette.intensity = Mathf.Lerp(vignette.intensity, 0.452f, (elapsedTime / time));
+            vignette.smoothness = Mathf.Lerp(vignette.smoothness, 0.513f, (elapsedTime / time));
+            vignette.roundness = Mathf.Lerp(vignette.roundness, 1f, (elapsedTime / time));
             m_Profile.vignette.settings = vignette;
             elapsedTime += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+
+        vignette.color = new Color(0.6f, 0, 0);
+        vignette.intensity = 0.452f;
+        vignette.smoothness = 0.513f;
+        vignette.roundness = 1f;
+        m_Profile.vignette.settings = vignette;
+
+        yield return new WaitForSeconds(0.2f);
+        float outElapsedTime = 0;
+        while (outElapsedTime < 2)
+        {
+            vignette.color = Color.Lerp(vignette.color, new Color(0, 0, 0), (outElapsedTime / 2));
+            vignette.intensity = Mathf.Lerp(vignette.intensity, 0.585f, (outElapsedTime / 2));
+            vignette.smoothness = Mathf.Lerp(vignette.smoothness, 0.208f, (outElapsedTime / 2));
+            vignette.roundness = Mathf.Lerp(vignette.roundness, 0.282f, (outElapsedTime / 2));
+            m_Profile.vignette.settings = vignette;
+            outElapsedTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
     }
@@ -761,30 +780,30 @@ public class CarController : MonoBehaviour
         if (playerID == 1)
         {
             Debug.Log("Found Cam1");
-            GameObject tempPlayerCam = GameObject.FindGameObjectWithTag("Cam1");
-            tempPlayerCam.transform.parent.GetComponent<SmoothCamera>().NewPlayerSetUp(this.transform, cameraDesiredPosition, cameraFocus, cameraPivot, carFront);
-            cameraShake = tempPlayerCam.GetComponent<CamShake>();
+            playerCam = GameObject.FindGameObjectWithTag("Cam1");
+            playerCam.transform.parent.GetComponent<SmoothCamera>().NewPlayerSetUp(this.transform, cameraDesiredPosition, cameraFocus, cameraPivot, carFront);
+            cameraShake = playerCam.GetComponent<CamShake>();
             boostSlider = GameObject.FindGameObjectWithTag("BoostSlider1").GetComponent<Slider>();
         }
         else if (playerID == 2)
         {
-            GameObject tempPlayerCam = GameObject.FindGameObjectWithTag("Cam2");
-            tempPlayerCam.transform.parent.GetComponent<SmoothCamera>().NewPlayerSetUp(this.transform, cameraDesiredPosition, cameraFocus, cameraPivot, carFront);
-            cameraShake = tempPlayerCam.GetComponent<CamShake>();
+            playerCam = GameObject.FindGameObjectWithTag("Cam2");
+            playerCam.transform.parent.GetComponent<SmoothCamera>().NewPlayerSetUp(this.transform, cameraDesiredPosition, cameraFocus, cameraPivot, carFront);
+            cameraShake = playerCam.GetComponent<CamShake>();
             boostSlider = GameObject.FindGameObjectWithTag("BoostSlider2").GetComponent<Slider>();
         }
         else if (playerID == 3)
         {
-            GameObject tempPlayerCam = GameObject.FindGameObjectWithTag("Cam3");
-            tempPlayerCam.transform.parent.GetComponent<SmoothCamera>().NewPlayerSetUp(this.transform, cameraDesiredPosition, cameraFocus, cameraPivot, carFront);
-            cameraShake = tempPlayerCam.GetComponent<CamShake>();
+            playerCam = GameObject.FindGameObjectWithTag("Cam3");
+            playerCam.transform.parent.GetComponent<SmoothCamera>().NewPlayerSetUp(this.transform, cameraDesiredPosition, cameraFocus, cameraPivot, carFront);
+            cameraShake = playerCam.GetComponent<CamShake>();
             boostSlider = GameObject.FindGameObjectWithTag("BoostSlider3").GetComponent<Slider>();
         }
         else if (playerID == 4)
         {
-            GameObject tempPlayerCam = GameObject.FindGameObjectWithTag("Cam4");
-            tempPlayerCam.transform.parent.GetComponent<SmoothCamera>().NewPlayerSetUp(this.transform, cameraDesiredPosition, cameraFocus, cameraPivot, carFront);
-            cameraShake = tempPlayerCam.GetComponent<CamShake>();
+            playerCam = GameObject.FindGameObjectWithTag("Cam4");
+            playerCam.transform.parent.GetComponent<SmoothCamera>().NewPlayerSetUp(this.transform, cameraDesiredPosition, cameraFocus, cameraPivot, carFront);
+            cameraShake = playerCam.GetComponent<CamShake>();
             boostSlider = GameObject.FindGameObjectWithTag("BoostSlider4").GetComponent<Slider>();
         }
     }
