@@ -48,15 +48,7 @@ public class Score : MonoBehaviour {
 
     public void killIncrease(int playerID)
     {
-        if(playerID == 1) {
-            Game_Manager.playerData[0].playerKills++;
-        } else if(playerID == 2) {
-            Game_Manager.playerData[1].playerKills++;
-        } else if(playerID == 3) {
-            Game_Manager.playerData[2].playerKills++;
-        } else if(playerID == 4) {
-            Game_Manager.playerData[3].playerKills++;
-        }
+        Game_Manager.playerData[playerID - 1].playerKills++;
     }
 
     public void UpdateLeaderBoard()
