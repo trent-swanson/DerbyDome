@@ -37,10 +37,23 @@ public class levelManager : MonoBehaviour {
             CarController.canControl = false;
             //Counts down from 3 and sets each associated text element to the timer
             startSeconds -= Time.deltaTime;
-            player1Round.text = ("Round ") + (Game_Manager.roundCount + 1);
-            player2Round.text = ("Round ") + (Game_Manager.roundCount + 1);
-            player3Round.text = ("Round ") + (Game_Manager.roundCount + 1);
-            player4Round.text = ("Round ") + (Game_Manager.roundCount + 1);
+            if (Game_Manager.roundCount == 0) {
+                player1Round.text = ("Round One");
+                player2Round.text = ("Round One");
+                player3Round.text = ("Round One");
+                player4Round.text = ("Round One");
+            } else if (Game_Manager.roundCount == 1) {
+                player1Round.text = ("Round Two");
+                player2Round.text = ("Round Two");
+                player3Round.text = ("Round Two");
+                player4Round.text = ("Round Two");
+            } else if (Game_Manager.roundCount == 2) {
+                player1Round.text = ("Round Three");
+                player2Round.text = ("Round Three");
+                player3Round.text = ("Round Three");
+                player4Round.text = ("Round Three");
+            }
+
 
             //As the timer starts above 3 to get a good feeling, it ensures that the timer never displays a value above 3
             if (startSeconds > 3.0f)

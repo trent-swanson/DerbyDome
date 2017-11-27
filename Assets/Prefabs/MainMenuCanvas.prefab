@@ -76,6 +76,7 @@ GameObject:
   - component: {fileID: 223975359718691706}
   - component: {fileID: 114849943079819748}
   - component: {fileID: 114406100007968120}
+  - component: {fileID: 114581365562759644}
   - component: {fileID: 114870645099508184}
   m_Layer: 5
   m_Name: MainMenuCanvas
@@ -325,6 +326,23 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114581365562759644
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1782889241212438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a37eba31ecda364086cb04a18d61901, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button1: {fileID: 1274615243201318}
+  button2: {fileID: 1829411258241626}
+  startSize: {x: 220, y: 50}
+  fullSize: {x: 230, y: 55}
+  animationSpeedScaleExpand: 3
+  animationSpeedScaleContract: 2
 --- !u!114 &114709737003696414
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -574,6 +574,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224400796373998720}
   - component: {fileID: 222782707572026222}
+  - component: {fileID: 114633677433470150}
   - component: {fileID: 114317820209245036}
   m_Layer: 5
   m_Name: Panel
@@ -1701,6 +1702,23 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
+--- !u!114 &114633677433470150
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1988415158647558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a37eba31ecda364086cb04a18d61901, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button1: {fileID: 1263789785396166}
+  button2: {fileID: 1927117260614438}
+  startSize: {x: 55, y: 12.5}
+  fullSize: {x: 65, y: 17.5}
+  animationSpeedScaleExpand: 3
+  animationSpeedScaleContract: 2
 --- !u!114 &114657173634120348
 MonoBehaviour:
   m_ObjectHideFlags: 1

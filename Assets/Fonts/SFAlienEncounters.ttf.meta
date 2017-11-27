@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: e48ed8a9123c07a4397a5c451c381bab
+timeCreated: 1511734722
+licenseType: Pro
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: SF Alien Encounters
+  fontNames:
+  - SF Alien Encounters
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

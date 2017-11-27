@@ -16,6 +16,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.PostProcessing;
 
 public class CarController : MonoBehaviour
 {
@@ -54,6 +55,8 @@ public class CarController : MonoBehaviour
     public float boostShake = 0.02f;
     private bool isBoosting = false;
     public CamShake cameraShake;
+    public PostProcessingProfile m_Profile;
+    public GameObject playerCam;
 
 	[Space]
 
@@ -161,6 +164,16 @@ public class CarController : MonoBehaviour
     void OnEnable()
     {
         Score.OnUpdatePlayerLeader += IsNewLeader;
+
+        PostProcessingBehaviour behaviour = playerCam.GetComponent<PostProcessingBehaviour>();
+        if (behaviour.profile == null)
+        {
+            enabled = false;
+            return;
+        }
+
+        m_Profile = Instantiate(behaviour.profile);
+        behaviour.profile = m_Profile;
     }    
     
     void OnDisable()
@@ -674,6 +687,7 @@ public class CarController : MonoBehaviour
     public void TakeDamage(float dmgAmount)
     {
         carHealth -= dmgAmount;
+        StartCoroutine(HueFadeIn(2f));
         cameraShake.Shake(impactShake, impactShakeTime);
         if(carHealth <= 0)
 		{
@@ -719,6 +733,26 @@ public class CarController : MonoBehaviour
         tempGhostScript.isGhost = true;
         tempGhostScript.controller = controller;
         enabled = false;
+    }
+
+    IEnumerator HueFadeIn(float time)
+    {
+        
+       if (m_Profile == null)
+         yield return null;
+
+        VignetteModel.Settings vignette = m_Profile.vignette.settings;
+        float elapsedTime = 0;
+        while (elapsedTime < time)
+        {
+            vignette.color = Color.Lerp(vignette.color, new Color(0.6f, 0, 0), (elapsedTime / time));
+            vignette.intensity = Mathf.Lerp(0.585f, 0.452f, (elapsedTime / time));
+            vignette.smoothness = Mathf.Lerp(0.208f, 0.513f, (elapsedTime / time));
+            vignette.roundness = Mathf.Lerp(0.282f, 1f, (elapsedTime / time));
+            m_Profile.vignette.settings = vignette;
+            elapsedTime += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
     }
 
 

@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: acabcd6b9fbaf294a9dc896afbba750d
+timeCreated: 1511734691
+licenseType: Pro
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Computer 7
+  fontNames:
+  - Computer 7
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

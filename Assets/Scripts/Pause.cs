@@ -22,6 +22,7 @@ public class Pause : MonoBehaviour
 	{
 		pauseCanvas = GameObject.FindGameObjectWithTag("Pause");
         gameCanvas = GameObject.FindGameObjectWithTag("Canvas");
+        pauseCanvas.transform.GetChild (0).gameObject.SetActive (false);
 	}
 
 	void Update ()
@@ -40,6 +41,8 @@ public class Pause : MonoBehaviour
 			if (isPaused)
             {
                 gameCanvas.transform.GetChild (0).gameObject.SetActive (true);
+                gameCanvas.transform.GetChild (1).gameObject.SetActive (true);
+                gameCanvas.transform.GetChild (2).gameObject.SetActive (true);
                 EventSystem.current.SetSelectedGameObject(null);
                 pauseCanvas.transform.GetChild (0).gameObject.SetActive (false);
 				Time.timeScale = 1f;
@@ -48,6 +51,8 @@ public class Pause : MonoBehaviour
 			else
             {
                 gameCanvas.transform.GetChild (0).gameObject.SetActive (false);
+                gameCanvas.transform.GetChild (1).gameObject.SetActive (false);
+                gameCanvas.transform.GetChild (2).gameObject.SetActive (false);
 				pauseCanvas.transform.GetChild (0).gameObject.SetActive (true);
                 EventSystem.current.SetSelectedGameObject(startOption);
                 Time.timeScale = 0f;
@@ -59,6 +64,8 @@ public class Pause : MonoBehaviour
 		if (isPaused && XCI.GetButtonUp(XboxButton.B, XboxController.First) || XCI.GetButtonUp(XboxButton.B, XboxController.Second) || XCI.GetButtonUp(XboxButton.B, XboxController.Third) || XCI.GetButtonUp(XboxButton.B, XboxController.Fourth))
 		{
 			gameCanvas.transform.GetChild (0).gameObject.SetActive (true);
+            gameCanvas.transform.GetChild (1).gameObject.SetActive (true);
+            gameCanvas.transform.GetChild (2).gameObject.SetActive (true);
 			pauseCanvas.transform.GetChild (0).gameObject.SetActive (false);
 			Time.timeScale = 1f;
             isPaused = false;
@@ -79,6 +86,8 @@ public class Pause : MonoBehaviour
     {
         EventSystem.current.SetSelectedGameObject(null);
         gameCanvas.transform.GetChild (0).gameObject.SetActive (true);
+        gameCanvas.transform.GetChild (1).gameObject.SetActive (true);
+        gameCanvas.transform.GetChild (2).gameObject.SetActive (true);
 		pauseCanvas.transform.GetChild (0).gameObject.SetActive (false);
 		Time.timeScale = 1f;
         isPaused = false;
