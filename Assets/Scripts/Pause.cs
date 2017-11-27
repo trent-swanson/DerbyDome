@@ -33,10 +33,10 @@ public class Pause : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(startOption);
         }
 
-        if (XCI.GetButtonUp(XboxButton.Start, XboxController.First) || 
-            XCI.GetButtonUp(XboxButton.Start, XboxController.Second) || 
-            XCI.GetButtonUp(XboxButton.Start, XboxController.Third) || 
-            XCI.GetButtonUp(XboxButton.Start, XboxController.Fourth))
+        if (XCI.GetButtonDown(XboxButton.Start, XboxController.First) || 
+            XCI.GetButtonDown(XboxButton.Start, XboxController.Second) || 
+            XCI.GetButtonDown(XboxButton.Start, XboxController.Third) || 
+            XCI.GetButtonDown(XboxButton.Start, XboxController.Fourth))
 		{
 			if (isPaused)
             {
@@ -48,6 +48,7 @@ public class Pause : MonoBehaviour
 				Time.timeScale = 1f;
                 isPaused = false;
 			}
+
 			else
             {
                 gameCanvas.transform.GetChild (0).gameObject.SetActive (false);

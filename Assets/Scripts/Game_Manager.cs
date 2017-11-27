@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Game_Manager : MonoBehaviour {
-
+public class Game_Manager : MonoBehaviour
+{
 	public struct PlayerData {
         public int playerID;
         public string playerName;
@@ -39,13 +39,14 @@ public class Game_Manager : MonoBehaviour {
 			playerData[2] = new PlayerData("WHITE", 3, 0, 0, 0);
 			playerData[3] = new PlayerData("PINK", 4, 0, 0, 0);
         }
+
     	else
         {
         	DestroyImmediate(gameObject);
         }
     }
 
-	static public PlayerData[] SortLeaderBoardReturn()
+    static public PlayerData[] SortLeaderBoardReturn()
     {
         //leaderboard = playerData;
 		System.Array.Copy(playerData, leaderboard, 4);
