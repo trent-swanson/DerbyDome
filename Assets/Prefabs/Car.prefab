@@ -5680,6 +5680,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4725b690e78508245acd8d0c2c80d9b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carController: {fileID: 114312570880543116}
+  isRoof: 0
   partHealth: 530
   maxHealth: 530
   lightDamage: {r: 1, g: 0.6, b: 0, a: 1}
@@ -5717,6 +5719,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4725b690e78508245acd8d0c2c80d9b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carController: {fileID: 0}
+  isRoof: 0
   partHealth: 530
   maxHealth: 530
   lightDamage: {r: 1, g: 0.6, b: 0, a: 1}
@@ -5737,6 +5741,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4725b690e78508245acd8d0c2c80d9b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carController: {fileID: 0}
+  isRoof: 0
   partHealth: 530
   maxHealth: 530
   lightDamage: {r: 1, g: 0.6, b: 0, a: 1}
@@ -5757,6 +5763,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4725b690e78508245acd8d0c2c80d9b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carController: {fileID: 114312570880543116}
+  isRoof: 0
   partHealth: 530
   maxHealth: 530
   lightDamage: {r: 1, g: 0.6, b: 0, a: 1}
@@ -5777,6 +5785,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4725b690e78508245acd8d0c2c80d9b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carController: {fileID: 0}
+  isRoof: 0
   partHealth: 530
   maxHealth: 530
   lightDamage: {r: 1, g: 0.6, b: 0, a: 1}
@@ -5797,6 +5807,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4725b690e78508245acd8d0c2c80d9b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carController: {fileID: 114312570880543116}
+  isRoof: 0
   partHealth: 530
   maxHealth: 530
   lightDamage: {r: 1, g: 0.6, b: 0, a: 1}
@@ -5817,6 +5829,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4725b690e78508245acd8d0c2c80d9b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carController: {fileID: 114312570880543116}
+  isRoof: 0
   partHealth: 530
   maxHealth: 530
   lightDamage: {r: 1, g: 0.6, b: 0, a: 1}
@@ -5853,6 +5867,7 @@ MonoBehaviour:
   vibrationIntensity: 0
   vibrationThreshold: 0
   carHealth: 1500
+  carAnimator: {fileID: 95411645252588804}
   JumpHeight: 15000
   boostSpeed: 165
   boostPower: 40000
@@ -5930,6 +5945,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4725b690e78508245acd8d0c2c80d9b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carController: {fileID: 0}
+  isRoof: 0
   partHealth: 530
   maxHealth: 530
   lightDamage: {r: 1, g: 0.6, b: 0, a: 1}
@@ -5950,6 +5967,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4725b690e78508245acd8d0c2c80d9b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carController: {fileID: 114312570880543116}
+  isRoof: 0
   partHealth: 530
   maxHealth: 530
   lightDamage: {r: 1, g: 0.6, b: 0, a: 1}
@@ -5970,6 +5989,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4725b690e78508245acd8d0c2c80d9b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carController: {fileID: 114312570880543116}
+  isRoof: 0
   partHealth: 530
   maxHealth: 530
   lightDamage: {r: 1, g: 0.6, b: 0, a: 1}
@@ -5990,6 +6011,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4725b690e78508245acd8d0c2c80d9b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carController: {fileID: 0}
+  isRoof: 0
   partHealth: 530
   maxHealth: 530
   lightDamage: {r: 1, g: 0.6, b: 0, a: 1}
@@ -6010,6 +6033,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4725b690e78508245acd8d0c2c80d9b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carController: {fileID: 0}
+  isRoof: 0
   partHealth: 530
   maxHealth: 530
   lightDamage: {r: 1, g: 0.6, b: 0, a: 1}
@@ -6030,6 +6055,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4725b690e78508245acd8d0c2c80d9b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carController: {fileID: 114312570880543116}
+  isRoof: 0
   partHealth: 530
   maxHealth: 530
   lightDamage: {r: 1, g: 0.6, b: 0, a: 1}
@@ -6050,6 +6077,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4725b690e78508245acd8d0c2c80d9b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carController: {fileID: 114312570880543116}
+  isRoof: 0
   partHealth: 530
   maxHealth: 530
   lightDamage: {r: 1, g: 0.6, b: 0, a: 1}
@@ -6085,6 +6114,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4725b690e78508245acd8d0c2c80d9b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carController: {fileID: 114312570880543116}
+  isRoof: 0
   partHealth: 530
   maxHealth: 530
   lightDamage: {r: 1, g: 0.6, b: 0, a: 1}
@@ -6119,6 +6150,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4725b690e78508245acd8d0c2c80d9b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carController: {fileID: 0}
+  isRoof: 0
   partHealth: 530
   maxHealth: 530
   lightDamage: {r: 1, g: 0.6, b: 0, a: 1}
@@ -6139,6 +6172,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4725b690e78508245acd8d0c2c80d9b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carController: {fileID: 0}
+  isRoof: 0
   partHealth: 530
   maxHealth: 530
   lightDamage: {r: 1, g: 0.6, b: 0, a: 1}
@@ -6159,6 +6194,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4725b690e78508245acd8d0c2c80d9b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carController: {fileID: 114312570880543116}
+  isRoof: 1
   partHealth: 530
   maxHealth: 530
   lightDamage: {r: 1, g: 0.6, b: 0, a: 1}
@@ -6179,6 +6216,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4725b690e78508245acd8d0c2c80d9b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carController: {fileID: 114312570880543116}
+  isRoof: 0
   partHealth: 530
   maxHealth: 530
   lightDamage: {r: 1, g: 0.6, b: 0, a: 1}
@@ -6199,6 +6238,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4725b690e78508245acd8d0c2c80d9b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carController: {fileID: 0}
+  isRoof: 0
   partHealth: 530
   maxHealth: 530
   lightDamage: {r: 1, g: 0.6, b: 0, a: 1}
@@ -6695,9 +6736,9 @@ WheelCollider:
   m_Radius: 0.35
   m_SuspensionSpring:
     spring: 34386.89
-    damper: 5501.9023
+    damper: 5501.903
     targetPosition: 0.5
-  m_SuspensionDistance: 0.29999998
+  m_SuspensionDistance: 0.3
   m_ForceAppPointDistance: 0.51345897
   m_Mass: 10
   m_WheelDampingRate: 0.25

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class carPart : MonoBehaviour {
 
+    public CarController carController;
+    public bool isRoof = false;
     public float partHealth = 1200;
     public float maxHealth = 1200;
     public Color lightDamage = Color.blue;
@@ -26,6 +28,33 @@ public class carPart : MonoBehaviour {
         if(other.gameObject.tag == "FrontBumper" && other.GetComponent<Damage>().carSpeed >= minAttackSpeed && alive)
         {            
             float tempDamage = other.gameObject.GetComponent<Damage>().damageToTake;
+            partHealth -= tempDamage;
+            if (partHealth < 0)
+                partHealth = 0;
+
+            //float percent = partHealth/maxHealth;
+            //float inversePercent = 1-percent;
+            //otherPercent = (1.5f * inversePercent) + 2;
+            //Debug.Log(partHealth + " percent:" + percent + " inversePercent:" + inversePercent + " otherPercent:" + otherPercent);
+
+            if (partHealth <= heavyDamageThreshold)
+            {
+                //gameObject.GetComponent<Renderer>().material.color = heavyDamage;
+            }
+            else if (partHealth <= lightDamageThreshold)
+            {
+                //gameObject.GetComponent<Renderer>().material.color = lightDamage;
+            }
+
+            Debug.Log("Percentage is: "+ partHealth/maxHealth);
+            gameObject.GetComponent<Renderer>().material.SetTexture("_occlusionMap", lightOcclusion);
+            gameObject.GetComponent<Renderer>().material.SetFloat("_alphaCutOff", Mathf.Clamp(InverseRelationshipConvert(0, 0.8f), 0, 0.8f)); //min0 max1
+            gameObject.GetComponent<Renderer>().material.SetFloat("_dmgNormal", Mathf.Clamp(InverseRelationshipConvert(1, 0.5f), 0.5f, 1)); //min1 max0.6
+            gameObject.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, Mathf.Clamp(InverseRelationshipConvert(0, 100), 0, 100)); //min0 max100
+        }
+        if(other.gameObject.tag == "Ground" && (carController.localVel.y >= 7 || carController.localVel.y <= -7) && alive && isRoof)
+        {            
+            float tempDamage = 300;
             partHealth -= tempDamage;
             if (partHealth < 0)
                 partHealth = 0;

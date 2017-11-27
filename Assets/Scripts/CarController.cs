@@ -42,6 +42,9 @@ public class CarController : MonoBehaviour
     public float vibrationIntensity = 0.3f;
     public float vibrationThreshold = 3.5f;
     public float carHealth = 1500;
+    private float savedCarHealth;
+    private bool isDamaged = false;
+    public Animator carAnimator;
 	public float JumpHeight = 15000;
 
     [Space]
@@ -175,6 +178,8 @@ public class CarController : MonoBehaviour
     {
         //soundevent = FMODUnity.RuntimeManager.CreateInstance(selectsound);
 
+        savedCarHealth = carHealth;
+
         if (!isGhost)
             Instantiate(spawner, transform.position, Quaternion.identity);
 
@@ -209,6 +214,17 @@ public class CarController : MonoBehaviour
 
         m_Profile = Instantiate(behaviour.profile);
         behaviour.profile = m_Profile;
+
+        ColorGradingModel.Settings colorSettings = m_Profile.colorGrading.settings;
+        float saveSatValue = colorSettings.basic.saturation;
+        if(isGhost)
+        {
+            colorSettings.basic.saturation = 0.3f;
+            m_Profile.colorGrading.settings = colorSettings;
+        } else {
+            colorSettings.basic.saturation = saveSatValue;
+            m_Profile.colorGrading.settings = colorSettings;
+        }
 
         tempBoostTimer = boostTimer;
         boostSlider.minValue = 0;
@@ -414,6 +430,12 @@ public class CarController : MonoBehaviour
 
         if (impactTimer > 0)
             impactTimer -= Time.deltaTime;
+
+        if (speed >= 70 && isDamaged) {
+            carAnimator.SetBool("Moving", true);
+        } else {
+            carAnimator.SetBool("Moving", false);
+        }
 	}
 
     void FixedUpdate()
@@ -687,8 +709,13 @@ public class CarController : MonoBehaviour
     public void TakeDamage(float dmgAmount)
     {
         carHealth -= dmgAmount;
-        StartCoroutine(HueFade(0.3f));
+        StartCoroutine(DmgHueFade(0.3f));
         cameraShake.Shake(impactShake, impactShakeTime);
+        if (carHealth < savedCarHealth/2) {
+            isDamaged = true;
+        } else {
+            isDamaged = false;
+        }
         if(carHealth <= 0)
 		{
 			isAlive = false;
@@ -735,7 +762,7 @@ public class CarController : MonoBehaviour
         enabled = false;
     }
 
-    IEnumerator HueFade(float time)
+    IEnumerator DmgHueFade(float time)
     {
         
        if (m_Profile == null)
@@ -760,15 +787,48 @@ public class CarController : MonoBehaviour
         vignette.roundness = 1f;
         m_Profile.vignette.settings = vignette;
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.15f);
         float outElapsedTime = 0;
-        while (outElapsedTime < 2)
+        while (outElapsedTime < 1.5f)
         {
             vignette.color = Color.Lerp(vignette.color, new Color(0, 0, 0), (outElapsedTime / 2));
             vignette.intensity = Mathf.Lerp(vignette.intensity, 0.585f, (outElapsedTime / 2));
             vignette.smoothness = Mathf.Lerp(vignette.smoothness, 0.208f, (outElapsedTime / 2));
             vignette.roundness = Mathf.Lerp(vignette.roundness, 0.282f, (outElapsedTime / 2));
             m_Profile.vignette.settings = vignette;
+            outElapsedTime += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
+    public IEnumerator HueFlash(float time)
+    {
+        
+       if (m_Profile == null)
+         yield return null;
+
+        ColorGradingModel.Settings colorGrading = m_Profile.colorGrading.settings;
+        float elapsedTime = 0;
+        while (elapsedTime < time)
+        {
+            colorGrading.tonemapping.neutralWhiteLevel = Mathf.Lerp(colorGrading.tonemapping.neutralWhiteLevel, 1f, (elapsedTime / time));
+            colorGrading.tonemapping.neutralWhiteIn = Mathf.Lerp(colorGrading.tonemapping.neutralWhiteLevel, 15f, (elapsedTime / time));
+            m_Profile.colorGrading.settings = colorGrading;
+            elapsedTime += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+
+        colorGrading.tonemapping.neutralWhiteLevel = Mathf.Lerp(colorGrading.tonemapping.neutralWhiteLevel, 1f, (elapsedTime / time));
+        colorGrading.tonemapping.neutralWhiteIn = Mathf.Lerp(colorGrading.tonemapping.neutralWhiteLevel, 15f, (elapsedTime / time));
+        m_Profile.colorGrading.settings = colorGrading;
+
+        yield return new WaitForSeconds(0.1f);
+        float outElapsedTime = 0;
+        while (outElapsedTime < 1)
+        {
+            colorGrading.tonemapping.neutralWhiteLevel = Mathf.Lerp(colorGrading.tonemapping.neutralWhiteLevel, 5.3f, (elapsedTime / time));
+            colorGrading.tonemapping.neutralWhiteIn = Mathf.Lerp(colorGrading.tonemapping.neutralWhiteLevel, 10f, (elapsedTime / time));
+            m_Profile.colorGrading.settings = colorGrading;
             outElapsedTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
@@ -812,7 +872,7 @@ public class CarController : MonoBehaviour
     {
         if (speed >= minAttackSpeed && impactTimer <= 0)
         {
-            if (other.gameObject.tag == "Player")
+            if (other.gameObject.tag == "Player" || (other.gameObject.tag == "Ground" && (localVel.y <= -7 || localVel.y >= 7)))
             {
                 cameraShake.Shake(impactShake, impactShakeTime);
                 GameObject tempImpactEffect = Instantiate(impactEffect, other.contacts[0].point, Quaternion.identity);
