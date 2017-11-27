@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerIcon : MonoBehaviour {
+public class PlayerIcon : MonoBehaviour
+{
 	
 	public Transform playerTransform;
 	public Camera playerCam;
@@ -34,14 +35,19 @@ public class PlayerIcon : MonoBehaviour {
 	void Start()
 	{
 		image = transform.GetComponent<Image>();
-		
-		if (playerNumber == Game_Manager.leaderboard[0].playerID)
-		{
-			image.sprite = crown;
-		} else
-		{
-			image.sprite = arrow;
-		}
+
+        if (Game_Manager.roundCount >= 1)
+        {
+            if (playerNumber == Game_Manager.leaderboard[0].playerID)
+            {
+                image.sprite = crown;
+            }
+        }
+
+        else
+        {
+            image.sprite = arrow;
+        }
 	}
 	
 	// Update is called once per frame
