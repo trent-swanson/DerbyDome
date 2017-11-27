@@ -19,7 +19,10 @@ public class SpotCam : MonoBehaviour {
 
 	void NewLeaderCam()
 	{
-		leader = GameObject.FindGameObjectWithTag("Leader").transform;
+        if (!Game_Manager.isDraw)
+        {
+            leader = GameObject.FindGameObjectWithTag("Leader").transform;
+        }
 	}
 
 	void Update()

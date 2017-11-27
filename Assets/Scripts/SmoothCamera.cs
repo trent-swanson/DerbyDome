@@ -68,6 +68,8 @@ public class SmoothCamera : MonoBehaviour
     {
         if (Game_Manager.roundCount == 0)
             isLeader = true;
+        if (Game_Manager.roundCount >= 1)
+            NewLeader();
     }
     
     private void FixedUpdate()
@@ -91,8 +93,9 @@ public class SmoothCamera : MonoBehaviour
         if (!showingCentreView)
         {
             showingCentreView = true;
-           
-        } else
+        }
+
+        else
         {
             showingCentreView = false;
         }        
@@ -100,11 +103,16 @@ public class SmoothCamera : MonoBehaviour
 
     void NewLeader()
     {
+        if (Game_Manager.isDraw)
+            return;
+
         if (Game_Manager.leaderboard[0].playerID == playerNum)
         {
             isLeader = true;
             showingCentreView = false;
-        } else
+        }
+
+        else
         {
             leader = GameObject.FindGameObjectWithTag("Leader").transform;
             isLeader = false;
@@ -118,13 +126,19 @@ public class SmoothCamera : MonoBehaviour
             cameraFocus.transform.LookAt(carFront);
             SmoothFollow();
            
-        } else
+        }
+
+        else
         {
-            if(isLeader) {
+            if(isLeader)
+            {
                 cameraFocus.transform.LookAt(mapCentre);
-            } else {
+            }
+            else
+            {
                 cameraFocus.transform.LookAt(leader);
             }
+
             SmoothFollow();
         }  
     }

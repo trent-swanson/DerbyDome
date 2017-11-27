@@ -23,6 +23,7 @@ public class Game_Manager : MonoBehaviour
 
     static public PlayerData[] playerData = new PlayerData[4];
     static public PlayerData[] leaderboard = new PlayerData[4];
+    static public bool isDraw = true;
 
     static public int roundCount;
 

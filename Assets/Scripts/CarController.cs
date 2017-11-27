@@ -676,7 +676,7 @@ public class CarController : MonoBehaviour
 
     void IsNewLeader()
     {
-        if (playerID == Game_Manager.leaderboard[0].playerID)
+        if (playerID == Game_Manager.leaderboard[0].playerID && !Game_Manager.isDraw)
             leaderPosition.SetActive(true);
         else
             leaderPosition.SetActive(false);

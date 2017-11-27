@@ -84,7 +84,7 @@ public class PlayerIcon : MonoBehaviour
 	{
 		if(!playerDead)
 		{
-			if (playerNumber == Game_Manager.leaderboard[0].playerID)
+			if (playerNumber == Game_Manager.leaderboard[0].playerID && !Game_Manager.isDraw)
 			{
 				image.sprite = crown;
 			} else
