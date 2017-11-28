@@ -28,9 +28,11 @@ public class CarController : MonoBehaviour
     public AudioClip explosionSound;
     public AudioClip[] skidSounds;
     public AudioClip boostSound;
+    public AudioClip crowdCheerSound;
     public AudioSource mainSource1;
     public AudioSource mainSource2;
     public AudioSource mainSource3;
+    public AudioSource mainSource4;
     AudioSource audioSource1;
     AudioSource audioSource2;
     float audio1Volume = 1.0f;
@@ -577,6 +579,7 @@ public class CarController : MonoBehaviour
                 else
                     return;
             }
+
             else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0 && isAlive)
             {
                 if (localVel.z < -0.01f)
@@ -584,6 +587,7 @@ public class CarController : MonoBehaviour
                 else
                     Accelerate();
             }
+
             else if (XCI.GetAxis(XboxAxis.LeftTrigger, controller) > 0 && isAlive && !isBoosting)
             {
                 if (localVel.z > 0.01f)
@@ -591,6 +595,7 @@ public class CarController : MonoBehaviour
                 else
                     Reverse();
             }
+
             else
             {
                 if (isGrounded)
@@ -604,6 +609,7 @@ public class CarController : MonoBehaviour
                     else
                         playerBody.drag = declDrag * 2;
                 }
+
                 else
                     playerBody.drag = 0;
 
@@ -648,14 +654,17 @@ public class CarController : MonoBehaviour
     }
 
     //=========================================SOUND=================================================
-    void fadeIn(AudioSource _source) {
-        if (audio2Volume < 0.5) {
+    void fadeIn(AudioSource _source)
+    {
+        if (audio2Volume < 0.5)
+        {
             audio2Volume += 0.5f * Time.deltaTime;
             audioSource2.volume = audio2Volume;
         }
     }
  
-    void fadeOut(AudioSource _source) {
+    void fadeOut(AudioSource _source)
+    {
         if(audio1Volume > 0.1)
         {
             audio1Volume -= 0.5f * Time.deltaTime;
@@ -667,21 +676,25 @@ public class CarController : MonoBehaviour
     {
         if (_sourceFrom.isPlaying)
         {
-            if (_sourceFrom.volume > 0.1f) {
+            if (_sourceFrom.volume > 0.1f)
                 fadeOut(_sourceFrom);
-            } else {
+
+            else
+            {
                 _sourceFrom.volume = 0;
                 _sourceFrom.loop = false;
                 _sourceFrom.Stop();
                 Debug.Log("Stoped");
             }
         }
+
         if (!_sourceTo.isPlaying) {
             _sourceTo.clip = clip;
             _sourceTo.loop = true;
             _sourceTo.Play();
             Debug.Log("Started");
         }
+
         fadeIn(_sourceTo);
     }
 
@@ -689,13 +702,14 @@ public class CarController : MonoBehaviour
     {
         if (XCI.GetAxis(XboxAxis.RightTrigger, controller) == 0)
         {
-            if (audioSource2.isPlaying) {
+            if (audioSource2.isPlaying)
                 CrossFade(audioSource2, audioSource1, idleSound);
-            }
-        } else {
-            if (audioSource1.isPlaying) {
+        }
+
+        else
+        {
+            if (audioSource1.isPlaying)
                 CrossFade(audioSource1, audioSource2, accSoundHigh);
-            }
         }
     }
 
@@ -708,6 +722,7 @@ public class CarController : MonoBehaviour
 			leftLightTrail.GetComponent<TrailRenderer> ().enabled = true;
 			rightLightTrail.GetComponent<TrailRenderer> ().enabled = true;
 		}
+
 		else
 		{
 			leftLightTrail.GetComponent<TrailRenderer> ().enabled = false;
@@ -813,9 +828,10 @@ public class CarController : MonoBehaviour
             {
                 mainSource3.PlayOneShot(skidSounds[Random.Range(0,2)], 0.5f);
             }
-        } else {
-            mainSource3.Stop();
         }
+
+        else
+            mainSource3.Stop();
     }
 
     void WheelRotation()
@@ -825,6 +841,7 @@ public class CarController : MonoBehaviour
 			wheels [0].localEulerAngles = new Vector3 (wheels [0].localEulerAngles.x, wheelColliders [0].steerAngle - wheels [0].localEulerAngles.z, wheels [0].localEulerAngles.z);
 			wheels [1].localEulerAngles = new Vector3 (wheels [1].localEulerAngles.x, (wheelColliders [3].steerAngle - wheels [1].localEulerAngles.z) + 180, wheels [1].localEulerAngles.z);
 		}
+
         else
 		{
 			wheels [0].localEulerAngles = new Vector3 (wheels [0].localEulerAngles.x, -(wheelColliders [1].steerAngle - wheels [0].localEulerAngles.z), wheels [0].localEulerAngles.z);
@@ -842,7 +859,8 @@ public class CarController : MonoBehaviour
         if (playerID == Game_Manager.leaderboard[0].playerID && !Game_Manager.isDraw)
             leaderPosition.SetActive(true);
         else
-            leaderPosition.SetActive(false);
+            if(!isGhost)
+                leaderPosition.SetActive(false);
     }
     #endregion
 
@@ -894,6 +912,7 @@ public class CarController : MonoBehaviour
 			}
 
             mainSource1.PlayOneShot(explosionSound, 0.35f);
+            mainSource4.PlayOneShot(crowdCheerSound, 0.5f);
             explosion.SetActive(true);
             explosionSphere.gameObject.SetActive(true);
             explosionSphere.radius = 10;
