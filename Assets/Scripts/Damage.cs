@@ -1,5 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿//================================================================================
+//Damage
+//
+//Purpose: To control, assign and calculate how much damage is done on impact
+//
+//Creator: Trent Swanson
+//================================================================================
+
 using UnityEngine;
 
 public class Damage : MonoBehaviour
@@ -10,10 +16,14 @@ public class Damage : MonoBehaviour
     public float damageToTake;
     public float carSpeed;
     public float minAttackSpeed = 20;
+
+    [Space]
+
+    private float hitTimer = 3.0f;
+    private float timer;
+
     private Score scoreScript;
     private CarController carController;
-    public float hitTimer = 3f;
-    public float timer;
 
     // Use this for initialization
     void Start()
@@ -38,11 +48,6 @@ public class Damage : MonoBehaviour
         scoreScript.ScoreIncrease(carController.playerID, (int)damageToTake);
     }
 
-    private void BumperScore()
-    {
-        scoreScript.ScoreIncrease(carController.playerID, (int)damageToTake / 2);
-    }
-
     private void KillScore()
     {
         scoreScript.ScoreIncrease(carController.playerID, 300);
@@ -52,30 +57,20 @@ public class Damage : MonoBehaviour
     {
         if (carSpeed >= minAttackSpeed && timer <= 0)
         {
-            //Calculation occurs with head on collision with another car
-            /*/if (other.gameObject.tag == "FrontBumper")
-            {
-                other.transform.parent.gameObject.GetComponent<CarController>().TakeDamage(damageToTake / 2);
-                Debug.Log("BumperHit!!!!!!");
-                BumperScore();
-                Debug.Log(transform.parent.GetComponent<CarController>().playerID + ":  " + other.gameObject.GetComponent<CarController>().carHealth); 
-                timer = hitTimer;               
-                return;
-            }*/
             //Calculation occurs when a player hits anywhere on the other car except for the bumper
             if (other.gameObject.tag == "Player" && other.GetComponent<CarController>().isAlive)
             {
-
                 carController.cameraShake.Shake(0.1f, 0.2f);
                 StartCoroutine(carController.HueFlash(0.05f));
                 other.gameObject.GetComponent<CarController>().TakeDamage(damageToTake);
+
                 if (other.gameObject.GetComponent<CarController>().isAlive == false)
                 {
                     scoreScript.killIncrease(carController.playerID);
                     KillScore();
                 }
-                BodyScore();
 
+                BodyScore();
                 timer = hitTimer;
                 return;
             }

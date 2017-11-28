@@ -1,5 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿//================================================================================
+//carPart
+//
+//Purpose: Used to determine the health of the individual car parts and allows the
+//textures to be changed so the player can see how much damage has been done to their car
+//
+//Creator: Trent Swanson
+//================================================================================
+
 using UnityEngine;
 
 public class carPart : MonoBehaviour {
@@ -8,20 +15,16 @@ public class carPart : MonoBehaviour {
     public bool isRoof = false;
     public float partHealth = 1200;
     public float maxHealth = 1200;
-    public Color lightDamage = Color.blue;
-    public Color heavyDamage = Color.red;
     public Texture2D lightOcclusion;
 
-
     [Space]
-    public float lightDamageThreshold = 800;
-    public float heavyDamageThreshold = 200;
+
     public int minAttackSpeed = 20;
     
     [HideInInspector]
     public bool alive = true;
 
-    float otherPercent;
+    private float otherPercent;
 
     void OnTriggerEnter(Collider other)
     {
@@ -32,21 +35,6 @@ public class carPart : MonoBehaviour {
             if (partHealth < 0)
                 partHealth = 0;
 
-            //float percent = partHealth/maxHealth;
-            //float inversePercent = 1-percent;
-            //otherPercent = (1.5f * inversePercent) + 2;
-            //Debug.Log(partHealth + " percent:" + percent + " inversePercent:" + inversePercent + " otherPercent:" + otherPercent);
-
-            if (partHealth <= heavyDamageThreshold)
-            {
-                //gameObject.GetComponent<Renderer>().material.color = heavyDamage;
-            }
-            else if (partHealth <= lightDamageThreshold)
-            {
-                //gameObject.GetComponent<Renderer>().material.color = lightDamage;
-            }
-
-            Debug.Log("Percentage is: "+ partHealth/maxHealth);
             gameObject.GetComponent<Renderer>().material.SetTexture("_occlusionMap", lightOcclusion);
             gameObject.GetComponent<Renderer>().material.SetFloat("_alphaCutOff", Mathf.Clamp(InverseRelationshipConvert(0, 0.8f), 0, 0.8f)); //min0 max1
             gameObject.GetComponent<Renderer>().material.SetFloat("_dmgNormal", Mathf.Clamp(InverseRelationshipConvert(1, 0.5f), 0.5f, 1)); //min1 max0.6
@@ -59,21 +47,6 @@ public class carPart : MonoBehaviour {
             if (partHealth < 0)
                 partHealth = 0;
 
-            //float percent = partHealth/maxHealth;
-            //float inversePercent = 1-percent;
-            //otherPercent = (1.5f * inversePercent) + 2;
-            //Debug.Log(partHealth + " percent:" + percent + " inversePercent:" + inversePercent + " otherPercent:" + otherPercent);
-
-            if (partHealth <= heavyDamageThreshold)
-            {
-                //gameObject.GetComponent<Renderer>().material.color = heavyDamage;
-            }
-            else if (partHealth <= lightDamageThreshold)
-            {
-                //gameObject.GetComponent<Renderer>().material.color = lightDamage;
-            }
-
-            Debug.Log("Percentage is: "+ partHealth/maxHealth);
             gameObject.GetComponent<Renderer>().material.SetTexture("_occlusionMap", lightOcclusion);
             gameObject.GetComponent<Renderer>().material.SetFloat("_alphaCutOff", Mathf.Clamp(InverseRelationshipConvert(0, 0.8f), 0, 0.8f)); //min0 max1
             gameObject.GetComponent<Renderer>().material.SetFloat("_dmgNormal", Mathf.Clamp(InverseRelationshipConvert(1, 0.5f), 0.5f, 1)); //min1 max0.6
@@ -81,14 +54,11 @@ public class carPart : MonoBehaviour {
         }
     }
 
-    private float InverseRelationshipConvert(float MaxOutput, float minOutput){
-       
+    private float InverseRelationshipConvert(float MaxOutput, float minOutput)
+    {
         float percent = partHealth/maxHealth;
 
         Mathf.Clamp(percent, 0, 1);
-        //float inversePercent = 1-percent;
-        Debug.Log(((MaxOutput - minOutput ) * percent) + minOutput);
         return ((MaxOutput - minOutput ) * percent) + minOutput;
-        //Debug.Log(partHealth + " percent:" + percent + " inversePercent:" + inversePercent + " otherPercent:" + otherPercent);
     }
 }

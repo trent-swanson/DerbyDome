@@ -1,9 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿//================================================================================
+//AntiRollBar
+//
+//Purpose: Stabalises the car when it is undergoing turns at high speeds
+//
+//Creator: Trent Swanson
+//================================================================================
+
 using UnityEngine;
 
-public class AntiRollBar : MonoBehaviour {
-
+public class AntiRollBar : MonoBehaviour
+{
 	public WheelCollider WheelL;
 	public WheelCollider WheelR;
 	public float AntiRoll = 5000.0f;

@@ -1,16 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿//================================================================================
+//CamShake
+//
+//Purpose: Controls the camera and allows it to shake whenever collision, explosion
+//or boosting occurs.  Also implements controller vibration where neccessary
+//
+//Creator: Trent Swanson
+//Edited by: Joel Goodchild
+//================================================================================
+
 using UnityEngine;
 using XboxCtrlrInput;
 using XInputDotNetPure;
 
 public class CamShake : MonoBehaviour
 {
-
-	float shakeAmount = 0;
     public XboxController controller;
 
-	public void Shake(float amount, float length)
+    private float shakeAmount = 0;
+
+    public void Shake(float amount, float length)
 	{
         PlayerIndex playerNum = checkPlayer(controller);
         vibration(playerNum, 1.0f);
@@ -78,31 +86,38 @@ public class CamShake : MonoBehaviour
 		gameObject.transform.localPosition = Vector3.zero;
 	}
 
-    public void StopShakeVibration()
+    public void StopBoostShake()
     {
         PlayerIndex playerNum = checkPlayer(controller);
+        CancelInvoke("DoBoostShake");
+        gameObject.transform.localPosition = Vector3.zero;
         stopVibration(playerNum);
     }
 
-    public void StopBoostShake()
-	{
-        PlayerIndex playerNum = checkPlayer(controller);
-
-        CancelInvoke("DoBoostShake");
-		gameObject.transform.localPosition = Vector3.zero;
-        stopVibration(playerNum);
-	}
-
+    //Sets vibration to playerNum's controller at the given intensity
     void vibration(PlayerIndex playerNum ,float intensity)
     {       
         GamePad.SetVibration(playerNum, intensity, intensity);
     }
 
+    //Stops the camShake vibration to ensure that there are no
+    //unwanted long lasting vibrations, allowing it to be invoked
+    public void StopShakeVibration()
+    {
+        //Determines which players controller is currently being used
+        PlayerIndex playerNum = checkPlayer(controller);
+        //Stops the vibration on that players controller
+        stopVibration(playerNum);
+    }
+
+    //Sets the vibration to playerNum's controller to 0
     void stopVibration(PlayerIndex playerNum)
     {
         GamePad.SetVibration(playerNum, 0.0f, 0.0f);
     }
 
+    //Allows the active player to be determined to ensure the camShake and vibration is
+    //assigned to the correct player
     PlayerIndex checkPlayer(XboxController control)
     {
         if (controller == XboxController.First)

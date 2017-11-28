@@ -1,5 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿//================================================================================
+//Game_Manager
+//
+//Purpose: Creates and stores all player stats
+//
+//Creator: Trent Swanson
+//================================================================================
+
 using UnityEngine;
 
 public class Game_Manager : MonoBehaviour
@@ -42,14 +48,11 @@ public class Game_Manager : MonoBehaviour
         }
 
     	else
-        {
         	DestroyImmediate(gameObject);
-        }
     }
 
     static public PlayerData[] SortLeaderBoardReturn()
     {
-        //leaderboard = playerData;
 		System.Array.Copy(playerData, leaderboard, 4);
         for (int i = 0; i < leaderboard.Length; i++)
 		{
@@ -68,7 +71,6 @@ public class Game_Manager : MonoBehaviour
 
 	static public void SortLeaderBoard()
     {
-        //leaderboard = playerData;
 		System.Array.Copy(playerData, leaderboard, 4);
         for (int i = 0; i < leaderboard.Length; i++)
 		{
