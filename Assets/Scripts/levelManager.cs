@@ -22,10 +22,28 @@ public class levelManager : MonoBehaviour {
     private float startSeconds = 3.5f;
     private float three = 3.0f;
 
+    public AudioSource AudioSource;
+    public AudioSource AudioSource2;
+    public AudioClip countDownClip;
+    public AudioClip musicClip1;
+    public AudioClip musicClip2;
+
     // Use this for initialization
     void Start()
     {
         Cursor.visible = false;
+        PlayLevelAudio();
+    }
+
+    void PlayLevelAudio()
+    {
+        AudioSource.PlayOneShot(countDownClip, 0.35f);
+        if (Game_Manager.roundCount == 0)
+            AudioSource2.PlayOneShot(musicClip1, 0.2f);
+        if (Game_Manager.roundCount == 1)
+            AudioSource2.PlayOneShot(musicClip2, 0.2f);
+        if (Game_Manager.roundCount == 2)
+            AudioSource2.PlayOneShot(musicClip1, 0.2f);
     }
 
     // Update is called once per frame

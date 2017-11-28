@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 85de77885bc0c2147ae7abbc344613b4
+timeCreated: 1511847254
+licenseType: Free
+ShaderImporter:
+  defaultTextures:
+  - _spotlight_txtr: {fileID: 2800000, guid: 469cd6850926e274a97f219770bd6d05, type: 3}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

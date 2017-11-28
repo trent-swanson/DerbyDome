@@ -20,6 +20,26 @@ using UnityEngine.PostProcessing;
 
 public class CarController : MonoBehaviour
 {
+    public AudioClip idleSound;
+    public AudioClip accSound;
+    public AudioClip accSoundHigh;
+    public AudioClip decSound;
+    public AudioClip[] impactSounds;
+    public AudioClip explosionSound;
+    public AudioClip[] skidSounds;
+    public AudioClip boostSound;
+    public AudioSource mainSource1;
+    public AudioSource mainSource2;
+    public AudioSource mainSource3;
+    AudioSource audioSource1;
+    AudioSource audioSource2;
+    float audio1Volume = 1.0f;
+    float audio2Volume = 0.0f;
+    bool track2Playing = false;
+
+    [Space]
+    [Space]
+    [Space]
 	public XboxController controller;
 
 	[Space]
@@ -181,7 +201,15 @@ public class CarController : MonoBehaviour
 
     void Start()
     {
-        //soundevent = FMODUnity.RuntimeManager.CreateInstance(selectsound);
+        audioSource1 = gameObject.AddComponent(typeof(AudioSource)) as AudioSource;
+        audioSource2 = gameObject.AddComponent(typeof(AudioSource)) as AudioSource;
+
+        if(!audioSource1.isPlaying) {
+            audioSource1.clip = idleSound;
+            audioSource1.loop = true;
+            audioSource1.volume = 0.5f;
+            audioSource1.Play();
+        }
 
         savedCarHealth = carHealth;
 
@@ -480,6 +508,7 @@ public class CarController : MonoBehaviour
                 }
             }
         }
+        //EngineSound();
     }
 
     void FixedUpdate()
@@ -493,6 +522,12 @@ public class CarController : MonoBehaviour
             if (XCI.GetButton(XboxButton.A, controller) && tempBoostTimer > 0 && isAlive)
             {
                 isBoosting = true;
+                if (!mainSource2.isPlaying) {
+                    mainSource2.clip = boostSound;
+                    mainSource2.loop = true;
+                    mainSource2.volume = 0.8f;
+                    mainSource2.Play();
+                }
                 tempBoostTimer -= Time.deltaTime;
                 boostEffect.SetActive(true);
                 cameraShake.BoostShake(boostShake);
@@ -504,7 +539,12 @@ public class CarController : MonoBehaviour
             {
                 if(isBoosting)
                     cameraShake.StopBoostShake();
-
+                
+                if (mainSource2.isPlaying) {
+                    mainSource2.loop = false;
+                    mainSource2.volume = 0f;
+                    mainSource2.Stop();
+                }
                 isBoosting = false;
                 tempMaxSpeed = maxSpeed;
                 boostEffect.SetActive(false);
@@ -604,6 +644,58 @@ public class CarController : MonoBehaviour
             explosionSphere.gameObject.SetActive(false);
             deathTimerStart = false;
             deathTimer = 0.0f;
+        }
+    }
+
+    //=========================================SOUND=================================================
+    void fadeIn(AudioSource _source) {
+        if (audio2Volume < 0.5) {
+            audio2Volume += 0.5f * Time.deltaTime;
+            audioSource2.volume = audio2Volume;
+        }
+    }
+ 
+    void fadeOut(AudioSource _source) {
+        if(audio1Volume > 0.1)
+        {
+            audio1Volume -= 0.5f * Time.deltaTime;
+            audioSource1.volume = audio1Volume;
+        }
+    }
+
+    void CrossFade(AudioSource _sourceFrom, AudioSource _sourceTo, AudioClip clip)
+    {
+        if (_sourceFrom.isPlaying)
+        {
+            if (_sourceFrom.volume > 0.1f) {
+                fadeOut(_sourceFrom);
+            } else {
+                _sourceFrom.volume = 0;
+                _sourceFrom.loop = false;
+                _sourceFrom.Stop();
+                Debug.Log("Stoped");
+            }
+        }
+        if (!_sourceTo.isPlaying) {
+            _sourceTo.clip = clip;
+            _sourceTo.loop = true;
+            _sourceTo.Play();
+            Debug.Log("Started");
+        }
+        fadeIn(_sourceTo);
+    }
+
+    void EngineSound()
+    {
+        if (XCI.GetAxis(XboxAxis.RightTrigger, controller) == 0)
+        {
+            if (audioSource2.isPlaying) {
+                CrossFade(audioSource2, audioSource1, idleSound);
+            }
+        } else {
+            if (audioSource1.isPlaying) {
+                CrossFade(audioSource1, audioSource2, accSoundHigh);
+            }
         }
     }
 
@@ -713,6 +805,17 @@ public class CarController : MonoBehaviour
             rightRearSkidMark.transform.parent = null;
             rightRearSkidMark = null;
         }
+
+        //Skid sound 
+        if (skidStartFL || skidStartFR || skidStartRL || skidStartRR)
+        {
+            if(!mainSource3.isPlaying)
+            {
+                mainSource3.PlayOneShot(skidSounds[Random.Range(0,2)], 0.5f);
+            }
+        } else {
+            mainSource3.Stop();
+        }
     }
 
     void WheelRotation()
@@ -790,6 +893,7 @@ public class CarController : MonoBehaviour
                 carParts[i].GetComponent<carPart>().alive = false;
 			}
 
+            mainSource1.PlayOneShot(explosionSound, 0.35f);
             explosion.SetActive(true);
             explosionSphere.gameObject.SetActive(true);
             explosionSphere.radius = 10;
@@ -933,6 +1037,9 @@ public class CarController : MonoBehaviour
         {
             if (other.gameObject.tag == "Player" || (other.gameObject.tag == "Ground" && (localVel.y <= -7 || localVel.y >= 7)))
             {
+                if(speed >= 90) {mainSource1.PlayOneShot(impactSounds[Random.Range(3,4)], 0.35f);}
+                else if (speed >= 60) {mainSource1.PlayOneShot(impactSounds[Random.Range(1,2)], 0.35f);}
+                else {mainSource1.PlayOneShot(impactSounds[0], 0.35f);}
                 cameraShake.Shake(impactShake, impactShakeTime);
                 if (!isGhost)
                 {
@@ -940,6 +1047,8 @@ public class CarController : MonoBehaviour
                 }
                 impactTimer = hitImpactTimer;
             }
+        } else if (speed >= 10 && impactTimer <= 0) {
+                mainSource1.PlayOneShot(impactSounds[0], 0.35f);
         }
     }
 }
