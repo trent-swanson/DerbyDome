@@ -13,7 +13,7 @@ public class CarScorboardHit : MonoBehaviour {
 		if (other.collider.tag == "Ground" || other.collider.tag == "Player"){
 			if (!hasPlayed)
 			{
-				audioSource.PlayOneShot(hitSound, 0.5f);
+				audioSource.PlayOneShot(hitSound, 0.65f);
 				hasPlayed = true;
 			}
 		}

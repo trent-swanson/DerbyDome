@@ -207,7 +207,7 @@ public class CarController : MonoBehaviour
         audioSource2 = gameObject.AddComponent(typeof(AudioSource)) as AudioSource;
 
         if(!audioSource1.isPlaying) {
-            audioSource1.clip = idleSound;
+            audioSource1.clip = accSoundHigh;
             audioSource1.loop = true;
             audioSource1.volume = 0.5f;
             audioSource1.Play();
@@ -510,7 +510,7 @@ public class CarController : MonoBehaviour
                 }
             }
         }
-        //EngineSound();
+        EngineSound();
     }
 
     void FixedUpdate()
@@ -527,7 +527,7 @@ public class CarController : MonoBehaviour
                 if (!mainSource2.isPlaying) {
                     mainSource2.clip = boostSound;
                     mainSource2.loop = true;
-                    mainSource2.volume = 0.8f;
+                    mainSource2.volume = 0.65f;
                     mainSource2.Play();
                 }
                 tempBoostTimer -= Time.deltaTime;
@@ -654,19 +654,19 @@ public class CarController : MonoBehaviour
     }
 
     //=========================================SOUND=================================================
-    void fadeIn(AudioSource _source)
-    {
-        if (audio2Volume < 0.5)
-        {
+    void fadeIn(AudioSource _source) {
+        if (audio2Volume < 0.5) {
             audio2Volume += 0.5f * Time.deltaTime;
             audioSource2.volume = audio2Volume;
         }
     }
  
-    void fadeOut(AudioSource _source)
-    {
+    void fadeOut(AudioSource _source) {
+        //Debug.Log("hit");
         if(audio1Volume > 0.1)
         {
+           // Debug.Log("hit2");
+           // Debug.Log(audio1Volume);
             audio1Volume -= 0.5f * Time.deltaTime;
             audioSource1.volume = audio1Volume;
         }
@@ -674,43 +674,34 @@ public class CarController : MonoBehaviour
 
     void CrossFade(AudioSource _sourceFrom, AudioSource _sourceTo, AudioClip clip)
     {
-        if (_sourceFrom.isPlaying)
-        {
-            if (_sourceFrom.volume > 0.1f)
-                fadeOut(_sourceFrom);
-
-            else
-            {
-                _sourceFrom.volume = 0;
-                _sourceFrom.loop = false;
-                _sourceFrom.Stop();
-                Debug.Log("Stoped");
-            }
+        if (_sourceFrom.volume > 0f) {
+            fadeOut(_sourceFrom);
+        } else {
+            _sourceFrom.volume = 0;
+            _sourceFrom.loop = false;
         }
-
-        if (!_sourceTo.isPlaying) {
+        if (_sourceTo.volume <= 0) {
             _sourceTo.clip = clip;
             _sourceTo.loop = true;
             _sourceTo.Play();
-            Debug.Log("Started");
         }
-
         fadeIn(_sourceTo);
     }
 
     void EngineSound()
     {
-        if (XCI.GetAxis(XboxAxis.RightTrigger, controller) == 0)
+        audioSource1.volume = Mathf.Clamp((XCI.GetAxis(XboxAxis.RightTrigger, controller) * 0.25f), 0.012f, 0.25f);
+        //audioSource1.pitch = (XCI.GetAxis(XboxAxis.RightTrigger, controller) * 0.2f);
+        /*if (XCI.GetAxis(XboxAxis.RightTrigger, controller) == 0)
         {
-            if (audioSource2.isPlaying)
+            if (audioSource2.isPlaying) {
                 CrossFade(audioSource2, audioSource1, idleSound);
-        }
-
-        else
-        {
-            if (audioSource1.isPlaying)
+            }
+        } else {
+            if (audioSource1.isPlaying) {
                 CrossFade(audioSource1, audioSource2, accSoundHigh);
-        }
+            }
+        }*/
     }
 
 	//=========================================OTHER=================================================
@@ -826,7 +817,7 @@ public class CarController : MonoBehaviour
         {
             if(!mainSource3.isPlaying)
             {
-                mainSource3.PlayOneShot(skidSounds[Random.Range(0,2)], 0.5f);
+                mainSource3.PlayOneShot(skidSounds[Random.Range(0,2)], 0.25f);
             }
         }
 
@@ -1056,9 +1047,9 @@ public class CarController : MonoBehaviour
         {
             if (other.gameObject.tag == "Player" || (other.gameObject.tag == "Ground" && (localVel.y <= -7 || localVel.y >= 7)))
             {
-                if(speed >= 90) {mainSource1.PlayOneShot(impactSounds[Random.Range(3,4)], 0.35f);}
-                else if (speed >= 60) {mainSource1.PlayOneShot(impactSounds[Random.Range(1,2)], 0.35f);}
-                else {mainSource1.PlayOneShot(impactSounds[0], 0.35f);}
+                if(speed >= 90) {mainSource1.PlayOneShot(impactSounds[Random.Range(3,4)], 0.16f);}
+                else if (speed >= 60) {mainSource1.PlayOneShot(impactSounds[Random.Range(1,2)], 0.16f);}
+                else {mainSource1.PlayOneShot(impactSounds[0], 0.16f);}
                 cameraShake.Shake(impactShake, impactShakeTime);
                 if (!isGhost)
                 {
@@ -1067,7 +1058,7 @@ public class CarController : MonoBehaviour
                 impactTimer = hitImpactTimer;
             }
         } else if (speed >= 10 && impactTimer <= 0) {
-                mainSource1.PlayOneShot(impactSounds[0], 0.35f);
+                mainSource1.PlayOneShot(impactSounds[0], 0.16f);
         }
     }
 }

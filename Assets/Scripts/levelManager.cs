@@ -39,11 +39,11 @@ public class levelManager : MonoBehaviour {
     {
         AudioSource.PlayOneShot(countDownClip, 0.35f);
         if (Game_Manager.roundCount == 0)
-            AudioSource2.PlayOneShot(musicClip1, 0.2f);
+            AudioSource2.PlayOneShot(musicClip1, 0.15f);
         if (Game_Manager.roundCount == 1)
-            AudioSource2.PlayOneShot(musicClip2, 0.2f);
+            AudioSource2.PlayOneShot(musicClip2, 0.15f);
         if (Game_Manager.roundCount == 2)
-            AudioSource2.PlayOneShot(musicClip1, 0.2f);
+            AudioSource2.PlayOneShot(musicClip1, 0.15f);
     }
 
     // Update is called once per frame

@@ -7,6 +7,11 @@ using XboxCtrlrInput;
 using XInputDotNetPure;
 
 public class Scoreboard : MonoBehaviour {
+
+    public AudioSource musicSource;
+    public AudioSource crowdSource;
+    public AudioClip music;
+    public AudioClip crowd;
     
     static public Game_Manager.PlayerData[] gameLeaderboard = new Game_Manager.PlayerData[4];
 
@@ -23,6 +28,15 @@ public class Scoreboard : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
+        musicSource.clip = music;
+        musicSource.volume = 0.3f;
+        musicSource.loop = true;
+        musicSource.Play();
+        crowdSource.clip = crowd;
+        crowdSource.volume = 0.05f;
+        crowdSource.loop = true;
+        crowdSource.Play();
+
         Cursor.visible = false;
         
         //gameLeaderboard = Game_Manager.playerData;
