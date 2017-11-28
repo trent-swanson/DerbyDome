@@ -433,48 +433,53 @@ public class CarController : MonoBehaviour
 
         boostSlider.value = tempBoostTimer;
 
-        if (impactTimer > 0)
-            impactTimer -= Time.deltaTime;
-        if (carAnimator)
+        if (!isGhost)
         {
-            if (speed >= 70 && isDamaged)
-                carAnimator.SetBool("Moving", true);
+            if (impactTimer > 0)
+                impactTimer -= Time.deltaTime;
+            if (carAnimator)
+            {
+                if (speed >= 70 && isDamaged)
+                    carAnimator.SetBool("Moving", true);
+                else
+                    carAnimator.SetBool("Moving", false);
+            }
+
+            if (carHealth <= savedCarHealth / 10)
+            {
+                stage1Smoke.SetActive(false);
+                stage2Smoke.SetActive(false);
+                stage3Smoke.SetActive(true);
+                tailSmoke.SetActive(true);
+            }
+
+            else if (carHealth <= savedCarHealth / 4)
+            {
+                stage1Smoke.SetActive(false);
+                stage2Smoke.SetActive(true);
+                stage3Smoke.SetActive(false);
+                tailSmoke.SetActive(true);
+            }
+
+            else if (carHealth <= savedCarHealth / 2)
+            {
+                stage1Smoke.SetActive(true);
+                stage2Smoke.SetActive(false);
+                stage3Smoke.SetActive(false);
+                tailSmoke.SetActive(false);
+            }
+
             else
-                carAnimator.SetBool("Moving", false);
+            {
+                if (!ghostCar)
+                {
+                    stage1Smoke.SetActive(false);
+                    stage2Smoke.SetActive(false);
+                    stage3Smoke.SetActive(false);
+                    tailSmoke.SetActive(false);
+                }
+            }
         }
-
-        if (carHealth <= savedCarHealth / 10)
-        {
-            stage1Smoke.SetActive(false);
-            stage2Smoke.SetActive(false);
-            stage3Smoke.SetActive(true);
-            tailSmoke.SetActive(true);
-        }
-
-        else if (carHealth <= savedCarHealth / 4)
-        {
-            stage1Smoke.SetActive(false);
-            stage2Smoke.SetActive(true);
-            stage3Smoke.SetActive(false);
-            tailSmoke.SetActive(true);
-        }
-
-        else if (carHealth <= savedCarHealth / 2)
-        {
-            stage1Smoke.SetActive(true);
-            stage2Smoke.SetActive(false);
-            stage3Smoke.SetActive(false);
-            tailSmoke.SetActive(false);
-        }
-
-        else
-        {
-            stage1Smoke.SetActive(false);
-            stage2Smoke.SetActive(false);
-            stage3Smoke.SetActive(false);
-            tailSmoke.SetActive(false);
-        }
-
     }
 
     void FixedUpdate()
@@ -929,7 +934,10 @@ public class CarController : MonoBehaviour
             if (other.gameObject.tag == "Player" || (other.gameObject.tag == "Ground" && (localVel.y <= -7 || localVel.y >= 7)))
             {
                 cameraShake.Shake(impactShake, impactShakeTime);
-                GameObject tempImpactEffect = Instantiate(impactEffect, other.contacts[0].point, Quaternion.identity);
+                if (!isGhost)
+                {
+                    GameObject tempImpactEffect = Instantiate(impactEffect, other.contacts[0].point, Quaternion.identity);
+                }
                 impactTimer = hitImpactTimer;
             }
         }

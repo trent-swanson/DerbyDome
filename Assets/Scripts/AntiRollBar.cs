@@ -8,7 +8,7 @@ public class AntiRollBar : MonoBehaviour {
 	public WheelCollider WheelR;
 	public float AntiRoll = 5000.0f;
 
-	private Rigidbody rigidbody;
+	private new Rigidbody rigidbody;
 
 	void Start()
 	{
