@@ -16,6 +16,10 @@ public class ButtonPulse : MonoBehaviour
     public GameObject button1;
     //Any button that needs to pulsate can be put into this gameobject to be animated
     public GameObject button2;
+    //Any button that needs to pulsate can be put into this gameobject to be animated
+    public GameObject button3;
+    //Any button that needs to pulsate can be put into this gameobject to be animated
+    public GameObject button4;
 
     [Space]
 
@@ -39,20 +43,44 @@ public class ButtonPulse : MonoBehaviour
 
     void Update()
     {
-        //If button1 is the selected button, it gets animated and button2 is resized to the minimum size of
+        //If button1 is the selected button, it gets animated and the others are resized to the minimum size of
         //at the beginning of the animation
         if (EventSystem.current.currentSelectedGameObject == button1)
         {
             Resize(button2);
+            Resize(button3);
+            Resize(button4);
             animateButton(button1);
         }
 
-        //If button2 is the selected button, it gets animated and button1 is resized to the minimum size of
+        //If button2 is the selected button, it gets animated and the others are resized to the minimum size of
+        //at the beginning of the animation
+        else if (EventSystem.current.currentSelectedGameObject == button2)
+        {
+            Resize(button1);
+            Resize(button3);
+            Resize(button4);
+            animateButton(button2);
+        }
+
+        //If button3 is the selected button, it gets animated and the others are resized to the minimum size of
+        //at the beginning of the animation
+        else if (EventSystem.current.currentSelectedGameObject == button3)
+        {
+            Resize(button1);
+            Resize(button2);
+            Resize(button4);
+            animateButton(button3);
+        }
+
+        //If button3 is the selected button, it gets animated and the others are resized to the minimum size of
         //at the beginning of the animation
         else
         {
             Resize(button1);
-            animateButton(button2);
+            Resize(button2);
+            Resize(button3);
+            animateButton(button4);
         }
     }
 
