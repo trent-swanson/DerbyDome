@@ -149,9 +149,13 @@ public class CarController : MonoBehaviour
     public float impactShake = 0.02f;
     public float impactShakeTime = 0.02f;
     public GameObject explosion;
+    public SphereCollider explosionSphere;
     public GameObject stage1Smoke;
     public GameObject stage2Smoke;
     public GameObject stage3Smoke;
+    public GameObject tailSmoke;
+    private bool deathTimerStart;
+    private float deathTimer;
 
     [Space]
     [Space]
@@ -431,17 +435,20 @@ public class CarController : MonoBehaviour
 
         if (impactTimer > 0)
             impactTimer -= Time.deltaTime;
-
-        if (speed >= 70 && isDamaged)
-            carAnimator.SetBool("Moving", true);
-        else
-            carAnimator.SetBool("Moving", false);
+        if (carAnimator)
+        {
+            if (speed >= 70 && isDamaged)
+                carAnimator.SetBool("Moving", true);
+            else
+                carAnimator.SetBool("Moving", false);
+        }
 
         if (carHealth <= savedCarHealth / 10)
         {
             stage1Smoke.SetActive(false);
             stage2Smoke.SetActive(false);
             stage3Smoke.SetActive(true);
+            tailSmoke.SetActive(true);
         }
 
         else if (carHealth <= savedCarHealth / 4)
@@ -449,6 +456,7 @@ public class CarController : MonoBehaviour
             stage1Smoke.SetActive(false);
             stage2Smoke.SetActive(true);
             stage3Smoke.SetActive(false);
+            tailSmoke.SetActive(true);
         }
 
         else if (carHealth <= savedCarHealth / 2)
@@ -456,6 +464,7 @@ public class CarController : MonoBehaviour
             stage1Smoke.SetActive(true);
             stage2Smoke.SetActive(false);
             stage3Smoke.SetActive(false);
+            tailSmoke.SetActive(false);
         }
 
         else
@@ -463,9 +472,10 @@ public class CarController : MonoBehaviour
             stage1Smoke.SetActive(false);
             stage2Smoke.SetActive(false);
             stage3Smoke.SetActive(false);
+            tailSmoke.SetActive(false);
         }
 
-	}
+    }
 
     void FixedUpdate()
     {
@@ -578,6 +588,17 @@ public class CarController : MonoBehaviour
             cameraShake.StopBoostShake();
             if (tempBoostTimer < boostTimer)
                 tempBoostTimer = boostTimer;
+        }
+
+        if(deathTimerStart)
+            deathTimer += Time.fixedDeltaTime;
+
+        if (deathTimer >= 0.5f)
+        {
+            explosion.SetActive(false);
+            explosionSphere.gameObject.SetActive(false);
+            deathTimerStart = false;
+            deathTimer = 0.0f;
         }
     }
 
@@ -757,12 +778,19 @@ public class CarController : MonoBehaviour
             cameraShake.StopBoostShake();
             if (tempBoostTimer < boostTimer)
                 tempBoostTimer = boostTimer;
+
             for (int i = 0; i < carParts.Length; i++)
 			{
 				//carParts[i].GetComponent<Renderer> ().material.color = death;
                 carParts[i].GetComponent<carPart>().alive = false;
 			}
+
             explosion.SetActive(true);
+            explosionSphere.gameObject.SetActive(true);
+            explosionSphere.radius = 10;
+
+            deathTimerStart = true;
+
             OnPlayerDead(playerID);
             StartCoroutine("GhostMode");
 		}
@@ -882,6 +910,15 @@ public class CarController : MonoBehaviour
             playerCam.transform.parent.GetComponent<SmoothCamera>().NewPlayerSetUp(this.transform, cameraDesiredPosition, cameraFocus, cameraPivot, carFront);
             cameraShake = playerCam.GetComponent<CamShake>();
             boostSlider = GameObject.FindGameObjectWithTag("BoostSlider4").GetComponent<Slider>();
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "ExplosionSphere")
+        {
+            StartCoroutine(DmgHueFade(0.3f));
+            cameraShake.Shake(impactShake, impactShakeTime);
         }
     }
 
