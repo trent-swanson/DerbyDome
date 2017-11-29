@@ -1,5 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿//================================================================================
+//CarScoreboardHit
+//
+//Purpose: Controls the audio of the cars colliding in the end game scoreboard scene
+//
+//Creator: Trent Swanson
+//================================================================================
+
 using UnityEngine;
 
 public class CarScorboardHit : MonoBehaviour {

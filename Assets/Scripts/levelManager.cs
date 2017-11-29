@@ -1,32 +1,47 @@
-﻿using UnityEngine;
+﻿//================================================================================
+//levelManager
+//
+//Purpose: To control all game timers present in the level, and control the
+//pre-game countdown timer and in game UI timers
+//
+//Creator: Joel Goodchild
+//Edited by: Trent Swanson
+//================================================================================
+
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class levelManager : MonoBehaviour {
+public class levelManager : MonoBehaviour
+{
     public Time time;
     public float myTimer = 180.0f;
     public Text timerText;
     public GameObject gameManager;
+
     [Space]
+
     public Text player1Round;
     public Text player2Round;
     public Text player3Round;
     public Text player4Round;
+
     [Space]
+
     public Text player1Timer;
     public Text player2Timer;
     public Text player3Timer;
     public Text player4Timer;
-
-    private bool roundStart = true;
-    private float startSeconds = 3.5f;
-    private float three = 3.0f;
 
     public AudioSource AudioSource;
     public AudioSource AudioSource2;
     public AudioClip countDownClip;
     public AudioClip musicClip1;
     public AudioClip musicClip2;
+
+    private bool roundStart = true;
+    private float startSeconds = 3.5f;
+    private float three = 3.0f;
 
     // Use this for initialization
     void Start()
@@ -53,19 +68,26 @@ public class levelManager : MonoBehaviour {
         {
             //Removes the ability for players to control their cars during the countdown timer
             CarController.canControl = false;
+
             //Counts down from 3 and sets each associated text element to the timer
             startSeconds -= Time.deltaTime;
-            if (Game_Manager.roundCount == 0) {
+
+            if (Game_Manager.roundCount == 0)
+            {
                 player1Round.text = ("Round One");
                 player2Round.text = ("Round One");
                 player3Round.text = ("Round One");
                 player4Round.text = ("Round One");
-            } else if (Game_Manager.roundCount == 1) {
+            }
+            else if (Game_Manager.roundCount == 1)
+            {
                 player1Round.text = ("Round Two");
                 player2Round.text = ("Round Two");
                 player3Round.text = ("Round Two");
                 player4Round.text = ("Round Two");
-            } else if (Game_Manager.roundCount == 2) {
+            }
+            else if (Game_Manager.roundCount == 2)
+            {
                 player1Round.text = ("Round Three");
                 player2Round.text = ("Round Three");
                 player3Round.text = ("Round Three");
@@ -82,6 +104,7 @@ public class levelManager : MonoBehaviour {
                 player3Timer.text = three.ToString("0");
                 player4Timer.text = three.ToString("0");
             }
+
             //If the timer goes below 3, it starts counting down normally
             else
             {
@@ -122,26 +145,28 @@ public class levelManager : MonoBehaviour {
         //Once the countdown timer has finished, the round timer commences
         if (!roundStart)
         {
+            //Returns control to the players to commence playing
             CarController.canControl = true;
+            //Begins counting down the timer
             myTimer -= Time.deltaTime;
 
+            //Presents the time in a minutes:seconds format rather than just seconds
             int min = Mathf.FloorToInt(myTimer / 60);
             int sec = Mathf.FloorToInt(myTimer % 60);
             timerText.text = min.ToString("00") + ":" + sec.ToString("00");
 
-
+            //Checks when the timer reaches close to 0, as if it reaches 0, the timer often went below it
             if (myTimer <= 0.05f)
             {
+                //Increases roundCount, ends the current round, and commences the new one
                 ++Game_Manager.roundCount;
                 roundStart = true;
+                //Loads a new round if 3 rounds have not been completed
                 if (Game_Manager.roundCount < 3)
                     SceneManager.LoadScene(1);
-
+                //Once 3 rounds have finished, loads the end game scoreboard scene
                 else
-                {
-                    Debug.Log("Load End Game Screen");
                     SceneManager.LoadScene(2);
-                }
             }     
         }
     }

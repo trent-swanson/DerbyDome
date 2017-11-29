@@ -1,14 +1,13 @@
 //================================================================================
-//DriftCamera
+//SmoothCamera
 //
 //Purpose:  To control the camera and to allow that player to control
 //the angle in which they are viewing the car from
 //
-//Creator: Andrew Hand
-//Edited by: Joel Goodchild
+//Creator: Joel Goodchild
+//Edited by: Trent Swanson
 //================================================================================
 
-using System;
 using UnityEngine;
 using XboxCtrlrInput;
 
@@ -18,7 +17,6 @@ public class SmoothCamera : MonoBehaviour
     
     [Space]
 
-    private Transform player;
     private Transform cameraDesiredPosition;
     private Transform cameraFocus;
     private Transform cameraPivot;
@@ -85,20 +83,15 @@ public class SmoothCamera : MonoBehaviour
     {
         // rotates and moves the camera. Smoothly lerps between the cameras current transform to the desired transform.
         transform.position = Vector3.Slerp(transform.position, cameraDesiredPosition.position, Time.deltaTime * smoothing);
-        //transform.rotation = Quaternion.Slerp(transform.rotation, cameraDesiredPosition.rotation, Time.deltaTime * smoothing);
     }
 
     void CenterToggle()
     {
         if (!showingCentreView)
-        {
             showingCentreView = true;
-        }
 
         else
-        {
-            showingCentreView = false;
-        }        
+            showingCentreView = false;    
     }
 
     void NewLeader()
@@ -125,20 +118,15 @@ public class SmoothCamera : MonoBehaviour
         {
             cameraFocus.transform.LookAt(carFront);
             SmoothFollow();
-           
         }
 
         else
         {
-            if(isLeader)
-            {
+            if (isLeader)
                 cameraFocus.transform.LookAt(mapCentre);
-            }
             else
-            {
                 cameraFocus.transform.LookAt(leader);
-            }
-
+       
             SmoothFollow();
         }  
     }
@@ -157,7 +145,6 @@ public class SmoothCamera : MonoBehaviour
         transform.LookAt(cameraPivot);
 
         Quaternion camRotation = Quaternion.Euler(finalInputY, finalInputX, 0);
-        //cameraPivot.localEulerAngles = Vector3.Slerp(transform.localEulerAngles, camRotation, Time.deltaTime * rotSmoothing);
         cameraPivot.localRotation = Quaternion.Slerp(cameraPivot.localRotation, camRotation, Time.deltaTime * rotSmoothing);
 
         SmoothFollow();
@@ -165,7 +152,6 @@ public class SmoothCamera : MonoBehaviour
 
     public void NewPlayerSetUp(Transform _player, Transform _cameraDesiredPosition, Transform _cameraFocus, Transform _cameraPivot, Transform _carFront)
     {
-        player = _player;
         cameraDesiredPosition = _cameraDesiredPosition;
         cameraFocus = _cameraFocus;
         cameraPivot = _cameraPivot;

@@ -1,8 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿//================================================================================
+//MainMenuMusic
+//
+//Purpose: To control the main menu sounds
+//
+//Creator: Trent Swanson
+//================================================================================
+
 using UnityEngine;
 
-public class MainMenuMusic : MonoBehaviour {
+public class MainMenuMusic : MonoBehaviour
+{
 
 	public AudioSource audioSource;
 	public AudioClip menuMusic;

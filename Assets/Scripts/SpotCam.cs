@@ -1,5 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿//================================================================================
+//SpotCam
+//
+//Purpose: Allows the TV's to follow the leading players car
+//
+//Creator: Trent Swanson
+//Edited by: Joel Goodchild
+//================================================================================
+
 using UnityEngine;
 
 public class SpotCam : MonoBehaviour {
@@ -20,9 +27,7 @@ public class SpotCam : MonoBehaviour {
 	void NewLeaderCam()
 	{
         if (!Game_Manager.isDraw)
-        {
             leader = GameObject.FindGameObjectWithTag("Leader").transform;
-        }
 	}
 
 	void Update()

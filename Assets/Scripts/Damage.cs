@@ -10,8 +10,6 @@ using UnityEngine;
 
 public class Damage : MonoBehaviour
 {
-    Rigidbody rigidBody;
-
     public float attackValue = 100.0f;
     public float damageToTake;
     public float carSpeed;
@@ -28,7 +26,6 @@ public class Damage : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        rigidBody = GetComponentInParent<Rigidbody>();
         scoreScript = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<Score>();
         carController = transform.parent.GetComponent<CarController>();
         timer = 0;

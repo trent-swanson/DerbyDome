@@ -1,5 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿//================================================================================
+//Scoreboard
+//
+//Purpose: Controls the end game scoreboard and allows the car materials
+//to be changed over
+//
+//Creator: Joel Goodchild
+//Edited by: Ryan Ward
+//Edited by: Trent Swanson
+//================================================================================
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -39,7 +47,6 @@ public class Scoreboard : MonoBehaviour {
 
         Cursor.visible = false;
         
-        //gameLeaderboard = Game_Manager.playerData;
         System.Array.Copy(Game_Manager.playerData, gameLeaderboard, 4);
         for (int i = 0; i < gameLeaderboard.Length; i++)
         {
@@ -104,7 +111,7 @@ public class Scoreboard : MonoBehaviour {
             SceneManager.LoadScene(0);
         }
 	}
-
+    
     void carColour()
     {
         int first = gameLeaderboard[0].playerID - 1;
