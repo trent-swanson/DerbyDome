@@ -527,7 +527,7 @@ public class CarController : MonoBehaviour
                 if (!mainSource2.isPlaying) {
                     mainSource2.clip = boostSound;
                     mainSource2.loop = true;
-                    mainSource2.volume = 0.65f;
+                    mainSource2.volume = 0.4f;
                     mainSource2.Play();
                 }
                 tempBoostTimer -= Time.deltaTime;
@@ -690,8 +690,8 @@ public class CarController : MonoBehaviour
 
     void EngineSound()
     {
-        audioSource1.volume = Mathf.Clamp((XCI.GetAxis(XboxAxis.RightTrigger, controller) * 0.25f), 0.012f, 0.25f);
-        //audioSource1.pitch = (XCI.GetAxis(XboxAxis.RightTrigger, controller) * 0.2f);
+        audioSource1.volume = Mathf.Clamp((XCI.GetAxis(XboxAxis.RightTrigger, controller) * 0.45f), 0.02f, 0.45f);
+        //audioSource1.pitch = Mathf.Clamp((XCI.GetAxis(XboxAxis.RightTrigger, controller) * 0.2f), 0, 1.2f);
         /*if (XCI.GetAxis(XboxAxis.RightTrigger, controller) == 0)
         {
             if (audioSource2.isPlaying) {
@@ -817,7 +817,7 @@ public class CarController : MonoBehaviour
         {
             if(!mainSource3.isPlaying)
             {
-                mainSource3.PlayOneShot(skidSounds[Random.Range(0,2)], 0.25f);
+                mainSource3.PlayOneShot(skidSounds[Random.Range(0,2)], 0.2f);
             }
         }
 
