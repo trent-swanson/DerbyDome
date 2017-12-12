@@ -5487,7 +5487,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -6398,10 +6398,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b1f9b1459a71fd438495d636f4df25d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleSound: {fileID: 8300000, guid: d7749e199702dd6429b55f2f047c6a6b, type: 3}
-  accSound: {fileID: 8300000, guid: 4fdc6f2f2d76353478d23373e630e1ac, type: 3}
-  accSoundHigh: {fileID: 8300000, guid: 83f6da85a850323418afcab3f3b5d12f, type: 3}
-  decSound: {fileID: 8300000, guid: a3b00732a8a721845857d10feceacb2b, type: 3}
+  stands1: {fileID: 0}
+  stands2: {fileID: 0}
+  standsSource: {fileID: 0}
   impactSounds:
   - {fileID: 8300000, guid: 8d0321ce3dd18534bae99c4cbad99f9b, type: 3}
   - {fileID: 8300000, guid: a0b91378833127f4a8841c50d4d1bd2b, type: 3}
@@ -6419,6 +6418,7 @@ MonoBehaviour:
   mainSource2: {fileID: 82265213807476984}
   mainSource3: {fileID: 82509360382920720}
   mainSource4: {fileID: 82205082400029888}
+  engineSource: {fileID: 0}
   controller: 1
   spawner: {fileID: 1221659913989982, guid: b62d046db8ff760458b20a649f115fec, type: 2}
   isGhost: 0
@@ -6487,6 +6487,9 @@ MonoBehaviour:
   DebugControls: 1
   ghostCar: {fileID: 1857328314090722, guid: 8a8faec5a54fe604db996b2609cdff2f, type: 2}
   ghostSpawn: {fileID: 4265255826532068}
+  ghostLayerMask:
+    serializedVersion: 2
+    m_Bits: 4072727
   cameraDesiredPosition: {fileID: 4213415324183928}
   cameraFocus: {fileID: 4325782458553904}
   cameraPivot: {fileID: 4464877040151280}

@@ -3615,7 +3615,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -3639,7 +3639,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
 --- !u!82 &82105172514676998
 AudioSource:
   m_ObjectHideFlags: 1
@@ -3695,7 +3695,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -3719,7 +3719,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
 --- !u!82 &82566710955741970
 AudioSource:
   m_ObjectHideFlags: 1
@@ -3775,7 +3775,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -3799,7 +3799,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
 --- !u!96 &96136994734069892
 TrailRenderer:
   serializedVersion: 2
@@ -4437,9 +4437,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8d73e83b85655fe4783f44b62a6eb22d, type: 3}
   - {fileID: 8300000, guid: f64aeba25ded8d64b81775182df7961b, type: 3}
   boostSound: {fileID: 8300000, guid: 4ac768263a88f8a40985a0ee14f8b62e, type: 3}
+  crowdCheerSound: {fileID: 0}
   mainSource1: {fileID: 82105172514676998}
   mainSource2: {fileID: 82566710955741970}
   mainSource3: {fileID: 82042325135535588}
+  mainSource4: {fileID: 0}
+  engineSource: {fileID: 0}
   controller: 1
   spawner: {fileID: 0}
   isGhost: 0
@@ -4509,6 +4512,9 @@ MonoBehaviour:
   DebugControls: 0
   ghostCar: {fileID: 1857328314090722}
   ghostSpawn: {fileID: 0}
+  ghostLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
   cameraDesiredPosition: {fileID: 4007421194367080}
   cameraFocus: {fileID: 4964896823135952}
   cameraPivot: {fileID: 4089801461502206}
@@ -4532,7 +4538,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1134110021737124}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3c3fee974770f28448d170ce8aa129cb, type: 3}
   m_Name: 
